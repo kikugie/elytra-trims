@@ -1,38 +1,33 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "elytratrims",
   "version": "${version}",
-
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "Elytra Trims",
+  "description": "",
   "authors": [
-    "Me!"
+    "KikuGie"
   ],
   "contact": {
     "homepage": "https://fabricmc.net/",
     "sources": "https://github.com/FabricMC/fabric-example-mod"
   },
-
-  "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
-
-  "environment": "*",
+  "license": "MIT",
+  "icon": "assets/elytratrims/icon.png",
+  "environment": "client",
   "entrypoints": {
-    "main": [
-      "net.fabricmc.example.ExampleMod"
+    "client": [
+      "me.kikugie.elytratrims.ElytraTrimsMod"
     ]
   },
   "mixins": [
-    "modid.mixins.json"
+    "elytratrims.mixins.json"
   ],
-
   "depends": {
-    "fabricloader": ">=0.14.17",
-    "fabric-api": "*",
+    "fabricloader": ">=0.13",
+    "fabric-resource-loader-v0": "*",
     "minecraft": "~1.19.4",
     "java": ">=17"
   },
   "suggests": {
-    "another-mod": "*"
   }
 }

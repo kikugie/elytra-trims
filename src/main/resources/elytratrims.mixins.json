@@ -1,12 +1,15 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "net.fabricmc.example.mixin",
+  "package": "me.kikugie.elytratrims.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
   ],
   "client": [
-    "ExampleMixin"
+    "ArmorStandEntityMixin",
+    "ElytraFeatureRendererMixin",
+    "MinecraftClientMixin",
+    "SmithingScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1
