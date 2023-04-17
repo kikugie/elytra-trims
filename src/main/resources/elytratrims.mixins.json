@@ -8,7 +8,6 @@
   "client": [
     "ArmorStandEntityMixin",
     "ElytraFeatureRendererMixin",
-    "MinecraftClientMixin",
     "SmithingScreenMixin"
   ],
   "injectors": {
