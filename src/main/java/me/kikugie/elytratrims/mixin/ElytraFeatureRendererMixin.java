@@ -45,8 +45,7 @@ public class ElytraFeatureRendererMixin {
 
     @ModifyArgs(method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/LivingEntity;FFFFFF)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/RenderLayer;getArmorCutoutNoCull(Lnet/minecraft/util/Identifier;)Lnet/minecraft/client/render/RenderLayer;"))
     private void renderCapeOnGuiArmorStand(Args args, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, LivingEntity entity, float f, float g, float h, float j, float k, float l) {
-        boolean guiArmorStand = entity instanceof ArmorStandEntity && ((ArmorStandEntityAccessor) entity).isGui();
-        if (!guiArmorStand) return;
+        if (!isEntityGuiArmorStand(entity)) return;
         ClientPlayerEntity player = MinecraftClient.getInstance().player;
         assert player != null;
 
@@ -61,8 +60,10 @@ public class ElytraFeatureRendererMixin {
         ArmorTrim trim = ArmorTrim.getTrim(entity.world.getRegistryManager(), stack).orElse(null);
         if (trim == null) return;
 
-        Sprite sprite = getTrimSprite(trim, atlas);
-        if (sprite.getContents().getId().equals(MissingSprite.getMissingSpriteId())) return;
+        Sprite sprite = getTrimSprite(trim);
+        if (sprite.getContents().getId().equals(MissingSprite.getMissingSpriteId()) && !isEntityGuiArmorStand(entity)) {
+            return;
+        }
 
         VertexConsumer vertexConsumer = sprite.getTextureSpecificVertexConsumer(
                 ItemRenderer.getDirectItemGlintConsumer(provider, TexturedRenderLayers.getArmorTrims(), false, stack.hasGlint())
@@ -71,9 +72,13 @@ public class ElytraFeatureRendererMixin {
         elytra.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1F, 1F, 1F, 1F);
     }
 
-    private Sprite getTrimSprite(ArmorTrim trim, SpriteAtlasTexture atlas) {
+    private Sprite getTrimSprite(ArmorTrim trim) {
         String material = trim.getMaterial().value().assetName();
         Identifier identifier = trim.getPattern().value().assetId().withPath(path -> "trims/models/elytra/" + path + "_" + material);
         return atlas.getSprite(identifier);
+    }
+
+    private boolean isEntityGuiArmorStand(LivingEntity entity) {
+        return entity instanceof ArmorStandEntity && ((ArmorStandEntityAccessor) entity).isGui();
     }
 }
