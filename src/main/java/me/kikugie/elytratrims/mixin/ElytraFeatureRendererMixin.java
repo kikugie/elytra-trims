@@ -1,5 +1,6 @@
 package me.kikugie.elytratrims.mixin;
 
+import me.kikugie.elytratrims.ElytraTrimsMod;
 import me.kikugie.elytratrims.access.ArmorStandEntityAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -43,9 +44,23 @@ public class ElytraFeatureRendererMixin {
         atlas = MinecraftClient.getInstance().getBakedModelManager().getAtlas(TexturedRenderLayers.ARMOR_TRIMS_ATLAS_TEXTURE);
     }
 
+    @ModifyArgs(method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/LivingEntity;FFFFFF)V", at = @At(value = "INVOKE",  target = "Lnet/minecraft/client/render/entity/model/ElytraEntityModel;render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;IIFFFF)V"))
+    private void renderDyedElytra(Args args, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, LivingEntity entity, float f, float g, float h, float j, float k, float l) {
+        ItemStack stack = entity.getEquippedStack(EquipmentSlot.CHEST);
+        if (ElytraTrimsMod.DYEABLE.hasColor(stack)) {
+            var color = ElytraTrimsMod.DYEABLE.getColor(stack);
+            float red = (float)(color >> 16 & 0xFF) / 255.0F;
+            float green = (float)(color >> 8 & 0xFF) / 255.0F;
+            float blue = (float)(color & 0xFF) / 255.0F;
+            args.set(4, red);
+            args.set(5, green);
+            args.set(6, blue);
+        }
+    }
+
     @ModifyArgs(method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/LivingEntity;FFFFFF)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/RenderLayer;getArmorCutoutNoCull(Lnet/minecraft/util/Identifier;)Lnet/minecraft/client/render/RenderLayer;"))
     private void renderCapeOnGuiArmorStand(Args args, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, LivingEntity entity, float f, float g, float h, float j, float k, float l) {
-        if (!isEntityGuiArmorStand(entity)) return;
+        if (shouldRenderBlankIfMissing(entity)) return;
         ClientPlayerEntity player = MinecraftClient.getInstance().player;
         assert player != null;
 
@@ -61,7 +76,7 @@ public class ElytraFeatureRendererMixin {
         if (trim == null) return;
 
         Sprite sprite = getTrimSprite(trim);
-        if (sprite.getContents().getId().equals(MissingSprite.getMissingSpriteId()) && !isEntityGuiArmorStand(entity)) {
+        if (sprite.getContents().getId().equals(MissingSprite.getMissingSpriteId()) && shouldRenderBlankIfMissing(entity)) {
             return;
         }
 
@@ -78,7 +93,7 @@ public class ElytraFeatureRendererMixin {
         return atlas.getSprite(identifier);
     }
 
-    private boolean isEntityGuiArmorStand(LivingEntity entity) {
-        return entity instanceof ArmorStandEntity && ((ArmorStandEntityAccessor) entity).isGui();
+    private boolean shouldRenderBlankIfMissing(LivingEntity entity) {
+        return !(entity instanceof ArmorStandEntity) || !((ArmorStandEntityAccessor) entity).isGui();
     }
 }

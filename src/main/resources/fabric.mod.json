@@ -13,7 +13,7 @@
   },
   "license": "MIT",
   "icon": "assets/elytratrims/icon.png",
-  "environment": "client",
+  "environment": "*",
   "entrypoints": {
     "client": [
       "me.kikugie.elytratrims.ElytraTrimsMod"
@@ -24,8 +24,8 @@
   ],
   "depends": {
     "fabricloader": ">=0.13",
-    "fabric-resource-loader-v0": "*",
-    "minecraft": "~1.20-alpha.23.14.a",
+    "fabric-api": "*",
+    "minecraft": ">1.19.4 <=1.20",
     "java": ">=17"
   },
   "suggests": {
