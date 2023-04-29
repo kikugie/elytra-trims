@@ -6,6 +6,7 @@ import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.BannerItem;
 import net.minecraft.item.ElytraItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtInt;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.recipe.RecipeSerializer;
@@ -61,8 +62,9 @@ public class ElytraPatternRecipe extends SpecialCraftingRecipe {
         NbtList patterns = BannerBlockEntity.getPatternListNbt(banner);
         if (patterns != null) {
             int color = ((BannerItem) banner.getItem()).getColor().getId();
-            elytra.setSubNbt("Patterns", patterns);
-            elytra.setSubNbt("Base", NbtInt.of(color));
+            NbtCompound compound = elytra.getOrCreateSubNbt("BlockEntityTag");
+            compound.put("Patterns", patterns);
+            compound.put("Base", NbtInt.of(color));
             ElytraTrimsMod.DYEABLE.setColor(elytra, color);
         }
         return elytra;
