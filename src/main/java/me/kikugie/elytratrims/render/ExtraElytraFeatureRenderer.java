@@ -58,13 +58,13 @@ public class ExtraElytraFeatureRenderer {
         return !(entity instanceof ArmorStandEntity) || !((ArmorStandEntityAccessor) entity).isGui();
     }
 
-    public void render(MatrixStack matrices, VertexConsumerProvider provider, LivingEntity entity, ItemStack stack, int light) {
-        renderElytraOverlay(matrices, provider, entity, stack, light);
-        renderElytraPatterns(matrices, provider, entity, stack, light);
-        renderElytraTrims(matrices, provider, entity, stack, light);
+    public void render(MatrixStack matrices, VertexConsumerProvider provider, LivingEntity entity, ItemStack stack, int light, float alpha) {
+        renderElytraOverlay(matrices, provider, entity, stack, light, alpha);
+        renderElytraPatterns(matrices, provider, entity, stack, light, alpha);
+        renderElytraTrims(matrices, provider, entity, stack, light, alpha);
     }
 
-    private void renderElytraOverlay(MatrixStack matrices, VertexConsumerProvider provider, LivingEntity ignoredEntity, ItemStack stack, int light) {
+    private void renderElytraOverlay(MatrixStack matrices, VertexConsumerProvider provider, LivingEntity ignoredEntity, ItemStack stack, int light, float alpha) {
         int color = ((ElytraOverlaysAccessor) (Object) stack).getColor();
         if (color != 0) {
             float red = (float) (color >> 16 & 0xFF) / 255.0F;
@@ -78,11 +78,11 @@ public class ExtraElytraFeatureRenderer {
                             ELYTRA_LAYER.apply(ARMOR_TRIMS_ATLAS_TEXTURE),
                             false,
                             stack.hasGlint()));
-            elytra.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, red, green, blue, 1F);
+            elytra.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, red, green, blue, alpha);
         }
     }
 
-    private void renderElytraPatterns(MatrixStack matrices, VertexConsumerProvider provider, LivingEntity ignoredEntity, ItemStack stack, int light) {
+    private void renderElytraPatterns(MatrixStack matrices, VertexConsumerProvider provider, LivingEntity ignoredEntity, ItemStack stack, int light, float alpha) {
         List<Pair<RegistryEntry<BannerPattern>, DyeColor>> patterns = ((ElytraOverlaysAccessor) (Object) stack).getPatterns();
 
         for (int i = 0; i < 17 && i < patterns.size(); i++) {
@@ -98,11 +98,11 @@ public class ExtraElytraFeatureRenderer {
                             ELYTRA_LAYER.apply(ARMOR_TRIMS_ATLAS_TEXTURE),
                             false,
                             stack.hasGlint()));
-            elytra.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, color[0], color[1], color[2], 1F);
+            elytra.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, color[0], color[1], color[2], alpha);
         }
     }
 
-    private void renderElytraTrims(MatrixStack matrices, VertexConsumerProvider provider, LivingEntity entity, ItemStack stack, int light) {
+    private void renderElytraTrims(MatrixStack matrices, VertexConsumerProvider provider, LivingEntity entity, ItemStack stack, int light, float alpha) {
         ArmorTrim trim = ArmorTrim.getTrim(entity.world.getRegistryManager(), stack).orElse(null);
         if (trim == null)
             return;
@@ -114,10 +114,10 @@ public class ExtraElytraFeatureRenderer {
         VertexConsumer vertexConsumer = sprite.getTextureSpecificVertexConsumer(
                 ItemRenderer.getDirectItemGlintConsumer(
                         provider,
-                        TexturedRenderLayers.getArmorTrims(),
+                        ELYTRA_LAYER.apply(ARMOR_TRIMS_ATLAS_TEXTURE),
                         false,
                         stack.hasGlint()));
-        elytra.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1F, 1F, 1F, 1F);
+        elytra.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1F, 1F, 1F, alpha);
     }
 
     private Sprite getOverlaySprite() {

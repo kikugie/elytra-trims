@@ -1,9 +1,13 @@
 package me.kikugie.elytratrims.mixin;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.sugar.Local;
 import me.kikugie.elytratrims.render.ExtraElytraFeatureRenderer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.TexturedRenderLayers;
+import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.PlayerModelPart;
 import net.minecraft.client.render.entity.feature.ElytraFeatureRenderer;
@@ -44,8 +48,20 @@ public class ElytraFeatureRendererMixin {
         }
     }
 
-    @Inject(method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/LivingEntity;FFFFFF)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/math/MatrixStack;pop()V"))
-    private void elytraPostRender(MatrixStack matrices, VertexConsumerProvider provider, int light, LivingEntity entity, float f, float g, float h, float j, float k, float l, CallbackInfo ci) {
-        extraRenderer.render(matrices, provider, entity, entity.getEquippedStack(EquipmentSlot.CHEST), light);
+    @WrapOperation(method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/LivingEntity;FFFFFF)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/model/ElytraEntityModel;render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;IIFFFF)V"))
+    private void elytraPostRender(ElytraEntityModel<?> model,
+                                  MatrixStack matrices,
+                                  VertexConsumer vertices,
+                                  int light,
+                                  int overlay,
+                                  float red,
+                                  float green,
+                                  float blue,
+                                  float alpha,
+                                  Operation<ElytraEntityModel<?>> original,
+                                  @Local(argsOnly = true) VertexConsumerProvider provider,
+                                  @Local(argsOnly = true) LivingEntity entity) {
+        original.call(model, matrices, vertices, light, overlay, red, green, blue, alpha);
+        extraRenderer.render(matrices, provider, entity, entity.getEquippedStack(EquipmentSlot.CHEST), light, alpha);
     }
 }
