@@ -137,7 +137,7 @@ public class ExtraElytraFeatureRenderer {
         if (cancelRender(ConfigState.RenderType.TRIMS, entity))
             return;
 
-        ArmorTrim trim = ArmorTrim.getTrim(entity.world.getRegistryManager(), stack).orElse(null);
+        ArmorTrim trim = ArmorTrim.getTrim(entity.getWorld().getRegistryManager(), stack).orElse(null);
         if (trim == null)
             return;
 
