@@ -13,6 +13,7 @@ import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
 import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
@@ -61,11 +62,11 @@ public class ElytraPatternRecipe extends SpecialCraftingRecipe {
 
         NbtList patterns = BannerBlockEntity.getPatternListNbt(banner);
         if (patterns != null) {
-            int color = ((BannerItem) banner.getItem()).getColor().getId();
+            DyeColor color = ((BannerItem) banner.getItem()).getColor();
             NbtCompound compound = elytra.getOrCreateSubNbt("BlockEntityTag");
             compound.put("Patterns", patterns);
-            compound.put("Base", NbtInt.of(color));
-            ElytraTrimsMod.DYEABLE.setColor(elytra, color);
+            compound.put("Base", NbtInt.of(color.getId()));
+            ElytraTrimsMod.DYEABLE.setColor(elytra, color.getFireworkColor());
         }
         return elytra;
     }
