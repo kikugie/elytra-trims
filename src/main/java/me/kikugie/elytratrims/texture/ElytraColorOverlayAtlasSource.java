@@ -17,27 +17,23 @@ import java.io.IOException;
 
 public class ElytraColorOverlayAtlasSource implements AtlasSource {
     public static final Codec<ElytraColorOverlayAtlasSource> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            Identifier.CODEC.fieldOf("overlay").forGetter(atlasSource -> atlasSource.overlay),
-            Identifier.CODEC.fieldOf("mask").forGetter(atlasSource -> atlasSource.maskKey)
+            Identifier.CODEC.fieldOf("source").forGetter(atlasSource -> atlasSource.overlay)
     ).apply(instance, ElytraColorOverlayAtlasSource::new));
-    private final Identifier maskKey;
     private final Identifier overlay;
 
-    private ElytraColorOverlayAtlasSource(Identifier overlay, Identifier maskKey) {
+    private ElytraColorOverlayAtlasSource(Identifier overlay
+    ) {
         this.overlay = overlay;
-        this.maskKey = maskKey;
     }
 
     @Override
     public void load(ResourceManager resourceManager, AtlasSource.SpriteRegions regions) {
-        Identifier maskPath = RESOURCE_FINDER.toResourcePath(maskKey);
         Identifier sourcePath = RESOURCE_FINDER.toResourcePath(overlay);
 
         try {
-            Sprite mask = ImageUtils.loadTexture(maskPath, resourceManager, 1);
             Sprite source = ImageUtils.loadTexture(sourcePath, resourceManager, 1);
-            Identifier key = RESOURCE_FINDER.toResourceId(maskPath).withSuffixedPath("_overlay");
-            regions.add(key, new ElytraColorOverlaySpriteRegion(source, mask, sourcePath, maskPath, key));
+            Identifier key = RESOURCE_FINDER.toResourceId(sourcePath).withSuffixedPath("_overlay");
+            regions.add(key, new ElytraColorOverlaySpriteRegion(source, sourcePath, key));
         } catch (FileNotFoundException ignored) {
         }
     }
@@ -49,15 +45,13 @@ public class ElytraColorOverlayAtlasSource implements AtlasSource {
 
     private record ElytraColorOverlaySpriteRegion(
             Sprite source,
-            Sprite mask,
             Identifier sourceId,
-            Identifier maskId,
             Identifier key) implements AtlasSource.SpriteRegion {
         @Override
         public SpriteContents get() {
             NativeImage image;
             try {
-                image = mask.read();
+                image = source.read();
                 ImageUtils.createSaturationMask(image);
             } catch (IOException e) {
                 return null;
@@ -69,7 +63,6 @@ public class ElytraColorOverlayAtlasSource implements AtlasSource {
         @Override
         public void close() {
             source.close();
-            mask.close();
         }
     }
 }

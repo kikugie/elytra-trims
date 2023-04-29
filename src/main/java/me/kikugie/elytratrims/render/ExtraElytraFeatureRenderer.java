@@ -4,9 +4,13 @@ import com.mojang.datafixers.util.Pair;
 import me.kikugie.elytratrims.access.ArmorStandEntityAccessor;
 import me.kikugie.elytratrims.access.ElytraOverlaysAccessor;
 import net.minecraft.block.entity.BannerPattern;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
+import net.minecraft.client.render.block.entity.BannerBlockEntityRenderer;
 import net.minecraft.client.render.entity.model.ElytraEntityModel;
+import net.minecraft.client.render.entity.model.EntityModelLayers;
 import net.minecraft.client.render.item.ItemRenderer;
+import net.minecraft.client.render.model.ModelLoader;
 import net.minecraft.client.texture.MissingSprite;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteAtlasTexture;
@@ -20,6 +24,7 @@ import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
+import net.minecraft.util.math.MathHelper;
 
 import java.util.List;
 import java.util.Optional;
@@ -59,27 +64,32 @@ public class ExtraElytraFeatureRenderer {
     }
 
     public void render(MatrixStack matrices, VertexConsumerProvider provider, LivingEntity entity, ItemStack stack, int light, float alpha) {
-        renderElytraOverlay(matrices, provider, entity, stack, light, alpha);
-        renderElytraPatterns(matrices, provider, entity, stack, light, alpha);
+        if (!renderJebElytra(matrices, provider, entity, stack, light, alpha)) {
+            renderElytraOverlay(matrices, provider, entity, stack, light, alpha);
+            renderElytraPatterns(matrices, provider, entity, stack, light, alpha);
+        }
         renderElytraTrims(matrices, provider, entity, stack, light, alpha);
     }
 
     private void renderElytraOverlay(MatrixStack matrices, VertexConsumerProvider provider, LivingEntity ignoredEntity, ItemStack stack, int light, float alpha) {
         int color = ((ElytraOverlaysAccessor) (Object) stack).getColor();
         if (color != 0) {
-            float red = (float) (color >> 16 & 0xFF) / 255.0F;
-            float green = (float) (color >> 8 & 0xFF) / 255.0F;
-            float blue = (float) (color & 0xFF) / 255.0F;
-
-            Sprite sprite = getOverlaySprite();
-            VertexConsumer vertexConsumer = sprite.getTextureSpecificVertexConsumer(
-                    ItemRenderer.getDirectItemGlintConsumer(
-                            provider,
-                            ELYTRA_LAYER.apply(ARMOR_TRIMS_ATLAS_TEXTURE),
-                            false,
-                            stack.hasGlint()));
-            elytra.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, red, green, blue, alpha);
+            renderElytraColor(matrices, provider, ignoredEntity, stack, light, color, alpha);
         }
+    }
+
+    private void renderElytraColor(MatrixStack matrices, VertexConsumerProvider provider, LivingEntity ignoredEntity, ItemStack stack, int light, int color, float alpha) {
+        float red = (float) (color >> 16 & 0xFF) / 255.0F;
+        float green = (float) (color >> 8 & 0xFF) / 255.0F;
+        float blue = (float) (color & 0xFF) / 255.0F;
+        Sprite sprite = getOverlaySprite();
+        VertexConsumer vertexConsumer = sprite.getTextureSpecificVertexConsumer(
+                ItemRenderer.getDirectItemGlintConsumer(
+                        provider,
+                        ELYTRA_LAYER.apply(ARMOR_TRIMS_ATLAS_TEXTURE),
+                        false,
+                        stack.hasGlint()));
+        elytra.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, red, green, blue, alpha);
     }
 
     private void renderElytraPatterns(MatrixStack matrices, VertexConsumerProvider provider, LivingEntity ignoredEntity, ItemStack stack, int light, float alpha) {
@@ -118,6 +128,17 @@ public class ExtraElytraFeatureRenderer {
                         false,
                         stack.hasGlint()));
         elytra.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1F, 1F, 1F, alpha);
+    }
+
+    private boolean renderJebElytra(MatrixStack matrices, VertexConsumerProvider provider, LivingEntity entity, ItemStack stack, int light, float alpha) {
+        if (((ElytraOverlaysAccessor) (Object) stack).getPatterns().isEmpty() && stack.getName().getString().equals("jeb_")) {
+            assert MinecraftClient.getInstance().world != null;
+            long tick = MinecraftClient.getInstance().world.getTime() % 360;
+            int color = MathHelper.hsvToRgb(tick / 360F, 1F, 1F);
+            renderElytraColor(matrices, provider, entity, stack, light, color, alpha);
+            return true;
+        }
+        return false;
     }
 
     private Sprite getOverlaySprite() {

@@ -39,8 +39,7 @@
     },
     {
       "type": "elytra_overlay",
-      "overlay": "entity/elytra_mask",
-      "mask": "entity/elytra"
+      "source": "entity/elytra"
     }
   ]
 }
