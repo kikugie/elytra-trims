@@ -4,6 +4,7 @@
   "package": "me.kikugie.elytratrims.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "CauldronBehaviorMixin",
     "ElytraItemMixin",
     "ItemStackMixin",
     "SynchronizeRecipesS2CPacketMixin"
