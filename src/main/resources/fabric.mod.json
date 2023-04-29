@@ -13,7 +13,7 @@
   },
   "license": "MIT",
   "icon": "assets/elytratrims/icon.png",
-  "environment": "client",
+  "environment": "*",
   "entrypoints": {
     "client": [
       "me.kikugie.elytratrims.ElytraTrimsMod"
