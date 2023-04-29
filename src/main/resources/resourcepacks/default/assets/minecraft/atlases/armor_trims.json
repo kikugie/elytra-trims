@@ -2,6 +2,7 @@
   "sources": [
     {
       "type": "paletted_permutations",
+      "mask": "entity/elytra",
       "textures": [
         "trims/models/elytra/coast",
         "trims/models/elytra/sentry",
@@ -28,6 +29,18 @@
         "lapis": "trims/color_palettes/lapis",
         "amethyst": "trims/color_palettes/amethyst"
       }
+    },
+    {
+      "type": "elytra_patterns",
+      "patterns": "entity/shield",
+      "mask": "entity/elytra",
+      "x_offset": 34,
+      "y_offset": 0
+    },
+    {
+      "type": "elytra_overlay",
+      "overlay": "entity/elytra_mask",
+      "mask": "entity/elytra"
     }
   ]
 }
