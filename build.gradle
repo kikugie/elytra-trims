@@ -4,6 +4,10 @@ plugins {
 	id 'maven-publish'
 }
 
+loom {
+	accessWidenerPath = accessWidenerPath = file("src/main/resources/elytratrims.accesswidener")
+}
+
 version = project.mod_version + "+" + project.version_support
 group = project.maven_group
 
