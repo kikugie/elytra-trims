@@ -3,7 +3,7 @@
   "id": "elytratrims",
   "version": "${version}",
   "name": "Elytra Trims",
-  "description": "",
+  "description": "Lightweight and customizable support for trimmable elytras",
   "authors": [
     "KikuGie"
   ],
@@ -26,9 +26,11 @@
   "depends": {
     "fabricloader": ">=0.13",
     "fabric-resource-loader-v0": "*",
+    "fabric-command-api-v2": "*",
     "minecraft": "~1.19.4",
     "java": ">=17"
   },
   "suggests": {
+    "having-a-great-time": "*"
   }
 }
