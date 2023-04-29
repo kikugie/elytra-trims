@@ -1,0 +1,5 @@
+{
+  "elytratrims.command.response.get_mode": "Current %s mode is %s.",
+  "elytratrims.command.response.set_mode": "%s mode has been set to %s.",
+  "elytratrims.command.response.reset": "Config reset!"
+}
