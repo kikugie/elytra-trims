@@ -26,6 +26,7 @@ public abstract class ItemStackMixin implements ElytraOverlaysAccessor {
     private List<Pair<RegistryEntry<BannerPattern>, DyeColor>> patterns;
     @Nullable
     private Integer color;
+
     @Inject(method = "setNbt", at = @At("HEAD"))
     private void resetPatternsOnNbt(CallbackInfo ci) {
         patterns = null;

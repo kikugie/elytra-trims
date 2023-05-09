@@ -10,8 +10,8 @@
     "SynchronizeRecipesS2CPacketMixin"
   ],
   "client": [
-    "ArmorStandEntityMixin",
     "ElytraFeatureRendererMixin",
+    "LivingEntityMixin",
     "MinecraftClientMixin",
     "SmithingScreenMixin"
   ],

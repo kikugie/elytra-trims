@@ -1,6 +1,6 @@
 package me.kikugie.elytratrims.access;
 
-public interface ArmorStandEntityAccessor {
+public interface LivingEntityAccessor {
     void markGui();
 
     boolean isGui();

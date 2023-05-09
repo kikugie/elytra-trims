@@ -1,14 +1,14 @@
 package me.kikugie.elytratrims.mixin;
 
-import me.kikugie.elytratrims.access.ArmorStandEntityAccessor;
+import me.kikugie.elytratrims.access.LivingEntityAccessor;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.entity.decoration.ArmorStandEntity;
+import net.minecraft.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Environment(EnvType.CLIENT)
-@Mixin(ArmorStandEntity.class)
-public class ArmorStandEntityMixin implements ArmorStandEntityAccessor {
+@Mixin(LivingEntity.class)
+public class LivingEntityMixin implements LivingEntityAccessor {
     private boolean isGui = false;
 
     @Override

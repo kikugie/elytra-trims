@@ -7,7 +7,9 @@ import com.mojang.serialization.DataResult;
 import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import me.kikugie.elytratrims.ElytraTrimsMod;
+import me.kikugie.elytratrims.render.ExtraElytraFeatureRenderer;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.StringIdentifiable;
 import org.apache.commons.io.FileUtils;
 
@@ -22,17 +24,20 @@ public class ConfigState {
             Codec.STRING.fieldOf("color_mode").forGetter(state -> state.color.mode),
             Codec.STRING.fieldOf("patterns_mode").forGetter(state -> state.patterns.mode),
             Codec.STRING.fieldOf("trims_mode").forGetter(state -> state.trims.mode),
+            Codec.STRING.fieldOf("cape_mode").forGetter(state -> state.cape.mode),
             Codec.STRING.fieldOf("global_mode").forGetter(state -> state.global.mode)
     ).apply(instance, ConfigState::new));
-    public RenderMode color;
-    public RenderMode patterns;
-    public RenderMode trims;
-    public RenderMode global;
+    private RenderMode color;
+    private RenderMode patterns;
+    private RenderMode trims;
+    private RenderMode cape;
+    private RenderMode global;
 
-    private ConfigState(String colorMode, String patternsMode, String trimsMode, String globalMode) {
+    private ConfigState(String colorMode, String patternsMode, String trimsMode, String capeMode, String globalMode) {
         this.color = RenderMode.valueOf(colorMode.toUpperCase());
         this.patterns = RenderMode.valueOf(patternsMode.toUpperCase());
         this.trims = RenderMode.valueOf(trimsMode.toUpperCase());
+        this.cape = RenderMode.valueOf(capeMode.toUpperCase());
         this.global = RenderMode.valueOf(globalMode.toUpperCase());
     }
 
@@ -50,7 +55,7 @@ public class ConfigState {
             }
         }
 
-        ConfigState state = new ConfigState("all", "all", "all", "all");
+        ConfigState state = new ConfigState("all", "all", "all", "all", "all");
         try {
             CONFIG_FILE.createNewFile();
             state.save();
@@ -60,39 +65,16 @@ public class ConfigState {
         return state;
     }
 
-    public void reset() {
-        color = RenderMode.ALL;
-        patterns = RenderMode.ALL;
-        trims = RenderMode.ALL;
-        global = RenderMode.ALL;
-    }
-
-    public RenderMode getFor(RenderType type) {
-        return switch (type) {
-            case COLOR -> color;
-            case PATTERNS -> patterns;
-            case TRIMS -> trims;
-            case GLOBAL -> global;
+    public static boolean cancelRender(ConfigState.RenderType type, LivingEntity entity) {
+        ConfigState.RenderMode mode = ElytraTrimsMod.getConfigState().getConfigFor(type);
+        return switch (mode) {
+            case ALL -> false;
+            case SELF ->
+                    entity != MinecraftClient.getInstance().player && ExtraElytraFeatureRenderer.skipRenderIfMissingTexture(entity);
+            case OTHERS ->
+                    entity == MinecraftClient.getInstance().player || ExtraElytraFeatureRenderer.skipRenderIfMissingTexture(entity);
+            case NONE -> true;
         };
-    }
-
-    public RenderMode getConfigFor(RenderType type) {
-        RenderMode mode = switch (type) {
-            case COLOR -> color;
-            case PATTERNS -> patterns;
-            case TRIMS -> trims;
-            case GLOBAL -> global;
-        };
-        return mode.weight < global.weight ? mode : global;
-    }
-
-    public void setFor(RenderType type, RenderMode mode) {
-        switch (type) {
-            case COLOR -> color = mode;
-            case PATTERNS -> patterns = mode;
-            case TRIMS -> trims = mode;
-            case GLOBAL -> global = mode;
-        }
     }
 
     public void save() {
@@ -106,10 +88,50 @@ public class ConfigState {
         }
     }
 
+    public void reset() {
+        color = RenderMode.ALL;
+        patterns = RenderMode.ALL;
+        trims = RenderMode.ALL;
+        cape = RenderMode.ALL;
+        global = RenderMode.ALL;
+    }
+
+    public RenderMode getFor(RenderType type) {
+        return switch (type) {
+            case COLOR -> color;
+            case PATTERNS -> patterns;
+            case TRIMS -> trims;
+            case CAPE -> cape;
+            case GLOBAL -> global;
+        };
+    }
+
+    public RenderMode getConfigFor(RenderType type) {
+        RenderMode mode = switch (type) {
+            case COLOR -> color;
+            case PATTERNS -> patterns;
+            case TRIMS -> trims;
+            case CAPE -> cape;
+            case GLOBAL -> global;
+        };
+        return mode.weight < global.weight ? mode : global;
+    }
+
+    public void setFor(RenderType type, RenderMode mode) {
+        switch (type) {
+            case COLOR -> color = mode;
+            case PATTERNS -> patterns = mode;
+            case TRIMS -> trims = mode;
+            case CAPE -> cape = mode;
+            case GLOBAL -> global = mode;
+        }
+    }
+
     public enum RenderType {
         COLOR("color"),
         PATTERNS("patterns"),
         TRIMS("trims"),
+        CAPE("cape"),
         GLOBAL("global");
 
         public final String type;
@@ -122,6 +144,7 @@ public class ConfigState {
     public enum RenderMode implements StringIdentifiable {
         NONE("NONE", 0),
         SELF("SELF", 1),
+        OTHERS("OTHERS", 1),
         ALL("ALL", 2);
         public final String mode;
         public final int weight;

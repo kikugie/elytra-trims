@@ -18,12 +18,17 @@ import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.lit
 public class ConfigCommand {
     public static void register(CommandDispatcher<FabricClientCommandSource> dispatcher, CommandRegistryAccess ignoredAccess) {
         dispatcher.register(literal("et-config")
-                .then(getLiteralFor(ConfigState.RenderType.COLOR))
-                .then(getLiteralFor(ConfigState.RenderType.PATTERNS))
-                .then(getLiteralFor(ConfigState.RenderType.TRIMS))
-                .then(getLiteralFor(ConfigState.RenderType.GLOBAL))
+                .then(getRenderOptions())
                 .then(literal("reset").executes(ConfigCommand::reset))
         );
+    }
+
+    private static LiteralArgumentBuilder<FabricClientCommandSource> getRenderOptions() {
+        var source = literal("render");
+        for (ConfigState.RenderType type : ConfigState.RenderType.values()) {
+            source.then(getLiteralFor(type));
+        }
+        return source;
     }
 
     private static LiteralArgumentBuilder<FabricClientCommandSource> getLiteralFor(ConfigState.RenderType type) {

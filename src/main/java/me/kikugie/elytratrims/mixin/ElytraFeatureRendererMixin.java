@@ -3,6 +3,7 @@ package me.kikugie.elytratrims.mixin;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
+import me.kikugie.elytratrims.config.ConfigState;
 import me.kikugie.elytratrims.render.ExtraElytraFeatureRenderer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -15,6 +16,8 @@ import net.minecraft.client.render.entity.model.ElytraEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -28,8 +31,10 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 public class ElytraFeatureRendererMixin {
     @Shadow
     @Final
+    private static Identifier SKIN;
+    @Shadow
+    @Final
     private ElytraEntityModel<?> elytra;
-
     private ExtraElytraFeatureRenderer extraRenderer;
 
     @Inject(method = "<init>", at = @At("TAIL"))
@@ -39,11 +44,15 @@ public class ElytraFeatureRendererMixin {
 
     @ModifyArgs(method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/LivingEntity;FFFFFF)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/RenderLayer;getArmorCutoutNoCull(Lnet/minecraft/util/Identifier;)Lnet/minecraft/client/render/RenderLayer;"))
     private void renderCapeOnGuiArmorStand(Args args, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, LivingEntity entity, float f, float g, float h, float j, float k, float l) {
-        if (ExtraElytraFeatureRenderer.shouldRenderBlankIfMissing(entity)) return;
         ClientPlayerEntity player = MinecraftClient.getInstance().player;
         assert player != null;
 
-        if (player.getCapeTexture() != null && player.isPartVisible(PlayerModelPart.CAPE)) {
+        if (entity instanceof PlayerEntity &&
+                ConfigState.cancelRender(ConfigState.RenderType.CAPE, entity)) {
+            args.set(0, SKIN);
+        } else if (!ExtraElytraFeatureRenderer.skipRenderIfMissingTexture(entity) &&
+                player.getCapeTexture() != null &&
+                player.isPartVisible(PlayerModelPart.CAPE)) {
             args.set(0, player.getCapeTexture());
         }
     }

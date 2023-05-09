@@ -1,6 +1,6 @@
 package me.kikugie.elytratrims.mixin;
 
-import me.kikugie.elytratrims.access.ArmorStandEntityAccessor;
+import me.kikugie.elytratrims.access.LivingEntityAccessor;
 import net.minecraft.client.gui.screen.ingame.SmithingScreen;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.decoration.ArmorStandEntity;
@@ -25,7 +25,7 @@ public abstract class SmithingScreenMixin {
     @Inject(method = "setup", at = @At("TAIL"))
     private void markGuiArmorStand(CallbackInfo ci) {
         if (armorStand != null) {
-            ((ArmorStandEntityAccessor) armorStand).markGui();
+            ((LivingEntityAccessor) armorStand).markGui();
         }
     }
 

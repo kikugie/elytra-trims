@@ -1,10 +1,9 @@
 package me.kikugie.elytratrims.render;
 
 import com.mojang.datafixers.util.Pair;
-import me.kikugie.elytratrims.config.ConfigState;
-import me.kikugie.elytratrims.ElytraTrimsMod;
-import me.kikugie.elytratrims.access.ArmorStandEntityAccessor;
 import me.kikugie.elytratrims.access.ElytraOverlaysAccessor;
+import me.kikugie.elytratrims.access.LivingEntityAccessor;
+import me.kikugie.elytratrims.config.ConfigState;
 import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
@@ -15,7 +14,6 @@ import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.trim.ArmorTrim;
 import net.minecraft.registry.RegistryKey;
@@ -58,17 +56,8 @@ public class ExtraElytraFeatureRenderer {
         this.atlas = atlas;
     }
 
-    public static boolean shouldRenderBlankIfMissing(LivingEntity entity) {
-        return !(entity instanceof ArmorStandEntity) || !((ArmorStandEntityAccessor) entity).isGui();
-    }
-
-    private static boolean cancelRender(ConfigState.RenderType type, LivingEntity entity) {
-        ConfigState.RenderMode mode = ElytraTrimsMod.getConfigState().getConfigFor(type);
-        return switch (mode) {
-            case ALL -> false;
-            case SELF -> entity != MinecraftClient.getInstance().player && shouldRenderBlankIfMissing(entity);
-            case NONE -> true;
-        };
+    public static boolean skipRenderIfMissingTexture(LivingEntity entity) {
+        return !((LivingEntityAccessor) entity).isGui();
     }
 
     private static boolean isMissing(Sprite sprite) {
@@ -84,7 +73,7 @@ public class ExtraElytraFeatureRenderer {
     }
 
     private void renderElytraOverlay(MatrixStack matrices, VertexConsumerProvider provider, LivingEntity entity, ItemStack stack, int light, float alpha) {
-        if (cancelRender(ConfigState.RenderType.COLOR, entity))
+        if (ConfigState.cancelRender(ConfigState.RenderType.COLOR, entity))
             return;
 
         int color = ((ElytraOverlaysAccessor) (Object) stack).getColor();
@@ -111,7 +100,7 @@ public class ExtraElytraFeatureRenderer {
     }
 
     private void renderElytraPatterns(MatrixStack matrices, VertexConsumerProvider provider, LivingEntity entity, ItemStack stack, int light, float alpha) {
-        if (cancelRender(ConfigState.RenderType.PATTERNS, entity))
+        if (ConfigState.cancelRender(ConfigState.RenderType.PATTERNS, entity))
             return;
 
         List<Pair<RegistryEntry<BannerPattern>, DyeColor>> patterns = ((ElytraOverlaysAccessor) (Object) stack).getPatterns();
@@ -134,7 +123,7 @@ public class ExtraElytraFeatureRenderer {
     }
 
     private void renderElytraTrims(MatrixStack matrices, VertexConsumerProvider provider, LivingEntity entity, ItemStack stack, int light, float alpha) {
-        if (cancelRender(ConfigState.RenderType.TRIMS, entity))
+        if (ConfigState.cancelRender(ConfigState.RenderType.TRIMS, entity))
             return;
 
         ArmorTrim trim = ArmorTrim.getTrim(entity.world.getRegistryManager(), stack).orElse(null);
@@ -142,7 +131,7 @@ public class ExtraElytraFeatureRenderer {
             return;
 
         Sprite sprite = getTrimSprite(trim);
-        if (isMissing(sprite) && shouldRenderBlankIfMissing(entity))
+        if (isMissing(sprite) && skipRenderIfMissingTexture(entity))
             return;
 
         VertexConsumer vertexConsumer = sprite.getTextureSpecificVertexConsumer(
@@ -155,6 +144,9 @@ public class ExtraElytraFeatureRenderer {
     }
 
     private boolean renderJebElytra(MatrixStack matrices, VertexConsumerProvider provider, LivingEntity entity, ItemStack stack, int light, float alpha) {
+        if (ConfigState.cancelRender(ConfigState.RenderType.COLOR, entity))
+            return true;
+
         if (((ElytraOverlaysAccessor) (Object) stack).getPatterns().isEmpty() && stack.getName().getString().equals("jeb_")) {
             assert MinecraftClient.getInstance().world != null;
             long tick = MinecraftClient.getInstance().world.getTime() % 360;
