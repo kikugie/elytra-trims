@@ -5,6 +5,7 @@ import com.google.gson.JsonParser;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.JsonOps;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import me.kikugie.elytratrims.ElytraTrimsMod;
 import me.kikugie.elytratrims.render.ExtraElytraFeatureRenderer;
@@ -21,11 +22,11 @@ import java.util.NoSuchElementException;
 public class ConfigState {
     public static final File CONFIG_FILE = new File(MinecraftClient.getInstance().runDirectory, "config/elytra_trims.json");
     public static final Codec<ConfigState> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            Codec.STRING.fieldOf("color_mode").forGetter(state -> state.color.mode),
-            Codec.STRING.fieldOf("patterns_mode").forGetter(state -> state.patterns.mode),
-            Codec.STRING.fieldOf("trims_mode").forGetter(state -> state.trims.mode),
-            Codec.STRING.fieldOf("cape_mode").forGetter(state -> state.cape.mode),
-            Codec.STRING.fieldOf("global_mode").forGetter(state -> state.global.mode)
+            RenderMode.getCodec(RenderType.COLOR).forGetter(state -> state.color),
+            RenderMode.getCodec(RenderType.PATTERNS).forGetter(state -> state.patterns),
+            RenderMode.getCodec(RenderType.TRIMS).forGetter(state -> state.trims),
+            RenderMode.getCodec(RenderType.CAPE).forGetter(state -> state.cape),
+            RenderMode.getCodec(RenderType.GLOBAL).forGetter(state -> state.global)
     ).apply(instance, ConfigState::new));
     private RenderMode color;
     private RenderMode patterns;
@@ -33,12 +34,12 @@ public class ConfigState {
     private RenderMode cape;
     private RenderMode global;
 
-    private ConfigState(String colorMode, String patternsMode, String trimsMode, String capeMode, String globalMode) {
-        this.color = RenderMode.valueOf(colorMode.toUpperCase());
-        this.patterns = RenderMode.valueOf(patternsMode.toUpperCase());
-        this.trims = RenderMode.valueOf(trimsMode.toUpperCase());
-        this.cape = RenderMode.valueOf(capeMode.toUpperCase());
-        this.global = RenderMode.valueOf(globalMode.toUpperCase());
+    private ConfigState(RenderMode colorMode, RenderMode patternsMode, RenderMode trimsMode, RenderMode capeMode, RenderMode globalMode) {
+        this.color = colorMode;
+        this.patterns = patternsMode;
+        this.trims = trimsMode;
+        this.cape = capeMode;
+        this.global = globalMode;
     }
 
     public static ConfigState load() {
@@ -55,7 +56,7 @@ public class ConfigState {
             }
         }
 
-        ConfigState state = new ConfigState("all", "all", "all", "all", "all");
+        ConfigState state = new ConfigState(RenderMode.ALL, RenderMode.ALL, RenderMode.ALL, RenderMode.ALL, RenderMode.ALL);
         try {
             CONFIG_FILE.createNewFile();
             state.save();
@@ -69,11 +70,11 @@ public class ConfigState {
         ConfigState.RenderMode mode = ElytraTrimsMod.getConfigState().getConfigFor(type);
         return switch (mode) {
             case ALL -> false;
+            case NONE -> true;
             case SELF ->
                     entity != MinecraftClient.getInstance().player && ExtraElytraFeatureRenderer.skipRenderIfMissingTexture(entity);
             case OTHERS ->
                     entity == MinecraftClient.getInstance().player || ExtraElytraFeatureRenderer.skipRenderIfMissingTexture(entity);
-            case NONE -> true;
         };
     }
 
@@ -125,6 +126,7 @@ public class ConfigState {
             case CAPE -> cape = mode;
             case GLOBAL -> global = mode;
         }
+        save();
     }
 
     public enum RenderType {
@@ -146,12 +148,19 @@ public class ConfigState {
         SELF("SELF", 1),
         OTHERS("OTHERS", 1),
         ALL("ALL", 2);
+        public static final com.mojang.serialization.Codec<RenderMode> codec = com.mojang.serialization.Codec.STRING.xmap(
+                string -> RenderMode.valueOf(string.toUpperCase()),
+                mode -> mode.mode);
         public final String mode;
         public final int weight;
 
         RenderMode(String mode, int weight) {
             this.mode = mode;
             this.weight = weight;
+        }
+
+        public static MapCodec<RenderMode> getCodec(RenderType type) {
+            return codec.fieldOf(type.type + "_mode");
         }
 
         @Override
