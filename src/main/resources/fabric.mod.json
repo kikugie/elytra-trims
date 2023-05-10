@@ -17,6 +17,9 @@
   "entrypoints": {
     "client": [
       "me.kikugie.elytratrims.ElytraTrimsMod"
+    ],
+    "modmenu": [
+      "me.kikugie.elytratrims.config.ModMenuIntegration"
     ]
   },
   "mixins": [

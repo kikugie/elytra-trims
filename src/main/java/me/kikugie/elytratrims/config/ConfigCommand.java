@@ -49,9 +49,10 @@ public class ConfigCommand {
     private static int set(CommandContext<FabricClientCommandSource> context, ConfigState.RenderType type) {
         ConfigState.RenderMode value = context.getArgument("mode", ConfigState.RenderMode.class);
         ElytraTrimsMod.getConfigState().setFor(type, value);
+        ElytraTrimsMod.getConfigState().save();
         context.getSource().sendFeedback(Text.translatable(
                 "elytratrims.command.response.set_mode",
-                type.type,
+                type.getType(),
                 value).formatted(Formatting.GREEN));
         return 1;
     }

@@ -13,6 +13,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.StringIdentifiable;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -126,7 +127,6 @@ public class ConfigState {
             case CAPE -> cape = mode;
             case GLOBAL -> global = mode;
         }
-        save();
     }
 
     public enum RenderType {
@@ -140,6 +140,10 @@ public class ConfigState {
 
         RenderType(String type) {
             this.type = type;
+        }
+
+        public String getType() {
+            return StringUtils.capitalize(type);
         }
     }
 

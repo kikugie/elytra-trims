@@ -13,6 +13,8 @@ group = project.maven_group
 
 repositories {
 	maven { url 'https://jitpack.io' }
+	maven { url "https://maven.terraformersmc.com/releases/" }
+	maven { url 'https://maven.isxander.dev/releases' }
 }
 
 dependencies {
@@ -25,6 +27,9 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 //	implementation("com.github.LlamaLad7.mixinextras:mixinextras-fabric:${project.mixin_extras_version}")
 	include api(annotationProcessor("com.github.LlamaLad7.mixinextras:mixinextras-fabric:${project.mixin_extras_version}"))
+
+	modApi "com.terraformersmc:modmenu:${project.modmenu_version}"
+	modImplementation "dev.isxander.yacl:yet-another-config-lib-fabric:${yacl_version}"
 }
 
 base {
