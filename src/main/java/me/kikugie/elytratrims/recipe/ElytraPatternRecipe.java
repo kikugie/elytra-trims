@@ -16,6 +16,9 @@ import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
+//#if MC > 11940
+//$$ import net.minecraft.class_8566;
+//#endif
 
 public class ElytraPatternRecipe extends SpecialCraftingRecipe {
     public ElytraPatternRecipe(Identifier id, CraftingRecipeCategory category) {
@@ -23,7 +26,13 @@ public class ElytraPatternRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public boolean matches(CraftingInventory inventory, World world) {
+    public boolean matches(
+            //#if MC < 12000
+            CraftingInventory inventory,
+            //#else
+            //$$ class_8566 inventory,
+            //#endif
+            World world) {
         int elytra = 0;
         int banner = 0;
 
@@ -45,7 +54,13 @@ public class ElytraPatternRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public ItemStack craft(CraftingInventory inventory, DynamicRegistryManager registryManager) {
+    public ItemStack craft(
+            //#if MC < 12000
+            CraftingInventory inventory,
+            //#else
+            //$$ class_8566 inventory,
+            //#endif
+            DynamicRegistryManager registryManager) {
         ItemStack elytra = ItemStack.EMPTY;
         ItemStack banner = ItemStack.EMPTY;
 
@@ -67,6 +82,9 @@ public class ElytraPatternRecipe extends SpecialCraftingRecipe {
             compound.put("Patterns", patterns);
             compound.put("Base", NbtInt.of(color.getId()));
             ElytraTrimsMod.DYEABLE.setColor(elytra, color.getFireworkColor());
+        } else if (elytra.getSubNbt("BlockEntityTag") != null) {
+            elytra.removeSubNbt("BlockEntityTag");
+            ElytraTrimsMod.DYEABLE.setColor(elytra, 0);
         }
         return elytra;
     }

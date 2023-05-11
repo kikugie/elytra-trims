@@ -41,11 +41,17 @@ public class ElytraTrimsMod implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         LOGGER.info("Making elytras fancier!");
-        FabricLoader.getInstance().getModContainer(MOD_ID).ifPresent(container -> ResourceManagerHelper.registerBuiltinResourcePack(
-                new Identifier(MOD_ID, "default"), container,
-                Text.literal("Elytra Trims Defaults"),
-                ResourcePackActivationType.DEFAULT_ENABLED
-        ));
+
+        FabricLoader.getInstance().getModContainer(MOD_ID).ifPresent(container -> {
+                    LOGGER.info("Registering resourcepack");
+                    ResourceManagerHelper.registerBuiltinResourcePack(
+                            new Identifier(MOD_ID, "default"),
+                            container,
+                            Text.literal("Elytra Trims Defaults"),
+                            ResourcePackActivationType.DEFAULT_ENABLED
+                    );
+                }
+        );
         loadConfig();
         ClientCommandRegistrationCallback.EVENT.register(ConfigCommand::register);
     }

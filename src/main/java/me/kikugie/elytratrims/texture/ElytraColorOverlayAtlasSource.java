@@ -27,7 +27,7 @@ public class ElytraColorOverlayAtlasSource implements AtlasSource {
     }
 
     @Override
-    public void load(ResourceManager resourceManager, AtlasSource.SpriteRegions regions) {
+    public void load(ResourceManager resourceManager, SpriteRegions regions) {
         Identifier sourcePath = RESOURCE_FINDER.toResourcePath(overlay);
 
         try {
@@ -46,7 +46,7 @@ public class ElytraColorOverlayAtlasSource implements AtlasSource {
     private record ElytraColorOverlaySpriteRegion(
             Sprite source,
             Identifier sourceId,
-            Identifier key) implements AtlasSource.SpriteRegion {
+            Identifier key) implements SpriteRegion {
         @Override
         public SpriteContents get() {
             NativeImage image;

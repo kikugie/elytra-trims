@@ -22,6 +22,7 @@ import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
 
 import java.util.List;
 import java.util.Optional;
@@ -126,7 +127,13 @@ public class ExtraElytraFeatureRenderer {
         if (ConfigState.cancelRender(ConfigState.RenderType.TRIMS, entity))
             return;
 
-        ArmorTrim trim = ArmorTrim.getTrim(entity.world.getRegistryManager(), stack).orElse(null);
+        //#if MC < 12000
+        World world = entity.world;
+        //#else
+        //$$ World world = entity.getWorld();
+        //#endif
+
+        ArmorTrim trim = ArmorTrim.getTrim(world.getRegistryManager(), stack).orElse(null);
         if (trim == null)
             return;
 

@@ -67,8 +67,8 @@ public class ConfigState {
         return state;
     }
 
-    public static boolean cancelRender(ConfigState.RenderType type, LivingEntity entity) {
-        ConfigState.RenderMode mode = ElytraTrimsMod.getConfigState().getConfigFor(type);
+    public static boolean cancelRender(RenderType type, LivingEntity entity) {
+        RenderMode mode = ElytraTrimsMod.getConfigState().getConfigFor(type);
         return switch (mode) {
             case ALL -> false;
             case NONE -> true;

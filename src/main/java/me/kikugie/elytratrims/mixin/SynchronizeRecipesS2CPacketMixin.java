@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 import java.util.ArrayList;
 
 @Mixin(SynchronizeRecipesS2CPacket.class)
-public class SynchronizeRecipesS2CPacketMixin {
+public abstract class SynchronizeRecipesS2CPacketMixin {
     @ModifyArg(method = "<init>(Ljava/util/Collection;)V", at = @At(value = "INVOKE", target = "Lcom/google/common/collect/Lists;newArrayList(Ljava/lang/Iterable;)Ljava/util/ArrayList;"))
     private Iterable<Recipe<?>> removeElytraPatternRecipe(Iterable<Recipe<?>> elements) {
         ArrayList<Recipe<?>> recipes = new ArrayList<>();

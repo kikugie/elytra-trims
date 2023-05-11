@@ -7,7 +7,6 @@ import me.kikugie.elytratrims.ElytraTrimsMod;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.texture.SpriteContents;
-import net.minecraft.client.texture.atlas.AtlasSource;
 import net.minecraft.client.texture.atlas.AtlasSourceType;
 import net.minecraft.client.texture.atlas.PalettedPermutationsAtlasSource;
 import net.minecraft.client.texture.atlas.Sprite;
@@ -36,7 +35,7 @@ public class ElytraTrimsAtlasSource extends PalettedPermutationsAtlasSource {
     }
 
     @Override
-    public void load(ResourceManager resourceManager, AtlasSource.SpriteRegions regions) {
+    public void load(ResourceManager resourceManager, SpriteRegions regions) {
         Identifier maskPath = RESOURCE_FINDER.toResourcePath(this.maskKey);
         Sprite mask;
         try {
@@ -75,7 +74,7 @@ public class ElytraTrimsAtlasSource extends PalettedPermutationsAtlasSource {
             Identifier maskId,
             Identifier permutationLocation,
             Supplier<IntUnaryOperator> palette
-    ) implements AtlasSource.SpriteRegion {
+    ) implements SpriteRegion {
         @Override
         public SpriteContents get() {
             return null;
