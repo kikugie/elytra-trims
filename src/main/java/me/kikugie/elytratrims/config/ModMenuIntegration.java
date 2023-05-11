@@ -7,6 +7,11 @@ import net.fabricmc.loader.api.FabricLoader;
 public class ModMenuIntegration implements ModMenuApi {
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
-        return FabricLoader.getInstance().isModLoaded("yet-another-config-lib") ? YaclConfig::createGui : null;
+        if (FabricLoader.getInstance().isModLoaded("yet-another-config-lib")) {
+            return YaclConfig::createGui;
+        } else if (FabricLoader.getInstance().isModLoaded("cloth-config")) {
+            return ClothConfig::createGui;
+        }
+        return null;
     }
 }

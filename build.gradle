@@ -1,6 +1,7 @@
 plugins {
 	id 'fabric-loom' version '1.2-SNAPSHOT'
 	id 'io.github.juuxel.loom-quiltflower' version '1.8.0'
+	id "com.modrinth.minotaur" version "2.+"
 	id 'maven-publish'
 }
 
@@ -15,6 +16,7 @@ repositories {
 	maven { url 'https://jitpack.io' }
 	maven { url "https://maven.terraformersmc.com/releases/" }
 	maven { url 'https://maven.isxander.dev/releases' }
+	maven { url "https://maven.shedaniel.me/" }
 }
 
 dependencies {
@@ -25,11 +27,13 @@ dependencies {
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-//	implementation("com.github.LlamaLad7.mixinextras:mixinextras-fabric:${project.mixin_extras_version}")
 	include api(annotationProcessor("com.github.LlamaLad7.mixinextras:mixinextras-fabric:${project.mixin_extras_version}"))
 
 	modApi "com.terraformersmc:modmenu:${project.modmenu_version}"
-	modImplementation "dev.isxander.yacl:yet-another-config-lib-fabric:${yacl_version}"
+	modImplementation "dev.isxander.yacl:yet-another-config-lib-fabric:${project.yacl_version}"
+	modApi("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_version}") {
+		exclude(group: "net.fabricmc.fabric-api")
+	}
 }
 
 base {
@@ -63,6 +67,23 @@ jar {
 	from("LICENSE") {
 		rename { "${it}_${base.archivesName.get()}"}
 	}
+}
+
+modrinth {
+	token = System.getenv("MODRINTH_TOKEN")
+	projectId = "elytra-trims"
+	versionNumber = project.mod_version
+	versionType = "release"
+	uploadFile = remapJar
+	gameVersions = ["1.19.4"] // Must be an array, even with only one version
+	loaders = ["fabric", "quilt"]
+	dependencies {
+		required.project "fabric-api"
+		optional.project "cloth-config"
+		optional.project "yacl"
+	}
+	syncBodyFrom = rootProject.file("README.md").text
+	changelog = rootProject.file("CHANGELOG.md").text
 }
 
 // configure the maven publication

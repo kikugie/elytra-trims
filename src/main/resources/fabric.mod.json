@@ -8,6 +8,7 @@
     "KikuGie"
   ],
   "contact": {
+    "homepage": "https://modrinth.com/mod/elytra-trims",
     "sources": "https://github.com/Kikugie/elytra-trims",
     "issues": "https://github.com/Kikugie/elytra-trims/issues"
   },
@@ -28,8 +29,7 @@
   "accessWidener": "elytratrims.accesswidener",
   "depends": {
     "fabricloader": ">=0.13",
-    "fabric-resource-loader-v0": "*",
-    "fabric-command-api-v2": "*",
+    "fabric-api": "*",
     "minecraft": "~1.19.4",
     "java": ">=17"
   },

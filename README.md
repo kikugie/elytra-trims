@@ -1,20 +1,26 @@
 # Elytra Trims
+With this mod, you can add armor trims, dye your elytra in any color, and put banner patterns on them. It also comes with resourcepack support, mod config, and server-side support. Let your creativity soar and make your elytra stand out with the Elytra Trims mod!
 
-[//]: # (Lightweight and customisable support for trimmable elytras.)
-![](https://github.com/Kikugie/elytra-trims/blob/1.19/img/preview.png)  
+## Trims
+Put any trim on your elytra just like any other armor. Mod provides a default resourcepack with all vanilla trims, but it can be expanded further.
 
-1.20 introduces armor trims to the game, which give players great tools for customising their look. However, elytras were left out. This mod provides elytra trims support, customisable with resourcepacks!
+![](https://cdn.modrinth.com/data/XpzGz7KD/images/dfed96c8c5364d1a4fe2bf30b099c87338365073.png)
 
-## Setup
-### Client
-- Install the mod and [Fabric API](https://modrinth.com/mod/fabric-api).
-- Launch the game.
-- Enable default resourcepack.
-In singleplayer enables datapack by default. On 1.19.4 requires 1.20 update datapack enabled.
+## Banner patterns
+Combine your elytra with a banner to add intricate patterns and designs to your elytra.
 
-### Server
-- Enable 1.20 update on the server if you're on 1.19.4.
-- Install datapack on the server.
+![](https://cdn.modrinth.com/data/XpzGz7KD/images/c45f6f510ee2c859a544761999310eb845d702b5.png)
 
-## Custom trims
-If you want to include elytra trims in your resourcepack read the [Guide](https://github.com/Kikugie/elytra-trims/tree/1.19/resourcepacks)
+## Dyeing
+If you fancy something simplistic, dye your elytra however you want in a crafting table.
+
+![](https://cdn.modrinth.com/data/XpzGz7KD/images/3ce620a98b4d8143ea4231cb6ad6a4cdf8886eec.png)
+
+## Config
+Configure how you want the features displayed with the `/et-config` command. This feature allows you to tweak the mod settings to your liking and display them in a way that suits your gameplay style.
+
+## Client and server side
+When installed on a server this mod enables crafting recipes for all features above. However, you can edit item nbt manually to render elytra features even without server side.
+
+## Customisation
+With resourcepack support, you can customize all of the mod's features to your liking. Change the texture of your armor trims or add a unique design to your elytra pattern with ease.
