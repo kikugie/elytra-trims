@@ -2,6 +2,7 @@ plugins {
 	id 'fabric-loom' version '1.2-SNAPSHOT'
 	id 'io.github.juuxel.loom-quiltflower' version '1.8.0'
 	id "com.modrinth.minotaur" version "2.+"
+	id "co.uzzu.dotenv.gradle" version "2.0.0"
 	id 'maven-publish'
 }
 
@@ -17,6 +18,7 @@ repositories {
 	maven { url "https://maven.terraformersmc.com/releases/" }
 	maven { url 'https://maven.isxander.dev/releases' }
 	maven { url "https://maven.shedaniel.me/" }
+	maven { url "https://plugins.gradle.org/m2/" }
 }
 
 dependencies {
@@ -70,11 +72,13 @@ jar {
 }
 
 modrinth {
-	token = System.getenv("MODRINTH_TOKEN")
+	token = env.MODRINTH_TOKEN.value
 	projectId = "elytra-trims"
+	versionName = "Elytra Trims " + project.mod_version + " for " + project.version_support
 	versionNumber = project.mod_version
 	versionType = "release"
 	uploadFile = remapJar
+	additionalFiles = [sourcesJar]
 	gameVersions = ["1.19.4"] // Must be an array, even with only one version
 	loaders = ["fabric", "quilt"]
 	dependencies {
@@ -84,6 +88,7 @@ modrinth {
 	}
 	syncBodyFrom = rootProject.file("README.md").text
 	changelog = rootProject.file("CHANGELOG.md").text
+//	debugMode = true
 }
 
 // configure the maven publication

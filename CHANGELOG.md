@@ -21,4 +21,4 @@
 ## Fixes
 - Easter egg doesn't respect config
 
-Have fun trimming 👍
+Have fun trimming!
