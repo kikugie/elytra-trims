@@ -109,8 +109,10 @@ modrinth {
     loaders = ["fabric", "quilt"]
     dependencies {
         required.project "fabric-api"
-        optional.project "cloth-config"
-        optional.project "yacl"
+        if (mcVersion < 12000) {
+            optional.project "cloth-config"
+            optional.project "yacl"
+        }
     }
     syncBodyFrom = rootProject.file("README.md").text
     changelog = rootProject.file("CHANGELOG.md").text
