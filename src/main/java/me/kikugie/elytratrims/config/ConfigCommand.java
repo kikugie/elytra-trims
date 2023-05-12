@@ -41,8 +41,8 @@ public class ConfigCommand {
     private static int get(CommandContext<FabricClientCommandSource> context, ConfigState.RenderType type) {
         context.getSource().sendFeedback(Text.translatable(
                 "elytratrims.command.response.get_mode",
-                type.type,
-                ElytraTrimsMod.getConfigState().getFor(type).mode).formatted(Formatting.GREEN));
+                type.getName(),
+                ElytraTrimsMod.getConfigState().getFor(type).getName()).formatted(Formatting.GREEN));
         return 1;
     }
 
@@ -52,8 +52,8 @@ public class ConfigCommand {
         ElytraTrimsMod.getConfigState().save();
         context.getSource().sendFeedback(Text.translatable(
                 "elytratrims.command.response.set_mode",
-                type.getType(),
-                value).formatted(Formatting.GREEN));
+                type.getName(),
+                value.getName()).formatted(Formatting.GREEN));
         return 1;
     }
 

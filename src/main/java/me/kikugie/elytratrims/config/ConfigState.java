@@ -11,9 +11,9 @@ import me.kikugie.elytratrims.ElytraTrimsMod;
 import me.kikugie.elytratrims.render.ExtraElytraFeatureRenderer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.text.Text;
 import net.minecraft.util.StringIdentifiable;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,6 +29,10 @@ public class ConfigState {
             RenderMode.getCodec(RenderType.CAPE).forGetter(state -> state.cape),
             RenderMode.getCodec(RenderType.GLOBAL).forGetter(state -> state.global)
     ).apply(instance, ConfigState::new));
+
+    public static final Text title = Text.translatable("elytratrims.config.title");
+    public static final Text category = Text.translatable("elytratrims.config.category");
+    public static final Text renderGroup = Text.translatable("elytratrims.config.category.render");
     private RenderMode color;
     private RenderMode patterns;
     private RenderMode trims;
@@ -137,35 +141,51 @@ public class ConfigState {
         GLOBAL("global");
 
         public final String type;
+        private final String translation;
 
         RenderType(String type) {
             this.type = type;
+            this.translation = "elytratrims.config.type." + type;
         }
 
-        public String getType() {
-            return StringUtils.capitalize(type);
+        public Text getName() {
+            return Text.translatable(translation);
+        }
+
+        public Text getTooltip() {
+            return Text.translatable(translation + ".tooltip");
         }
     }
 
     public enum RenderMode implements StringIdentifiable {
-        NONE("NONE", 0),
-        SELF("SELF", 1),
-        OTHERS("OTHERS", 1),
-        ALL("ALL", 2);
+        NONE("none", 0),
+        SELF("self", 1),
+        OTHERS("others", 1),
+        ALL("all", 2);
         public static final com.mojang.serialization.Codec<RenderMode> codec = com.mojang.serialization.Codec.STRING.xmap(
                 string -> RenderMode.valueOf(string.toUpperCase()),
                 mode -> mode.mode);
         public final String mode;
         public final int weight;
+        private final String translation;
 
         RenderMode(String mode, int weight) {
             this.mode = mode;
             this.weight = weight;
+            this.translation = "elytratrims.config.mode." + mode;
         }
 
         public static MapCodec<RenderMode> getCodec(RenderType type) {
             return codec.fieldOf(type.type + "_mode");
         }
+
+        public Text getName() {
+            return Text.translatable(translation);
+        }
+
+//        public Text getTooltip() {
+//            return Text.translatable(translation + ".tooltip");
+//        }
 
         @Override
         public String asString() {

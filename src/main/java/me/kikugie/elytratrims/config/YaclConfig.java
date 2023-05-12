@@ -7,16 +7,15 @@ import dev.isxander.yacl.api.YetAnotherConfigLib;
 import dev.isxander.yacl.gui.controllers.cycling.EnumController;
 import me.kikugie.elytratrims.ElytraTrimsMod;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.text.Text;
 
 public class YaclConfig {
     public static Screen createGui(Screen parent) {
         return YetAnotherConfigLib.createBuilder()
-                .title(Text.of("Elytra Trims"))
+                .title(ConfigState.title)
                 .category(ConfigCategory.createBuilder()
-                        .name(Text.of("Elytra Trims Config"))
+                        .name(ConfigState.category)
                         .group(OptionGroup.createBuilder()
-                                .name(Text.of("Render"))
+                                .name(ConfigState.renderGroup)
                                 .option(optionFor(ConfigState.RenderType.COLOR))
                                 .option(optionFor(ConfigState.RenderType.PATTERNS))
                                 .option(optionFor(ConfigState.RenderType.TRIMS))
@@ -31,11 +30,12 @@ public class YaclConfig {
 
     private static Option<ConfigState.RenderMode> optionFor(ConfigState.RenderType type) {
         return Option.createBuilder(ConfigState.RenderMode.class)
-                .name(Text.of(type.getType()))
+                .name(type.getName())
+                .tooltip(type.getTooltip())
                 .binding(ConfigState.RenderMode.ALL,
                         () -> ElytraTrimsMod.getConfigState().getFor(type),
                         mode -> ElytraTrimsMod.getConfigState().setFor(type, mode))
-                .controller(EnumController::new)
+                .controller(opt -> new EnumController<>(opt, ConfigState.RenderMode::getName))
                 .build();
     }
 }

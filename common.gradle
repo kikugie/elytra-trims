@@ -90,7 +90,7 @@ processResources {
 // https://github.com/Fallen-Breath/yamlang
 yamlang {
     targetSourceSets = [sourceSets.main]
-    inputDir = 'assets/template_mod/lang'
+    inputDir = 'assets/elytratrims/lang'
 }
 
 tasks.withType(JavaCompile) {

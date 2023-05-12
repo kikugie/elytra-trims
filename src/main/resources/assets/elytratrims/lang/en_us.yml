@@ -1,0 +1,32 @@
+elytratrims:
+  command:
+    response:
+      get_mode: "Current %s mode is %s"
+      set_mode: "%s mode has been set to %s"
+      reset: Config reset!
+  config:
+    title: Elytra Trims
+    category:
+      .: Config
+      render: Render
+    type:
+      color:
+        .: Dye
+        tooltip: Show dyed elytras
+      cape:
+        .: Cape
+        tooltip: Show cape texture on elytras
+      patterns:
+        .: Patterns
+        tooltip: Show banner patterns on elytras
+      trims:
+        .: Trims
+        tooltip: Show armor trims on elytras
+      global:
+        .: Global
+        tooltip: Override all other render types
+    mode:
+      none: None
+      self: Self
+      others: Others
+      all: All
