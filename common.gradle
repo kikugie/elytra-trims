@@ -60,27 +60,17 @@ remapJar {
 sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
 
-String versionSuffix = ''
-// detect github action environment variables
-// https://docs.github.com/en/actions/learn-github-actions/environment-variables#default-environment-variables
-if (System.getenv("BUILD_RELEASE") != "true") {
-    String buildNumber = System.getenv("BUILD_ID")
-    versionSuffix += buildNumber != null ? ('+build.' + buildNumber) : '-SHAPSHOT'
-}
-String fullModVersion = project.mod_version + versionSuffix
-
-version = 'v' + fullModVersion
 group = project.maven_group
-archivesBaseName = project.archives_base_name + '-mc' + project.minecraft_version
+archivesBaseName = project.archives_base_name + "-" + project.mod_version + "+" + project.game_versions
 
 processResources {
-    inputs.property "version", fullModVersion
+    inputs.property "version", project.mod_version
 
     filesMatching("fabric.mod.json") {
         def valueMap = [
                 "id"                  : project.mod_id,
                 "name"                : project.mod_name,
-                "version"             : fullModVersion,
+                "version"             : project.mod_version,
                 "minecraft_dependency": project.minecraft_dependency,
         ]
         expand valueMap
