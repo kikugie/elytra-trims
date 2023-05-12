@@ -98,7 +98,7 @@ jar {
 }
 
 modrinth {
-    token = env.MODRINTH_TOKEN.value
+    token = env.fetchOrNull("MODRINTH_TOKEN")
     projectId = "elytra-trims"
     versionName = "Elytra Trims " + project.mod_version + " for " + project.game_versions
     versionNumber = project.mod_version
