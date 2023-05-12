@@ -114,6 +114,7 @@ modrinth {
     }
     syncBodyFrom = rootProject.file("README.md").text
     changelog = rootProject.file("CHANGELOG.md").text
+    failSilently = true
     debugMode = true
 }
 
