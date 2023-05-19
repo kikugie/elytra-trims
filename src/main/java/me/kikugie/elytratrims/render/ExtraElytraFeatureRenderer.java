@@ -127,11 +127,7 @@ public class ExtraElytraFeatureRenderer {
         if (ConfigState.cancelRender(ConfigState.RenderType.TRIMS, entity))
             return;
 
-        //#if MC < 12000
-        World world = entity.world;
-        //#else
-        //$$ World world = entity.getWorld();
-        //#endif
+        World world = entity.getWorld();
 
         ArmorTrim trim = ArmorTrim.getTrim(world.getRegistryManager(), stack).orElse(null);
         if (trim == null)

@@ -11,3 +11,4 @@ accessible field net/minecraft/client/texture/atlas/PalettedPermutationsAtlasSou
 accessible field net/minecraft/client/texture/atlas/PalettedPermutationsAtlasSource paletteKey Lnet/minecraft/util/Identifier;
 accessible field net/minecraft/client/texture/atlas/Sprite resource Lnet/minecraft/resource/Resource;
 accessible field net/minecraft/client/texture/atlas/Sprite id Lnet/minecraft/util/Identifier;
+accessible field net/minecraft/client/texture/SpriteContents image Lnet/minecraft/client/texture/NativeImage;
