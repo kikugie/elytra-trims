@@ -17,7 +17,7 @@ import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 //#if MC > 11940
-//$$ import net.minecraft.class_8566;
+//$$ import net.minecraft.inventory.RecipeInputInventory;
 //#endif
 
 public class ElytraPatternRecipe extends SpecialCraftingRecipe {
@@ -30,7 +30,7 @@ public class ElytraPatternRecipe extends SpecialCraftingRecipe {
             //#if MC < 12000
             CraftingInventory inventory,
             //#else
-            //$$ class_8566 inventory,
+            //$$ RecipeInputInventory inventory,
             //#endif
             World world) {
         int elytra = 0;
@@ -58,7 +58,7 @@ public class ElytraPatternRecipe extends SpecialCraftingRecipe {
             //#if MC < 12000
             CraftingInventory inventory,
             //#else
-            //$$ class_8566 inventory,
+            //$$ RecipeInputInventory inventory,
             //#endif
             DynamicRegistryManager registryManager) {
         ItemStack elytra = ItemStack.EMPTY;
