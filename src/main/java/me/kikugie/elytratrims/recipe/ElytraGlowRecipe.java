@@ -5,13 +5,15 @@ import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ElytraItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
+//#if MC > 11940
+//$$ import net.minecraft.inventory.RecipeInputInventory;
+//#endif
 
 public class ElytraGlowRecipe extends SpecialCraftingRecipe {
     public ElytraGlowRecipe(Identifier id, CraftingRecipeCategory category) {
@@ -19,7 +21,13 @@ public class ElytraGlowRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public boolean matches(CraftingInventory inventory, World world) {
+    public boolean matches(
+            //#if MC < 12000
+            CraftingInventory inventory,
+            //#else
+            //$$ RecipeInputInventory inventory,
+            //#endif
+            World world) {
         int item = 0;
         int sac = 0;
 
@@ -40,7 +48,13 @@ public class ElytraGlowRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public ItemStack craft(CraftingInventory inventory, DynamicRegistryManager registryManager) {
+    public ItemStack craft(
+            //#if MC < 12000
+            CraftingInventory inventory,
+            //#else
+            //$$ RecipeInputInventory inventory,
+            //#endif
+            DynamicRegistryManager registryManager) {
         ItemStack item = ItemStack.EMPTY;
         for (int slot = 0; slot < inventory.size(); slot++) {
             ItemStack stack = inventory.getStack(slot);

@@ -75,7 +75,6 @@ public class ConfigState {
     }
 
     public static boolean cancelRender(RenderType type, LivingEntity entity) {
-        //FIXME: Others not displaying properly
         RenderMode mode = ElytraTrimsMod.getConfigState().getConfigFor(type);
         return switch (mode) {
             case ALL -> false;
