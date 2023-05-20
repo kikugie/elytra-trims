@@ -16,6 +16,9 @@ elytratrims:
       cape:
         .: Cape
         tooltip: Show cape texture on elytras
+      glow:
+        .: Glow
+        tooltip: Glow elytra features
       patterns:
         .: Patterns
         tooltip: Show banner patterns on elytras

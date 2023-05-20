@@ -2,7 +2,9 @@ package me.kikugie.elytratrims;
 
 import me.kikugie.elytratrims.config.ConfigCommand;
 import me.kikugie.elytratrims.config.ConfigState;
+import me.kikugie.elytratrims.recipe.ElytraGlowRecipe;
 import me.kikugie.elytratrims.recipe.ElytraPatternRecipe;
+import me.kikugie.elytratrims.recipe.GlowingItem;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
@@ -23,7 +25,10 @@ public class ElytraTrimsMod implements ClientModInitializer {
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
     public static final DyeableItem DYEABLE = new DyeableItem() {
     };
+    public static final GlowingItem GLOWING = new GlowingItem() {
+    };
     public static final RecipeSerializer<SpecialCraftingRecipe> ELYTRA_PATTERNS_RECIPE = RecipeSerializer.register("crafting_special_elytrapatterns", new SpecialRecipeSerializer<>(ElytraPatternRecipe::new));
+    public static final RecipeSerializer<ElytraGlowRecipe> ELYTRA_GLOW_RECIPE = RecipeSerializer.register("crafting_special_elytraglow", new SpecialRecipeSerializer<>(ElytraGlowRecipe::new));
     public static AtlasSourceType ELYTRA_TRIMS;
     public static AtlasSourceType ELYTRA_PATTERNS;
     public static AtlasSourceType ELYTRA_OVERLAY;

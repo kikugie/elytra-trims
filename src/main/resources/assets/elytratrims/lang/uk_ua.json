@@ -9,14 +9,16 @@
   "elytratrims.config.type.color.tooltip": "Показувати забарвлені елітри",
   "elytratrims.config.type.cape": "Плащі",
   "elytratrims.config.type.cape.tooltip": "Показувати текстуру плаща на елітрах",
+  "elytratrims.config.type.glow": "Сяйво",
+  "elytratrims.config.type.glow.tooltip": "Підсвічувати текстури на елітрах",
   "elytratrims.config.type.patterns": "Візерунки",
   "elytratrims.config.type.patterns.tooltip": "Показувати візерунки стягів на елітрах",
   "elytratrims.config.type.trims": "Орнаменти",
   "elytratrims.config.type.trims.tooltip": "Показувати орнаменти обладунків на елітрах",
   "elytratrims.config.type.global": "Загальне",
   "elytratrims.config.type.global.tooltip": "Перевизначити всі інші типи відображення",
-  "elytratrims.config.mode.none": "Ні",
+  "elytratrims.config.mode.none": "Вимк.",
   "elytratrims.config.mode.self": "Свої",
-  "elytratrims.config.mode.others": "Інших",
+  "elytratrims.config.mode.others": "Чужі",
   "elytratrims.config.mode.all": "Всі"
 }

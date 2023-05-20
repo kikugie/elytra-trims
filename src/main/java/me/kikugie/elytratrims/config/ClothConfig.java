@@ -15,6 +15,7 @@ public class ClothConfig {
         ConfigEntryBuilder entryBuilder = builder.entryBuilder();
         addOption(entryBuilder, render, ConfigState.RenderType.COLOR);
         addOption(entryBuilder, render, ConfigState.RenderType.CAPE);
+        addOption(entryBuilder, render, ConfigState.RenderType.GLOW);
         addOption(entryBuilder, render, ConfigState.RenderType.PATTERNS);
         addOption(entryBuilder, render, ConfigState.RenderType.TRIMS);
         addOption(entryBuilder, render, ConfigState.RenderType.GLOBAL);

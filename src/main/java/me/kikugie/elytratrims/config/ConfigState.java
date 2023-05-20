@@ -27,6 +27,7 @@ public class ConfigState {
             RenderMode.getCodec(RenderType.PATTERNS).forGetter(state -> state.patterns),
             RenderMode.getCodec(RenderType.TRIMS).forGetter(state -> state.trims),
             RenderMode.getCodec(RenderType.CAPE).forGetter(state -> state.cape),
+            RenderMode.getCodec(RenderType.GLOW).forGetter(state -> state.glow),
             RenderMode.getCodec(RenderType.GLOBAL).forGetter(state -> state.global)
     ).apply(instance, ConfigState::new));
 
@@ -37,13 +38,15 @@ public class ConfigState {
     private RenderMode patterns;
     private RenderMode trims;
     private RenderMode cape;
+    private RenderMode glow;
     private RenderMode global;
 
-    private ConfigState(RenderMode colorMode, RenderMode patternsMode, RenderMode trimsMode, RenderMode capeMode, RenderMode globalMode) {
+    private ConfigState(RenderMode colorMode, RenderMode patternsMode, RenderMode trimsMode, RenderMode capeMode, RenderMode glowMode, RenderMode globalMode) {
         this.color = colorMode;
         this.patterns = patternsMode;
         this.trims = trimsMode;
         this.cape = capeMode;
+        this.glow = glowMode;
         this.global = globalMode;
     }
 
@@ -61,7 +64,7 @@ public class ConfigState {
             }
         }
 
-        ConfigState state = new ConfigState(RenderMode.ALL, RenderMode.ALL, RenderMode.ALL, RenderMode.ALL, RenderMode.ALL);
+        ConfigState state = new ConfigState(RenderMode.ALL, RenderMode.ALL, RenderMode.ALL, RenderMode.ALL, RenderMode.ALL, RenderMode.ALL);
         try {
             CONFIG_FILE.createNewFile();
             state.save();
@@ -72,6 +75,7 @@ public class ConfigState {
     }
 
     public static boolean cancelRender(RenderType type, LivingEntity entity) {
+        //FIXME: Others not displaying properly
         RenderMode mode = ElytraTrimsMod.getConfigState().getConfigFor(type);
         return switch (mode) {
             case ALL -> false;
@@ -79,7 +83,7 @@ public class ConfigState {
             case SELF ->
                     entity != MinecraftClient.getInstance().player && ExtraElytraFeatureRenderer.skipRenderIfMissingTexture(entity);
             case OTHERS ->
-                    entity == MinecraftClient.getInstance().player || ExtraElytraFeatureRenderer.skipRenderIfMissingTexture(entity);
+                    entity == MinecraftClient.getInstance().player || !ExtraElytraFeatureRenderer.skipRenderIfMissingTexture(entity);
         };
     }
 
@@ -99,6 +103,7 @@ public class ConfigState {
         patterns = RenderMode.ALL;
         trims = RenderMode.ALL;
         cape = RenderMode.ALL;
+        glow = RenderMode.ALL;
         global = RenderMode.ALL;
     }
 
@@ -108,18 +113,13 @@ public class ConfigState {
             case PATTERNS -> patterns;
             case TRIMS -> trims;
             case CAPE -> cape;
+            case GLOW -> glow;
             case GLOBAL -> global;
         };
     }
 
     public RenderMode getConfigFor(RenderType type) {
-        RenderMode mode = switch (type) {
-            case COLOR -> color;
-            case PATTERNS -> patterns;
-            case TRIMS -> trims;
-            case CAPE -> cape;
-            case GLOBAL -> global;
-        };
+        RenderMode mode = getFor(type);
         return mode.weight < global.weight ? mode : global;
     }
 
@@ -129,6 +129,7 @@ public class ConfigState {
             case PATTERNS -> patterns = mode;
             case TRIMS -> trims = mode;
             case CAPE -> cape = mode;
+            case GLOW -> glow = mode;
             case GLOBAL -> global = mode;
         }
     }
@@ -138,6 +139,7 @@ public class ConfigState {
         PATTERNS("patterns"),
         TRIMS("trims"),
         CAPE("cape"),
+        GLOW("glow"),
         GLOBAL("global");
 
         public final String type;

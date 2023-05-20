@@ -12,6 +12,7 @@ import static net.minecraft.block.cauldron.CauldronBehavior.WATER_CAULDRON_BEHAV
 
 @Mixin(CauldronBehavior.class)
 public interface CauldronBehaviorMixin {
+    //TODO: Clean glow and patterns
     @Inject(method = "registerBehavior", at = @At("TAIL"))
     private static void cleanElytra(CallbackInfo ci) {
         WATER_CAULDRON_BEHAVIOR.put(Items.ELYTRA, CLEAN_DYEABLE_ITEM);

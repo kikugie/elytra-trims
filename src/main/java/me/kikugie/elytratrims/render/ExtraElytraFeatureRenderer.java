@@ -1,6 +1,7 @@
 package me.kikugie.elytratrims.render;
 
 import com.mojang.datafixers.util.Pair;
+import me.kikugie.elytratrims.ElytraTrimsMod;
 import me.kikugie.elytratrims.access.ElytraOverlaysAccessor;
 import me.kikugie.elytratrims.access.LivingEntityAccessor;
 import me.kikugie.elytratrims.config.ConfigState;
@@ -66,11 +67,18 @@ public class ExtraElytraFeatureRenderer {
     }
 
     public void render(MatrixStack matrices, VertexConsumerProvider provider, LivingEntity entity, ItemStack stack, int light, float alpha) {
+        light = getLight(entity, stack, light);
         if (!renderJebElytra(matrices, provider, entity, stack, light, alpha)) {
             renderElytraOverlay(matrices, provider, entity, stack, light, alpha);
             renderElytraPatterns(matrices, provider, entity, stack, light, alpha);
         }
         renderElytraTrims(matrices, provider, entity, stack, light, alpha);
+    }
+
+    private int getLight(LivingEntity entity, ItemStack stack, int light) {
+        if (!ConfigState.cancelRender(ConfigState.RenderType.GLOW, entity) && ElytraTrimsMod.GLOWING.hasGlow(stack))
+            return 0xFF00FF;
+        return light;
     }
 
     private void renderElytraOverlay(MatrixStack matrices, VertexConsumerProvider provider, LivingEntity entity, ItemStack stack, int light, float alpha) {

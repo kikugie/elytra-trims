@@ -20,6 +20,7 @@ public class YaclConfig {
                                 .option(optionFor(ConfigState.RenderType.PATTERNS))
                                 .option(optionFor(ConfigState.RenderType.TRIMS))
                                 .option(optionFor(ConfigState.RenderType.CAPE))
+                                .option(optionFor(ConfigState.RenderType.GLOW))
                                 .option(optionFor(ConfigState.RenderType.GLOBAL))
                                 .build())
                         .build())
