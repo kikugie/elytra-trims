@@ -32,12 +32,10 @@ public interface CauldronBehaviorMixin {
 
         CauldronBehavior.WATER_CAULDRON_BEHAVIOR.put(Items.ELYTRA, (state, world, pos, player, hand, stack) -> {
             ActionResult result = CauldronBehavior.CLEAN_DYEABLE_ITEM.interact(state, world, pos, player, hand, stack);
-            if (result == ActionResult.SUCCESS)
-                return result;
-            result = CauldronBehavior.CLEAN_BANNER.interact(state, world, pos, player, hand, stack);
-            if (result == ActionResult.SUCCESS)
-                return result;
-            return CLEAN_GLOW.interact(state, world, pos, player, hand, stack);
+            ActionResult temp = CauldronBehavior.CLEAN_BANNER.interact(state, world, pos, player, hand, stack);
+            result = temp == ActionResult.PASS ? result : temp;
+            temp = CLEAN_GLOW.interact(state, world, pos, player, hand, stack);
+            return temp == ActionResult.PASS ? result : temp;
         });
     }
 }

@@ -1,2 +1,9 @@
+## Added
+- Glowing elytra features:  
+  Craft elytra with a glow ink sac to make dyes, patterns and trims glow.
+
+## Changed
+- Clicking on cauldron while holding elytra will now remove dyes, patterns and glow
+
 ## Fixed
-- Accesswidener crash, idk which other mod caused it, I fixed the issue faster
+- `Others` option didn't work properly.
