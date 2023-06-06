@@ -14,7 +14,12 @@
         "trims/models/elytra/tide",
         "trims/models/elytra/snout",
         "trims/models/elytra/rib",
-        "trims/models/elytra/spire"
+        "trims/models/elytra/spire",
+        "trims/models/elytra/wayfinder",
+        "trims/models/elytra/raiser",
+        "trims/models/elytra/shaper",
+        "trims/models/elytra/host",
+        "trims/models/elytra/silence"
       ],
       "palette_key": "trims/color_palettes/trim_palette",
       "permutations": {

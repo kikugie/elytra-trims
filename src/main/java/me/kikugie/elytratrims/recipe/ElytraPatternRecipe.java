@@ -2,7 +2,7 @@ package me.kikugie.elytratrims.recipe;
 
 import me.kikugie.elytratrims.ElytraTrimsMod;
 import net.minecraft.block.entity.BannerBlockEntity;
-import net.minecraft.inventory.CraftingInventory;
+import net.minecraft.inventory.RecipeInputInventory;
 import net.minecraft.item.BannerItem;
 import net.minecraft.item.ElytraItem;
 import net.minecraft.item.ItemStack;
@@ -16,9 +16,6 @@ import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
-//#if MC > 11940
-//$$ import net.minecraft.inventory.RecipeInputInventory;
-//#endif
 
 public class ElytraPatternRecipe extends SpecialCraftingRecipe {
     public ElytraPatternRecipe(Identifier id, CraftingRecipeCategory category) {
@@ -27,11 +24,7 @@ public class ElytraPatternRecipe extends SpecialCraftingRecipe {
 
     @Override
     public boolean matches(
-            //#if MC < 12000
-            CraftingInventory inventory,
-            //#else
-            //$$ RecipeInputInventory inventory,
-            //#endif
+            RecipeInputInventory inventory,
             World world) {
         int elytra = 0;
         int banner = 0;
@@ -55,11 +48,7 @@ public class ElytraPatternRecipe extends SpecialCraftingRecipe {
 
     @Override
     public ItemStack craft(
-            //#if MC < 12000
-            CraftingInventory inventory,
-            //#else
-            //$$ RecipeInputInventory inventory,
-            //#endif
+            RecipeInputInventory inventory,
             DynamicRegistryManager registryManager) {
         ItemStack elytra = ItemStack.EMPTY;
         ItemStack banner = ItemStack.EMPTY;

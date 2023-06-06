@@ -18,6 +18,11 @@ If you fancy something simplistic, dye your elytra however you want in a craftin
 
 ![Dyed elytra](https://cdn.modrinth.com/data/XpzGz7KD/images/511e985762a518992f2bc140b34e9f5c104ade74.png)
 
+## Glowing
+Craft your elytra with a glow ink sac to make it glow in the dark.
+
+![Glowing trim](https://cdn.modrinth.com/data/XpzGz7KD/images/849d54736e4519df78678bf00a2077a528e866ad.png)
+
 ## Config
 Configure how you want the features displayed with the `/et-config <type> <mode>` command. This feature allows you to tweak the mod settings to your liking and display them in a way that suits your gameplay style.
 

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 @Mixin(SynchronizeRecipesS2CPacket.class)
 public abstract class SynchronizeRecipesS2CPacketMixin {
-    @ModifyArg(method = "<init>(Ljava/util/Collection;)V", at = @At(value = "INVOKE", target = "Lcom/google/common/collect/Lists;newArrayList(Ljava/lang/Iterable;)Ljava/util/ArrayList;"))
+    @ModifyArg(method = "<init>(Ljava/util/Collection;)V", at = @At(value = "INVOKE", target = "Lcom/google/common/collect/Lists;newArrayList(Ljava/lang/Iterable;)Ljava/util/ArrayList;", remap = false))
     private Iterable<Recipe<?>> removeElytraPatternRecipe(Iterable<Recipe<?>> elements) {
         ArrayList<Recipe<?>> recipes = new ArrayList<>();
         elements.forEach(recipe -> {

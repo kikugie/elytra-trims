@@ -1,10 +1,7 @@
 package me.kikugie.elytratrims.config;
 
-import dev.isxander.yacl.api.ConfigCategory;
-import dev.isxander.yacl.api.Option;
-import dev.isxander.yacl.api.OptionGroup;
-import dev.isxander.yacl.api.YetAnotherConfigLib;
-import dev.isxander.yacl.gui.controllers.cycling.EnumController;
+import dev.isxander.yacl3.api.*;
+import dev.isxander.yacl3.gui.controllers.cycling.EnumController;
 import me.kikugie.elytratrims.ElytraTrimsMod;
 import net.minecraft.client.gui.screen.Screen;
 
@@ -30,13 +27,16 @@ public class YaclConfig {
     }
 
     private static Option<ConfigState.RenderMode> optionFor(ConfigState.RenderType type) {
-        return Option.createBuilder(ConfigState.RenderMode.class)
+        return Option.<ConfigState.RenderMode>createBuilder()
                 .name(type.getName())
-                .tooltip(type.getTooltip())
+                .description(OptionDescription.createBuilder()
+                        .text(type.getTooltip())
+                        .build()
+                )
                 .binding(ConfigState.RenderMode.ALL,
                         () -> ElytraTrimsMod.getConfigState().getFor(type),
                         mode -> ElytraTrimsMod.getConfigState().setFor(type, mode))
-                .controller(opt -> new EnumController<>(opt, ConfigState.RenderMode::getName))
+                .customController(opt -> new EnumController<>(opt, ConfigState.RenderMode::getName, ConfigState.RenderMode.values()))
                 .build();
     }
 }

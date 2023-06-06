@@ -32,7 +32,6 @@ public class ElytraTrimsMod implements ClientModInitializer {
     public static AtlasSourceType ELYTRA_TRIMS;
     public static AtlasSourceType ELYTRA_PATTERNS;
     public static AtlasSourceType ELYTRA_OVERLAY;
-
     private static ConfigState configState;
 
     public static ConfigState getConfigState() {

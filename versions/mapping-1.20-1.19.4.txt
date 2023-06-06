@@ -1,0 +1,1 @@
+net.minecraft.inventory.RecipeInputInventory net.minecraft.inventory.CraftingInventory

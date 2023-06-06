@@ -142,10 +142,12 @@ public class ConfigState {
         GLOBAL("global");
 
         public final String type;
+        public final String image;
         private final String translation;
 
         RenderType(String type) {
             this.type = type;
+            this.image = type;
             this.translation = "elytratrims.config.type." + type;
         }
 

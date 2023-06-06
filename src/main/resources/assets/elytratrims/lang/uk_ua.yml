@@ -1,0 +1,35 @@
+elytratrims:
+  command:
+    response:
+      get_mode: "Показуються %s - %s"
+      set_mode: "%s тепер показуються - %s"
+      reset: Налаштування скинуті!
+  config:
+    title: Elytra Trims
+    category:
+      .: Налаштування
+      render: Відображення
+    type:
+      color:
+        .: Фарби
+        tooltip: Показувати забарвлені елітри
+      cape:
+        .: Плащі
+        tooltip: Показувати текстуру плаща на елітрах
+      glow:
+        .: Сяйво
+        tooltip: Підсвічувати текстури на елітрах
+      patterns:
+        .: Візерунки
+        tooltip: Показувати візерунки стягів на елітрах
+      trims:
+        .: Орнаменти
+        tooltip: Показувати орнаменти обладунків на елітрах
+      global:
+        .: Загальне
+        tooltip: Перевизначити всі інші типи відображення
+    mode:
+      none: Вимк.
+      self: Свої
+      others: Чужі
+      all: Всі

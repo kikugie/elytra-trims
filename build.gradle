@@ -10,20 +10,22 @@ plugins {
     id 'com.replaymod.preprocess' version 'e1050f4d72'
 
     // https://github.com/Fallen-Breath/yamlang
-    id 'me.fallenbreath.yamlang' version '1.2.1' apply false
+    id 'me.fallenbreath.yamlang' version '1.3.0' apply false
 
     id "com.modrinth.minotaur" version "2.+" apply false
+    id "com.github.breadmoirai.github-release" version "2.4.+" apply false
     id "co.uzzu.dotenv.gradle" version "2.0.0"
 }
 
 preprocess {
-    def mc119 = createNode('1.19.4', 1_19_04, 'yarn')
-    def mcSnapshot = createNode('snapshot', 1_20_00, 'yarn')
+    def mc19 = createNode('1.19.4', 1_19_04, 'yarn')
+    def mc20 = createNode('1.20', 1_20_00, 'yarn')
 
-    mc119.link(mcSnapshot, null)
+    mc20.link(mc19, file("versions/mapping-1.20-1.19.4.txt"))
 }
 
 tasks.register('buildAndGather') {
+    group("build")
     subprojects {
         dependsOn project.name + ':build'
     }
@@ -43,7 +45,7 @@ tasks.register('buildAndGather') {
     }
 }
 
-task cleanPreprocessSources {
+tasks.register('cleanPreprocessSources') {
     doFirst {
         subprojects {
             def path = project.projectDir.toPath().resolve('build/preprocessed')
