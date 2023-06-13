@@ -1,6 +1,6 @@
 package me.kikugie.elytratrims.recipe;
 
-import me.kikugie.elytratrims.ElytraTrimsMod;
+import me.kikugie.elytratrims.ElytraTrimsServer;
 import net.minecraft.block.entity.BannerBlockEntity;
 import net.minecraft.inventory.RecipeInputInventory;
 import net.minecraft.item.BannerItem;
@@ -70,10 +70,10 @@ public class ElytraPatternRecipe extends SpecialCraftingRecipe {
             NbtCompound compound = elytra.getOrCreateSubNbt("BlockEntityTag");
             compound.put("Patterns", patterns);
             compound.put("Base", NbtInt.of(color.getId()));
-            ElytraTrimsMod.DYEABLE.setColor(elytra, color.getFireworkColor());
+            ElytraTrimsServer.DYEABLE.setColor(elytra, color.getFireworkColor());
         } else if (elytra.getSubNbt("BlockEntityTag") != null) {
             elytra.removeSubNbt("BlockEntityTag");
-            ElytraTrimsMod.DYEABLE.setColor(elytra, 0);
+            ElytraTrimsServer.DYEABLE.setColor(elytra, 0);
         }
         return elytra;
     }
@@ -85,6 +85,6 @@ public class ElytraPatternRecipe extends SpecialCraftingRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return ElytraTrimsMod.ELYTRA_PATTERNS_RECIPE;
+        return ElytraTrimsServer.ELYTRA_PATTERNS_RECIPE;
     }
 }

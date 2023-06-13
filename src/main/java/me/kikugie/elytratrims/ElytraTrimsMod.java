@@ -23,12 +23,6 @@ import org.slf4j.LoggerFactory;
 public class ElytraTrimsMod implements ClientModInitializer {
     public static final String MOD_ID = "elytratrims";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-    public static final DyeableItem DYEABLE = new DyeableItem() {
-    };
-    public static final GlowingItem GLOWING = new GlowingItem() {
-    };
-    public static final RecipeSerializer<SpecialCraftingRecipe> ELYTRA_PATTERNS_RECIPE = RecipeSerializer.register("crafting_special_elytrapatterns", new SpecialRecipeSerializer<>(ElytraPatternRecipe::new));
-    public static final RecipeSerializer<ElytraGlowRecipe> ELYTRA_GLOW_RECIPE = RecipeSerializer.register("crafting_special_elytraglow", new SpecialRecipeSerializer<>(ElytraGlowRecipe::new));
     public static AtlasSourceType ELYTRA_TRIMS;
     public static AtlasSourceType ELYTRA_PATTERNS;
     public static AtlasSourceType ELYTRA_OVERLAY;

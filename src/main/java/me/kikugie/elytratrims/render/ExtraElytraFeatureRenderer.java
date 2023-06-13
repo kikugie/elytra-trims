@@ -1,7 +1,7 @@
 package me.kikugie.elytratrims.render;
 
 import com.mojang.datafixers.util.Pair;
-import me.kikugie.elytratrims.ElytraTrimsMod;
+import me.kikugie.elytratrims.ElytraTrimsServer;
 import me.kikugie.elytratrims.access.ElytraOverlaysAccessor;
 import me.kikugie.elytratrims.access.LivingEntityAccessor;
 import me.kikugie.elytratrims.config.ConfigState;
@@ -76,7 +76,7 @@ public class ExtraElytraFeatureRenderer {
     }
 
     private int getLight(LivingEntity entity, ItemStack stack, int light) {
-        if (!ConfigState.cancelRender(ConfigState.RenderType.GLOW, entity) && ElytraTrimsMod.GLOWING.hasGlow(stack))
+        if (!ConfigState.cancelRender(ConfigState.RenderType.GLOW, entity) && ElytraTrimsServer.GLOWING.hasGlow(stack))
             return 0xFF00FF;
         return light;
     }

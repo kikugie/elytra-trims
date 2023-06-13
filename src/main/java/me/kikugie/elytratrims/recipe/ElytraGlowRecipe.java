@@ -1,6 +1,6 @@
 package me.kikugie.elytratrims.recipe;
 
-import me.kikugie.elytratrims.ElytraTrimsMod;
+import me.kikugie.elytratrims.ElytraTrimsServer;
 import net.minecraft.inventory.RecipeInputInventory;
 import net.minecraft.item.ElytraItem;
 import net.minecraft.item.ItemStack;
@@ -51,7 +51,7 @@ public class ElytraGlowRecipe extends SpecialCraftingRecipe {
             if (!(stack.getItem() instanceof ElytraItem)) continue;
             item = stack.copy();
         }
-        ElytraTrimsMod.GLOWING.setGlow(item);
+        ElytraTrimsServer.GLOWING.setGlow(item);
         return item;
     }
 
@@ -62,6 +62,6 @@ public class ElytraGlowRecipe extends SpecialCraftingRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return ElytraTrimsMod.ELYTRA_GLOW_RECIPE;
+        return ElytraTrimsServer.ELYTRA_GLOW_RECIPE;
     }
 }

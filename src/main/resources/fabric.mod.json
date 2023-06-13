@@ -18,6 +18,9 @@
   "accessWidener": "elytratrims.accesswidener",
   "environment": "*",
   "entrypoints": {
+    "main": [
+      "me.kikugie.elytratrims.ElytraTrimsServer"
+    ],
     "client": [
       "me.kikugie.elytratrims.ElytraTrimsMod"
     ],

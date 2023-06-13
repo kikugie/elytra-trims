@@ -1,7 +1,7 @@
 package me.kikugie.elytratrims.mixin;
 
 import com.mojang.datafixers.util.Pair;
-import me.kikugie.elytratrims.ElytraTrimsMod;
+import me.kikugie.elytratrims.ElytraTrimsServer;
 import me.kikugie.elytratrims.access.ElytraOverlaysAccessor;
 import net.minecraft.block.entity.BannerBlockEntity;
 import net.minecraft.block.entity.BannerPattern;
@@ -54,7 +54,7 @@ public abstract class ItemStackMixin implements ElytraOverlaysAccessor {
     @Override
     public int getColor() {
         if (color == null) {
-            color = ElytraTrimsMod.DYEABLE.hasColor((ItemStack) (Object) this) ? ElytraTrimsMod.DYEABLE.getColor((ItemStack) (Object) this) : 0;
+            color = ElytraTrimsServer.DYEABLE.hasColor((ItemStack) (Object) this) ? ElytraTrimsServer.DYEABLE.getColor((ItemStack) (Object) this) : 0;
         }
 
         return color;
