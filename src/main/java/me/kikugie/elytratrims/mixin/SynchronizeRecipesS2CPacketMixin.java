@@ -16,7 +16,8 @@ public abstract class SynchronizeRecipesS2CPacketMixin {
     private Iterable<Recipe<?>> removeElytraPatternRecipe(Iterable<Recipe<?>> elements) {
         ArrayList<Recipe<?>> recipes = new ArrayList<>();
         elements.forEach(recipe -> {
-            if (!(recipe instanceof ElytraPatternRecipe || recipe instanceof ElytraGlowRecipe)) {
+            if (!(recipe instanceof ElytraPatternRecipe ||
+                    recipe instanceof ElytraGlowRecipe)) {
                 recipes.add(recipe);
             }
         });

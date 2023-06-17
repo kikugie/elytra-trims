@@ -9,12 +9,6 @@
     "ItemStackMixin",
     "SynchronizeRecipesS2CPacketMixin"
   ],
-  "client": [
-    "ElytraFeatureRendererMixin",
-    "LivingEntityMixin",
-    "MinecraftClientMixin",
-    "SmithingScreenMixin"
-  ],
   "injectors": {
     "defaultRequire": 1
   }

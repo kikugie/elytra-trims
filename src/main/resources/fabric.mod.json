@@ -29,9 +29,12 @@
     ]
   },
   "mixins": [
-    "elytratrims.mixins.json"
+    "elytratrims.mixins.json",
+    {
+      "config": "elytratrims.client.mixins.json",
+      "environment": "client"
+    }
   ],
-
   "depends": {
     "fabricloader": ">=0.11.4",
     "minecraft": "${minecraft_dependency}",

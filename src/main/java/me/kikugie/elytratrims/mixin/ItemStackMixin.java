@@ -19,6 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
 
+@SuppressWarnings("DataFlowIssue")
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin implements ElytraOverlaysAccessor {
     private static final String BASE_COLOR_KEY = "Base";

@@ -1,3 +1,4 @@
+//file:noinspection GroovyAssignabilityCheck
 apply plugin: "maven-publish"
 apply plugin: "fabric-loom"
 apply plugin: "io.github.juuxel.loom-quiltflower"
@@ -7,6 +8,18 @@ apply plugin: "com.modrinth.minotaur"
 apply plugin: "com.github.breadmoirai.github-release"
 
 int mcVersion = 1
+
+loom {
+    splitEnvironmentSourceSets()
+
+    mods {
+        "minecraft" {
+            sourceSet sourceSets.main
+            sourceSet sourceSets.client
+        }
+    }
+
+}
 
 preprocess {
     mcVersion = vars.get()["MC"] as int
@@ -33,6 +46,7 @@ dependencies {
 
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
     include api(annotationProcessor("com.github.LlamaLad7.mixinextras:mixinextras-fabric:${project.mixin_extras_version}"))
+    include api(clientAnnotationProcessor("com.github.LlamaLad7.mixinextras:mixinextras-fabric:${project.mixin_extras_version}"))
 
     modApi "com.terraformersmc:modmenu:${project.modmenu_version}"
     modApi("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_version}") {
@@ -79,7 +93,7 @@ processResources {
 // https://github.com/Fallen-Breath/yamlang
 yamlang {
     targetSourceSets = [sourceSets.main]
-    inputDir = "assets/elytratrims/lang"
+    inputDir = "assets/minecraft/lang"
 }
 
 tasks.withType(JavaCompile).configureEach {
