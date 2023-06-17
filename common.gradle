@@ -147,17 +147,24 @@ githubRelease {
 }
 
 publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            artifactId archivesBaseName
-
-            from components.java
+    repositories {
+        maven {
+            name = "kikugieMaven"
+            url = "https://maven.kikugie.dev/releases"
+            credentials(PasswordCredentials)
+            authentication {
+                basic(BasicAuthentication)
+            }
         }
     }
 
-    // select the repositories you want to publish to
-    repositories {
-        // uncomment to publish to the local maven
-        // mavenLocal()
+    publications {
+        mavenJava(MavenPublication) {
+            groupId = project.maven_group + "." + project.archives_base_name
+            artifactId = project.mod_version
+            version = project.game_versions
+
+            from components.java
+        }
     }
 }

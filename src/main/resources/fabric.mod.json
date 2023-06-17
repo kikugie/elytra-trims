@@ -19,13 +19,13 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "me.kikugie.elytratrims.ElytraTrimsServer"
+      "dev.kikugie.elytratrims.ElytraTrimsServer"
     ],
     "client": [
-      "me.kikugie.elytratrims.ElytraTrimsMod"
+      "dev.kikugie.elytratrims.ElytraTrimsMod"
     ],
     "modmenu": [
-      "me.kikugie.elytratrims.config.ModMenuIntegration"
+      "dev.kikugie.elytratrims.config.ModMenuIntegration"
     ]
   },
   "mixins": [
