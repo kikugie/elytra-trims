@@ -1,12 +1,37 @@
-# Elytra Trims
-With this mod, you can add armor trims, dye your elytra in any color, and put banner patterns on them. It also comes with resourcepack support, mod config, and server-side support. Let your creativity soar and make your elytra stand out with the Elytra Trims mod!
+<div style="text-align: center;">
+<img alt="logo" height="256" src="https://cdn.modrinth.com/data/XpzGz7KD/8ff6751948e096f540e320681742d0b3b918931e.png">
 
-![Elytra Trims banner](https://cdn.modrinth.com/data/XpzGz7KD/images/989afdaa233a4100daa228e4824a50a4ad630da3.png)
+<h1>Elytra Trims</h1>
+<p>
+<b>With this mod, you can add armor trims, dye your elytra in any color, and put banner patterns on them.<br>
+It also comes with resourcepack support, mod config, and server-side support.<br>
+Let your creativity soar and make your elytra stand out with the Elytra Trims mod!</b>
+</p>
+<a href="https://modrinth.com/mod/elytra-trims">
+<img alt="modrinth" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/modrinth_vector.svg">
+</a>
+
+<a href="https://www.curseforge.com/minecraft/mc-mods/elytra-trims">
+<img alt="curseforge" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/curseforge_vector.svg">
+</a>
+
+<a href="https://github.com/Kikugie/elytra-trims">
+<img alt="github" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/github_vector.svg">
+</a>
+
+<br>
+
+<img alt="fabric" height="40" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/supported/fabric_vector.svg">
+<img alt="quilt" height="40" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/supported/quilt_vector.svg">
+<img alt="forge" height="40" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/unsupported/forge_vector.svg">
+
+<hr>
+</div>
 
 ## Trims
 Put any trim on your elytra just like any other armor. Mod provides a default resourcepack with all vanilla trims, but it can be expanded further.
 
-![A few trims](https://cdn.modrinth.com/data/XpzGz7KD/images/ab89ffcaa318f32292041b69e4815bb77a6a6c00.png)
+![A few trims](https://cdn.modrinth.com/data/XpzGz7KD/images/2966103eb5efb4e408088dbd502da364babf636d.png)
 
 ## Banner patterns
 Combine your elytra with a banner to add intricate patterns and designs to your elytra.

@@ -1,10 +1,10 @@
 package dev.kikugie.elytratrims.render;
 
 import com.mojang.datafixers.util.Pair;
-import dev.kikugie.elytratrims.config.ConfigState;
 import dev.kikugie.elytratrims.ElytraTrimsServer;
 import dev.kikugie.elytratrims.access.ElytraOverlaysAccessor;
 import dev.kikugie.elytratrims.access.LivingEntityAccessor;
+import dev.kikugie.elytratrims.config.ConfigState;
 import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
