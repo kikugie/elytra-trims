@@ -7,8 +7,8 @@ import com.mojang.serialization.DataResult;
 import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import dev.kikugie.elytratrims.render.ExtraElytraFeatureRenderer;
 import dev.kikugie.elytratrims.ElytraTrimsMod;
+import dev.kikugie.elytratrims.render.ExtraElytraFeatureRenderer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.LivingEntity;
@@ -30,12 +30,15 @@ public class ConfigState {
             RenderMode.getCodec(RenderType.TRIMS).forGetter(state -> state.trims),
             RenderMode.getCodec(RenderType.CAPE).forGetter(state -> state.cape),
             RenderMode.getCodec(RenderType.GLOW).forGetter(state -> state.glow),
-            RenderMode.getCodec(RenderType.GLOBAL).forGetter(state -> state.global)
+            RenderMode.getCodec(RenderType.GLOBAL).forGetter(state -> state.global),
+            MiscConfig.getCodec().forGetter(state -> state.misc)
     ).apply(instance, ConfigState::new));
 
-    public static final Text title = Text.translatable("minecraft.config.title");
-    public static final Text category = Text.translatable("minecraft.config.category");
-    public static final Text renderGroup = Text.translatable("minecraft.config.category.render");
+    public static final Text title = Text.translatable("elytratrims.config.title");
+    public static final Text category = Text.translatable("elytratrims.config.category");
+    public static final Text renderGroup = Text.translatable("elytratrims.config.category.render");
+    public static final Text miscGroup = Text.translatable("elytratrims.config.category.misc");
+    public final MiscConfig misc;
     private RenderMode color;
     private RenderMode patterns;
     private RenderMode trims;
@@ -43,13 +46,14 @@ public class ConfigState {
     private RenderMode glow;
     private RenderMode global;
 
-    private ConfigState(RenderMode colorMode, RenderMode patternsMode, RenderMode trimsMode, RenderMode capeMode, RenderMode glowMode, RenderMode globalMode) {
+    private ConfigState(RenderMode colorMode, RenderMode patternsMode, RenderMode trimsMode, RenderMode capeMode, RenderMode glowMode, RenderMode globalMode, MiscConfig misc) {
         this.color = colorMode;
         this.patterns = patternsMode;
         this.trims = trimsMode;
         this.cape = capeMode;
         this.glow = glowMode;
         this.global = globalMode;
+        this.misc = misc;
     }
 
     public static ConfigState load() {
@@ -66,7 +70,7 @@ public class ConfigState {
             }
         }
 
-        ConfigState state = new ConfigState(RenderMode.ALL, RenderMode.ALL, RenderMode.ALL, RenderMode.ALL, RenderMode.ALL, RenderMode.ALL);
+        ConfigState state = new ConfigState(RenderMode.ALL, RenderMode.ALL, RenderMode.ALL, RenderMode.ALL, RenderMode.ALL, RenderMode.ALL, new MiscConfig(true));
         try {
             Files.createFile(CONFIG_FILE);
             state.save();
@@ -144,13 +148,11 @@ public class ConfigState {
         GLOBAL("global");
 
         public final String type;
-        public final String image;
         private final String translation;
 
         RenderType(String type) {
             this.type = type;
-            this.image = type;
-            this.translation = "minecraft.config.type." + type;
+            this.translation = "elytratrims.config.type." + type;
         }
 
         public Text getName() {
@@ -177,7 +179,7 @@ public class ConfigState {
         RenderMode(String mode, int weight) {
             this.mode = mode;
             this.weight = weight;
-            this.translation = "minecraft.config.mode." + mode;
+            this.translation = "elytratrims.config.mode." + mode;
         }
 
         public static MapCodec<RenderMode> getCodec(RenderType type) {
@@ -187,10 +189,6 @@ public class ConfigState {
         public Text getName() {
             return Text.translatable(translation);
         }
-
-//        public Text getTooltip() {
-//            return Text.translatable(translation + ".tooltip");
-//        }
 
         @Override
         public String asString() {

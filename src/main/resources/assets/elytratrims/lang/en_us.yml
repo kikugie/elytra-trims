@@ -9,27 +9,32 @@ elytratrims:
     category:
       .: Config
       render: Render
+      misc: Misc
     type:
       color:
         .: Dye
-        tooltip: Show dyed elytras
+        tooltip: Show dyed elytras.
       cape:
         .: Cape
-        tooltip: Show cape texture on elytras
+        tooltip: Show cape texture on elytras.
       glow:
         .: Glow
-        tooltip: Glow elytra features
+        tooltip: Glow elytra features.
       patterns:
         .: Patterns
-        tooltip: Show banner patterns on elytras
+        tooltip: Show banner patterns on elytras.
       trims:
         .: Trims
-        tooltip: Show armor trims on elytras
+        tooltip: Show armor trims on elytras.
       global:
         .: Global
-        tooltip: Override all other render types
+        tooltip: Override all other render types.
     mode:
       none: None
       self: Self
       others: Others
       all: All
+    misc:
+      lock_pack:
+        .: Lock Default Pack
+        tooltip: Keep default pack enabled even in case of failed resource reload. Requires restart to apply.

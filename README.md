@@ -24,7 +24,11 @@ Craft your elytra with a glow ink sac to make it glow in the dark.
 ![Glowing trim](https://cdn.modrinth.com/data/XpzGz7KD/images/849d54736e4519df78678bf00a2077a528e866ad.png)
 
 ## Config
-Configure how you want the features displayed with the `/et-config <type> <mode>` command. This feature allows you to tweak the mod settings to your liking and display them in a way that suits your gameplay style.
+Supports following config libraries:
+- [Command Config Lib](https://modrinth.com/mod/command-config) - in-game and snapshot config. Uses `/et-config` command.
+- [YACL](https://modrinth.com/mod/yacl) - requires v3
+- [Cloth Config](https://modrinth.com/mod/cloth-config)
+Multiple config libraries can be installed without conflicts.
 
 ## Client and server side
 When installed on a server this mod enables crafting recipes for all features above. However, you can edit item nbt manually to render elytra features even without server side.
@@ -32,4 +36,4 @@ When installed on a server this mod enables crafting recipes for all features ab
 ![Server side explained](https://cdn.modrinth.com/data/XpzGz7KD/images/6586c8890bffd1ba21aee4bfdd33089ff2a77e8a.png)
 
 ## Customisation
-With resourcepack support, you can customize all of the mod's features to your liking. Change the texture of your armor trims or add a unique design to your elytra pattern with ease.
+With resourcepack support, you can customize all the mod's features to your liking. Change the texture of your armor trims or add a unique design to your elytra pattern with ease.

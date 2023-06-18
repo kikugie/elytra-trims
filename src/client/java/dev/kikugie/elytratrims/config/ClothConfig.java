@@ -8,17 +8,23 @@ import net.minecraft.client.gui.screen.Screen;
 
 public class ClothConfig {
     public static Screen createGui(Screen parent) {
+        ConfigState config = ElytraTrimsMod.getConfigState();
         ConfigBuilder builder = ConfigBuilder.create()
                 .setParentScreen(parent)
                 .setTitle(ConfigState.title);
         ConfigCategory render = builder.getOrCreateCategory(ConfigState.renderGroup);
-        ConfigEntryBuilder entryBuilder = builder.entryBuilder();
-        addOption(entryBuilder, render, ConfigState.RenderType.COLOR);
-        addOption(entryBuilder, render, ConfigState.RenderType.CAPE);
-        addOption(entryBuilder, render, ConfigState.RenderType.GLOW);
-        addOption(entryBuilder, render, ConfigState.RenderType.PATTERNS);
-        addOption(entryBuilder, render, ConfigState.RenderType.TRIMS);
-        addOption(entryBuilder, render, ConfigState.RenderType.GLOBAL);
+        ConfigEntryBuilder renderEntryBuilder = builder.entryBuilder();
+        for (ConfigState.RenderType type : ConfigState.RenderType.values()) {
+            addOption(renderEntryBuilder, render, type);
+        }
+        ConfigCategory misc = builder.getOrCreateCategory(ConfigState.miscGroup);
+        misc.addEntry(builder.entryBuilder().startBooleanToggle(config.misc.lockDefaultPack.getName(), config.misc.lockDefaultPack.value)
+                .setSaveConsumer((value) -> config.misc.lockDefaultPack.value = value)
+                .setDefaultValue(true)
+                .setTooltip(config.misc.lockDefaultPack.getTooltip())
+                .requireRestart()
+                .build());
+
         builder.setSavingRunnable(ElytraTrimsMod.getConfigState()::save);
         return builder.build();
     }

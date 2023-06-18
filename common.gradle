@@ -1,13 +1,14 @@
+import net.darkhax.curseforgegradle.TaskPublishCurseForge
+
 //file:noinspection GroovyAssignabilityCheck
 apply plugin: "maven-publish"
 apply plugin: "fabric-loom"
-apply plugin: "io.github.juuxel.loom-quiltflower"
+//apply plugin: "io.github.juuxel.loom-quiltflower"
 apply plugin: "com.replaymod.preprocess"
 apply plugin: "me.fallenbreath.yamlang"
 apply plugin: "com.modrinth.minotaur"
 apply plugin: "com.github.breadmoirai.github-release"
-
-int mcVersion = 1
+apply plugin: "net.darkhax.curseforgegradle"
 
 loom {
     splitEnvironmentSourceSets()
@@ -21,6 +22,7 @@ loom {
 
 }
 
+int mcVersion = 1
 preprocess {
     mcVersion = vars.get()["MC"] as int
     tabIndentation = false
@@ -32,6 +34,8 @@ repositories {
     maven { url "https://maven.isxander.dev/releases" }
     maven { url "https://maven.shedaniel.me/" }
     maven { url "https://plugins.gradle.org/m2/" }
+    maven { url "https://maven.kikugie.dev/releases" }
+
 }
 
 // https://github.com/FabricMC/fabric-loader/issues/783
@@ -53,6 +57,7 @@ dependencies {
         exclude(group: "net.fabricmc.fabric-api")
     }
     modImplementation "dev.isxander.yacl:yet-another-config-lib-fabric:${project.yacl_version}"
+    modImplementation "dev.kikugie.command-config:${project.cmd_config_version}"
 }
 
 loom {
@@ -69,12 +74,6 @@ loom {
 remapJar {
     remapperIsolation = true
 }
-
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
-
-group = project.maven_group
-archivesBaseName = project.archives_base_name + "-" + project.mod_version + "+" + project.game_versions
 
 processResources {
     inputs.property "version", project.mod_version
@@ -93,7 +92,7 @@ processResources {
 // https://github.com/Fallen-Breath/yamlang
 yamlang {
     targetSourceSets = [sourceSets.main]
-    inputDir = "assets/minecraft/lang"
+    inputDir = "assets/elytratrims/lang"
 }
 
 tasks.withType(JavaCompile).configureEach {
@@ -101,6 +100,9 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+
     withSourcesJar()
 }
 
@@ -108,6 +110,16 @@ jar {
     from(rootProject.file("LICENSE")) {
         rename { "${it}_${project.archivesBaseName}" }
     }
+}
+
+def debug = true
+
+tasks.register("release") {
+    group "publishing"
+    dependsOn "modrinth"
+    dependsOn "githubRelease"
+    dependsOn "curseforge"
+    dependsOn "publish"
 }
 
 modrinth {
@@ -128,7 +140,7 @@ modrinth {
     syncBodyFrom = rootProject.file("README.md").text
     changelog = rootProject.file("CHANGELOG.md").text
     failSilently = true
-    debugMode = true
+    debugMode = debug
 }
 
 githubRelease {
@@ -143,7 +155,26 @@ githubRelease {
     releaseAssets = [remapJar, sourcesJar]
     allowUploadToExisting = true
     overwrite = false
-    dryRun = true
+    dryRun = debug
+}
+
+tasks.register("curseforge", TaskPublishCurseForge) {
+    group "publishing"
+    disableVersionDetection()
+    apiToken = env.fetch("CURSEFORGE_TOKEN", "")
+
+    def mainFile = upload(project.project_id, remapJar)
+    mainFile.releaseType = "release"
+    mainFile.displayName = "Elytra Trims " + project.mod_version + " for " + project.game_versions
+    mainFile.changelog = rootProject.file("CHANGELOG.md").text
+    mainFile.changelogType = "markdown"
+    mainFile.addRequirement "fabric-api"
+    mainFile.addOptional "yacl", "cloth-config"
+    mainFile.addModLoader "fabric", "quilt"
+    for (String version : project.modrinth_versions.split(" ")) {
+        mainFile.addGameVersion version
+    }
+    debugMode = debug
 }
 
 publishing {

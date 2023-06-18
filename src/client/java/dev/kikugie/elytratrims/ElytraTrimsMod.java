@@ -1,9 +1,8 @@
 package dev.kikugie.elytratrims;
 
-import dev.kikugie.elytratrims.config.ConfigCommand;
+import dev.kikugie.elytratrims.config.CommandConfig;
 import dev.kikugie.elytratrims.config.ConfigState;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
 import net.fabricmc.loader.api.FabricLoader;
@@ -32,17 +31,18 @@ public class ElytraTrimsMod implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         LOGGER.info("Making elytras fancier!");
+        loadConfig();
 
         FabricLoader.getInstance().getModContainer(MOD_ID).ifPresent(container -> {
-                    LOGGER.info("Registering resourcepack");
+                    LOGGER.info("Registering Elytra Trims resourcepack");
                     ResourceManagerHelper.registerBuiltinResourcePack(
                             new Identifier(MOD_ID, "default"),
                             container,
                             Text.literal("Elytra Trims Defaults"),
-                            ResourcePackActivationType.ALWAYS_ENABLED
+                            configState.misc.lockDefaultPack.value ? ResourcePackActivationType.ALWAYS_ENABLED : ResourcePackActivationType.DEFAULT_ENABLED
                     );
                 });
-        loadConfig();
-        ClientCommandRegistrationCallback.EVENT.register(ConfigCommand::register);
+        if (FabricLoader.getInstance().isModLoaded("command-config"))
+            CommandConfig.register();
     }
 }
