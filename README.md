@@ -1,4 +1,4 @@
-<div style="text-align: center;">
+<center><div>
 <img alt="logo" height="256" src="https://cdn.modrinth.com/data/XpzGz7KD/8ff6751948e096f540e320681742d0b3b918931e.png">
 
 <h1>Elytra Trims</h1>
@@ -15,7 +15,7 @@ Let your creativity soar and make your elytra stand out with the Elytra Trims mo
 <img alt="curseforge" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/curseforge_vector.svg">
 </a>
 
-<a href="https://github.com/Kikugie/elytra-trims">
+<a href="https://github.com/kikugie/elytra-trims">
 <img alt="github" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/github_vector.svg">
 </a>
 
@@ -26,7 +26,7 @@ Let your creativity soar and make your elytra stand out with the Elytra Trims mo
 <img alt="forge" height="40" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact/unsupported/forge_vector.svg">
 
 <hr>
-</div>
+</div></center>
 
 ## Trims
 Put any trim on your elytra just like any other armor. Mod provides a default resourcepack with all vanilla trims, but it can be expanded further.
@@ -60,5 +60,5 @@ When installed on a server this mod enables crafting recipes for all features ab
 
 ![Server side explained](https://cdn.modrinth.com/data/XpzGz7KD/images/6586c8890bffd1ba21aee4bfdd33089ff2a77e8a.png)
 
-## Customisation
+## Customization
 With resourcepack support, you can customize all the mod's features to your liking. Change the texture of your armor trims or add a unique design to your elytra pattern with ease.

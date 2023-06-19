@@ -176,6 +176,7 @@ tasks.register("curseforge", TaskPublishCurseForge) {
     mainFile.addRequirement "fabric-api"
     mainFile.addOptional "yacl", "cloth-config"
     mainFile.addModLoader "fabric", "quilt"
+    mainFile.addGameVersion "client"
     for (String version : project.modrinth_versions.split(" ")) {
         mainFile.addGameVersion version
     }

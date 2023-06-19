@@ -1,10 +1,7 @@
-## Changed
-- Updated the Ward trim texture:
+## Added
+- Show elytra outline in the smithing table slot if recipe is available.
 
-![](https://i.imgur.com/Tvx5Lje.png)
+![](https://i.imgur.com/NvLOz7w.png)
 
-- Command config now depends on [Command Config Lib](https://modrinth.com/mod/command-config).
-- Moved to split source set.
-
-# Fixed
-- Default resourcepack is now locked to prevent accidental unloading. This comes with an option to disable the lock.
+## Fixed
+- Potential mixin compatibility issue in tooltip rendering.
