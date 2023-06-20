@@ -14,7 +14,7 @@ loom {
     splitEnvironmentSourceSets()
 
     mods {
-        "minecraft" {
+        "elytratrims" {
             sourceSet sourceSets.main
             sourceSet sourceSets.client
         }
