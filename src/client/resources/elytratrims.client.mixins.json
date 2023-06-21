@@ -1,6 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
+  "plugin": "dev.kikugie.elytratrims.ConditionalMixinPlugin",
   "package": "dev.kikugie.elytratrims.mixin.client",
   "compatibilityLevel": "JAVA_17",
   "client": [
@@ -9,7 +10,8 @@
     "ItemMixin",
     "LivingEntityMixin",
     "MinecraftClientMixin",
-    "SmithingScreenMixin"
+    "SmithingScreenMixin",
+    "compat.elytraslot.ElytraSlotLayerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
