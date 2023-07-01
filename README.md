@@ -28,6 +28,8 @@ Let your creativity soar and make your elytra stand out with the Elytra Trims mo
 <hr>
 </div></center>
 
+### For more trims check out [Elytra Trims Extensions](https://modrinth.com/mod/elytra-trims-extensions)
+
 ## Trims
 Put any trim on your elytra just like any other armor. Mod provides a default resourcepack with all vanilla trims, but it can be expanded further.
 

@@ -6,8 +6,6 @@
   "compatibilityLevel": "JAVA_17",
   "client": [
     "ElytraFeatureRendererMixin",
-    "ElytraItemMixin",
-    "ItemMixin",
     "LivingEntityMixin",
     "MinecraftClientMixin",
     "SmithingScreenMixin",

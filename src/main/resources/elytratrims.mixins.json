@@ -5,6 +5,8 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "CauldronBehaviorMixin",
+    "ElytraItemMixin",
+    "ItemMixin",
     "ItemStackMixin",
     "SynchronizeRecipesS2CPacketMixin"
   ],

@@ -1,4 +1,4 @@
-package dev.kikugie.elytratrims.mixin.client;
+package dev.kikugie.elytratrims.mixin;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -15,7 +15,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
 
-@Environment(EnvType.CLIENT)
 @Mixin(Item.class)
 public abstract class ItemMixin {
     @Inject(method = "appendTooltip", at = @At("HEAD"))
