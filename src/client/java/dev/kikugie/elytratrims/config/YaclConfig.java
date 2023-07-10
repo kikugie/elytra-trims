@@ -33,6 +33,15 @@ public class YaclConfig {
                                         .controller(TickBoxControllerBuilder::create)
                                         .flag(OptionFlag.GAME_RESTART)
                                         .build())
+                                .option(Option.<Boolean>createBuilder()
+                                        .name(config.misc.materialPatch.getName())
+                                        .description(OptionDescription.of(config.misc.materialPatch.getTooltip()))
+                                        .binding(true,
+                                                () -> config.misc.materialPatch.value,
+                                                (value) -> config.misc.materialPatch.value = value)
+                                        .controller(TickBoxControllerBuilder::create)
+                                        .flag(OptionFlag.ASSET_RELOAD)
+                                        .build())
                                 .build())
                         .build())
                 .save(ElytraTrimsMod.getConfigState()::save)

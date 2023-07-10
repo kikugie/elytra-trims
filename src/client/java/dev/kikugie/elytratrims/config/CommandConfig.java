@@ -46,7 +46,12 @@ public class CommandConfig {
                                 .valueAccess(Defaults.defaultValueAccess(
                                         () -> config.misc.lockDefaultPack.value,
                                         (value) -> config.misc.lockDefaultPack.value = value))
-                                .helpFunc(config.misc.lockDefaultPack::getTooltip)))
+                                .helpFunc(config.misc.lockDefaultPack::getTooltip))
+                        .option((unused) -> SimpleOptions.bool("material_patch", source)
+                                .valueAccess(Defaults.defaultValueAccess(
+                                        () -> config.misc.materialPatch.value,
+                                        (value) -> config.misc.materialPatch.value = value))
+                                .helpFunc(config.misc.materialPatch::getTooltip)))
                 .node((node) -> {
                     LiteralArgumentBuilder<FabricClientCommandSource> literal = literal("reset");
                     node.then(literal.executes(context -> {

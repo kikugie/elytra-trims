@@ -70,7 +70,7 @@ public class ConfigState {
             }
         }
 
-        ConfigState state = new ConfigState(RenderMode.ALL, RenderMode.ALL, RenderMode.ALL, RenderMode.ALL, RenderMode.ALL, RenderMode.ALL, new MiscConfig(true));
+        ConfigState state = new ConfigState(RenderMode.ALL, RenderMode.ALL, RenderMode.ALL, RenderMode.ALL, RenderMode.ALL, RenderMode.ALL, new MiscConfig(true, true));
         try {
             Files.createFile(CONFIG_FILE);
             state.save();

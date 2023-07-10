@@ -133,7 +133,7 @@ modrinth {
     projectId = "elytra-trims"
     versionName = "Elytra Trims " + project.mod_version + " for " + project.game_versions
     versionNumber = project.mod_version
-    versionType = "release"
+    versionType = "beta"
     uploadFile = remapJar
     additionalFiles = [sourcesJar]
     gameVersions = project.modrinth_versions.split(" ").toList()
@@ -171,7 +171,7 @@ tasks.register("curseforge", TaskPublishCurseForge) {
     apiToken = env.fetch("CURSEFORGE_TOKEN", "")
 
     def mainFile = upload(project.project_id, remapJar)
-    mainFile.releaseType = "release"
+    mainFile.releaseType = "beta"
     mainFile.displayName = "Elytra Trims " + project.mod_version + " for " + project.game_versions
     mainFile.changelog = rootProject.file("CHANGELOG.md").text
     mainFile.changelogType = "markdown"

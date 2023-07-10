@@ -8,12 +8,15 @@ import net.minecraft.text.Text;
 
 public class MiscConfig {
     public static final Codec<MiscConfig> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            Codec.BOOL.fieldOf("lockDefaultPack").forGetter(state -> state.lockDefaultPack.value)
+            Codec.BOOL.fieldOf("lockDefaultPack").forGetter(state -> state.lockDefaultPack.value),
+            Codec.BOOL.fieldOf("materialPatch").forGetter(state -> state.materialPatch.value)
     ).apply(instance, MiscConfig::new));
     public final BooleanEntry lockDefaultPack;
+    public final BooleanEntry materialPatch;
 
-    public MiscConfig(boolean lockDefaultPack) {
+    public MiscConfig(boolean lockDefaultPack, boolean materialPatch) {
         this.lockDefaultPack = new BooleanEntry(lockDefaultPack, "lock_pack");
+        this.materialPatch = new BooleanEntry(materialPatch, "material_patch");
     }
 
     public static MapCodec<MiscConfig> getCodec() {

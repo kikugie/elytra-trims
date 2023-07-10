@@ -24,6 +24,12 @@ public class ClothConfig {
                 .setTooltip(config.misc.lockDefaultPack.getTooltip())
                 .requireRestart()
                 .build());
+        misc.addEntry(builder.entryBuilder().startBooleanToggle(config.misc.materialPatch.getName(), config.misc.materialPatch.value)
+                .setSaveConsumer((value) -> config.misc.materialPatch.value = value)
+                .setDefaultValue(true)
+                .setTooltip(config.misc.materialPatch.getTooltip())
+                .requireRestart()
+                .build());
 
         builder.setSavingRunnable(ElytraTrimsMod.getConfigState()::save);
         return builder.build();
