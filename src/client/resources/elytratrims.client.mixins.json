@@ -8,9 +8,10 @@
     "ElytraFeatureRendererMixin",
     "LivingEntityMixin",
     "MinecraftClientMixin",
-    "experimental.PalettedPermutationsAtlasSourceMixin",
     "SmithingScreenMixin",
-    "compat.elytraslot.ElytraSlotLayerMixin"
+    "compat.elytraslot.ElytraSlotLayerMixin",
+    "compat.elytratrinket.ElytraTrinketFeatureRendererMixin",
+    "experimental.PalettedPermutationsAtlasSourceMixin"
   ],
   "injectors": {
     "defaultRequire": 1

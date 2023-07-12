@@ -35,6 +35,17 @@ repositories {
     maven { url "https://maven.shedaniel.me/" }
     maven { url "https://plugins.gradle.org/m2/" }
     maven { url "https://maven.kikugie.dev/releases" }
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "Modrinth"
+                url = "https://api.modrinth.com/maven"
+            }
+        }
+        filter {
+            includeGroup "maven.modrinth"
+        }
+    }
 }
 
 // https://github.com/FabricMC/fabric-loader/issues/783
