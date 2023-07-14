@@ -2,8 +2,8 @@
 name: Bug report
 about: Something doesn't seem correct and it might be a bug
 title: ''
-labels: ''
-assignees: ''
+labels: 'bug'
+assignees: 'kikugie'
 
 ---
 
@@ -31,7 +31,7 @@ What actually happens: '...'
 Describe the environment to reproduce this bug:
 
 - Minecraft version: '...'
-- TemplateMod version: '...'
+- Elytra Trims version: '...'
 - Other related mod versions: '...'
 - ...
 
