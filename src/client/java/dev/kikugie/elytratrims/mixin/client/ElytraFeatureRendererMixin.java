@@ -21,13 +21,13 @@ import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyArgs;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
-@Mixin(ElytraFeatureRenderer.class)
+@Mixin(value = ElytraFeatureRenderer.class, priority = 1100)
 public class ElytraFeatureRendererMixin {
     @Shadow
     @Final
@@ -35,6 +35,7 @@ public class ElytraFeatureRendererMixin {
     @Shadow
     @Final
     private ElytraEntityModel<?> elytra;
+    @Unique
     private ExtraElytraFeatureRenderer extraRenderer;
 
     @Inject(method = "<init>", at = @At("TAIL"))
@@ -42,19 +43,21 @@ public class ElytraFeatureRendererMixin {
         extraRenderer = new ExtraElytraFeatureRenderer(elytra, MinecraftClient.getInstance().getBakedModelManager().getAtlas(TexturedRenderLayers.ARMOR_TRIMS_ATLAS_TEXTURE));
     }
 
-    @ModifyArgs(method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/LivingEntity;FFFFFF)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/RenderLayer;getArmorCutoutNoCull(Lnet/minecraft/util/Identifier;)Lnet/minecraft/client/render/RenderLayer;"))
-    private void renderCapeOnGuiArmorStand(Args args, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, LivingEntity entity, float f, float g, float h, float j, float k, float l) {
+    @ModifyArg(method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/LivingEntity;FFFFFF)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/RenderLayer;getArmorCutoutNoCull(Lnet/minecraft/util/Identifier;)Lnet/minecraft/client/render/RenderLayer;"))
+    private Identifier renderCapeOnGuiArmorStand(Identifier texture, @Local(argsOnly = true) LivingEntity entity) {
         ClientPlayerEntity player = MinecraftClient.getInstance().player;
         assert player != null;
-
-        if (entity instanceof PlayerEntity &&
-                ConfigState.cancelRender(ConfigState.RenderType.CAPE, entity)) {
-            args.set(0, SKIN);
-        } else if (!ExtraElytraFeatureRenderer.skipRenderIfMissingTexture(entity) &&
-                player.getCapeTexture() != null &&
-                player.isPartVisible(PlayerModelPart.CAPE)) {
-            args.set(0, player.getCapeTexture());
+        Identifier cape = player.getCapeTexture();
+        if (texture.equals(SKIN) || texture.equals(cape)) {
+            if (entity instanceof PlayerEntity
+                    && ConfigState.cancelRender(ConfigState.RenderType.CAPE, entity))
+                return SKIN;
+            if (!ExtraElytraFeatureRenderer.skipRenderIfMissingTexture(entity)
+                    && player.getCapeTexture() != null
+                    && player.isPartVisible(PlayerModelPart.CAPE))
+                return player.getCapeTexture();
         }
+        return texture;
     }
 
     @WrapOperation(method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/LivingEntity;FFFFFF)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/model/ElytraEntityModel;render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;IIFFFF)V"))

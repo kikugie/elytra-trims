@@ -2,6 +2,7 @@ package dev.kikugie.elytratrims.config;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.JsonOps;
@@ -56,21 +57,23 @@ public class ConfigState {
         this.misc = misc;
     }
 
+    public ConfigState() {
+        this(RenderMode.ALL, RenderMode.ALL, RenderMode.ALL, RenderMode.ALL, RenderMode.ALL, RenderMode.ALL, new MiscConfig(true, true));
+    }
+
     public static ConfigState load() {
         if (Files.exists(CONFIG_FILE)) {
             try {
                 String jsonString = FileUtils.readFileToString(CONFIG_FILE.toFile(), StandardCharsets.UTF_8);
                 JsonElement json = JsonParser.parseString(jsonString);
-                return CODEC.decode(JsonOps.INSTANCE, json)
-                        .resultOrPartial(s -> ElytraTrimsMod.LOGGER.error("Error reading config data!\n{}", s))
-                        .orElseThrow().getFirst();
+                return CODEC.decode(JsonOps.INSTANCE, json).resultOrPartial(s -> ElytraTrimsMod.LOGGER.error("Error reading config data!\n{}", s)).orElse(new Pair<>(new ConfigState(), json)).getFirst();
             } catch (IOException e) {
                 ElytraTrimsMod.LOGGER.error("Error reading config file!\n", e);
             } catch (NoSuchElementException ignored) {
             }
         }
 
-        ConfigState state = new ConfigState(RenderMode.ALL, RenderMode.ALL, RenderMode.ALL, RenderMode.ALL, RenderMode.ALL, RenderMode.ALL, new MiscConfig(true, true));
+        ConfigState state = new ConfigState();
         try {
             Files.createFile(CONFIG_FILE);
             state.save();
