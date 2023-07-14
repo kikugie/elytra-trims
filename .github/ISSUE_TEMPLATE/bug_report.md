@@ -1,7 +1,7 @@
 ---
 name: Bug report
 about: Something doesn't seem correct and it might be a bug
-title: ''
+title: '[BUG] ...'
 labels: 'bug'
 assignees: 'kikugie'
 
@@ -37,4 +37,4 @@ Describe the environment to reproduce this bug:
 
 ## Log
 
-If it's a crash, send the corresponding Minecraft log in the `logs` folder, or crash report in the `crash-reports`, as attachment here.
+If it's a crash, send the corresponding Minecraft log in the `logs` folder as an attachment here or upload to https://mclo.gs. Please upload the full game log, because a crash report is usually insufficient to inspect a problem.
