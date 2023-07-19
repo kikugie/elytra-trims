@@ -4,7 +4,9 @@ import com.mojang.datafixers.util.Pair;
 import dev.kikugie.elytratrims.ElytraTrimsServer;
 import dev.kikugie.elytratrims.access.ElytraOverlaysAccessor;
 import dev.kikugie.elytratrims.access.LivingEntityAccessor;
+import dev.kikugie.elytratrims.compat.StackableTrimsList;
 import dev.kikugie.elytratrims.config.ConfigState;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
@@ -25,6 +27,7 @@ import net.minecraft.util.Util;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -137,7 +140,16 @@ public class ExtraElytraFeatureRenderer {
 
         World world = entity.getWorld();
 
-        ArmorTrim trim = ArmorTrim.getTrim(world.getRegistryManager(), stack).orElse(null);
+        // Readable code is my passion
+        List<ArmorTrim> trims = FabricLoader.getInstance().isModLoaded("stackabletrims")
+                ? StackableTrimsList.getTrims(world.getRegistryManager(), stack).orElse(Collections.emptyList())
+                : ArmorTrim.getTrim(world.getRegistryManager(), stack).map(Collections::singletonList).orElse(Collections.emptyList());
+
+        for (ArmorTrim trim : trims)
+            renderTrim(elytra, trim, matrices, provider, entity, stack, light, alpha);
+    }
+
+    public void renderTrim(ElytraEntityModel<?> elytra, ArmorTrim trim, MatrixStack matrices, VertexConsumerProvider provider, LivingEntity entity, ItemStack stack, int light, float alpha) {
         if (trim == null)
             return;
 

@@ -69,6 +69,8 @@ dependencies {
     }
     modImplementation "dev.isxander.yacl:yet-another-config-lib-fabric:${project.yacl_version}"
     modImplementation "dev.kikugie.command-config:${project.cmd_config_version}"
+
+    modCompileOnly "maven.modrinth:stackable-trims:${project.stackable_trims_version}"
 }
 
 loom {
