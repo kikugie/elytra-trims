@@ -1,9 +1,9 @@
 package dev.kikugie.elytratrims.compat;
 
+import io.github.apfelrauber.stacked_trims.ArmorTrimList;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.trim.ArmorTrim;
 import net.minecraft.registry.DynamicRegistryManager;
-import org.stackabletrims.ArmorTrimList;
 
 import java.util.List;
 import java.util.Optional;

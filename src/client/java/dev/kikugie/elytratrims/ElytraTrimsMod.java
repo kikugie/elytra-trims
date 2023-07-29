@@ -20,6 +20,8 @@ public class ElytraTrimsMod implements ClientModInitializer {
     public static AtlasSourceType ELYTRA_OVERLAY;
     private static ConfigState configState;
 
+    public static boolean stackedTrimsLoaded = false;
+
     public static ConfigState getConfigState() {
         return configState;
     }
@@ -33,15 +35,17 @@ public class ElytraTrimsMod implements ClientModInitializer {
         LOGGER.info("Making elytras fancier!");
         loadConfig();
 
-        FabricLoader.getInstance().getModContainer(MOD_ID).ifPresent(container -> {
-                    LOGGER.info("Registering Elytra Trims resourcepack");
-                    ResourceManagerHelper.registerBuiltinResourcePack(
-                            new Identifier(MOD_ID, "default"),
-                            container,
-                            Text.literal("Elytra Trims Defaults"),
-                            configState.misc.lockDefaultPack.value ? ResourcePackActivationType.ALWAYS_ENABLED : ResourcePackActivationType.DEFAULT_ENABLED
-                    );
-                });
+        FabricLoader fabric = FabricLoader.getInstance();
+        stackedTrimsLoaded = fabric.isModLoaded("stacked_trims");
+        fabric.getModContainer(MOD_ID).ifPresent(container -> {
+            LOGGER.info("Registering Elytra Trims resourcepack");
+            ResourceManagerHelper.registerBuiltinResourcePack(
+                    new Identifier(MOD_ID, "default"),
+                    container,
+                    Text.literal("Elytra Trims Defaults"),
+                    configState.misc.lockDefaultPack.value ? ResourcePackActivationType.ALWAYS_ENABLED : ResourcePackActivationType.DEFAULT_ENABLED
+            );
+        });
         if (FabricLoader.getInstance().isModLoaded("command-config"))
             CommandConfig.register();
     }

@@ -67,10 +67,10 @@ dependencies {
     modApi("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
-    modImplementation "dev.isxander.yacl:yet-another-config-lib-fabric:${project.yacl_version}"
-    modImplementation "dev.kikugie.command-config:${project.cmd_config_version}"
+    modApi "dev.isxander.yacl:yet-another-config-lib-fabric:${project.yacl_version}"
+    modApi "dev.kikugie.command-config:${project.cmd_config_version}"
 
-    modCompileOnly "maven.modrinth:stackable-trims:${project.stackable_trims_version}"
+    modCompileOnly "maven.modrinth:stacked-armor-trims:${project.stacked_trims_version}"
 }
 
 loom {

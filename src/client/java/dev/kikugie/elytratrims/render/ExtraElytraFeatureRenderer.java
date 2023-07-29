@@ -1,6 +1,7 @@
 package dev.kikugie.elytratrims.render;
 
 import com.mojang.datafixers.util.Pair;
+import dev.kikugie.elytratrims.ElytraTrimsMod;
 import dev.kikugie.elytratrims.ElytraTrimsServer;
 import dev.kikugie.elytratrims.access.ElytraOverlaysAccessor;
 import dev.kikugie.elytratrims.access.LivingEntityAccessor;
@@ -141,7 +142,7 @@ public class ExtraElytraFeatureRenderer {
         World world = entity.getWorld();
 
         // Readable code is my passion
-        List<ArmorTrim> trims = FabricLoader.getInstance().isModLoaded("stackabletrims")
+        List<ArmorTrim> trims = ElytraTrimsMod.stackedTrimsLoaded
                 ? StackableTrimsList.getTrims(world.getRegistryManager(), stack).orElse(Collections.emptyList())
                 : ArmorTrim.getTrim(world.getRegistryManager(), stack).map(Collections::singletonList).orElse(Collections.emptyList());
 
