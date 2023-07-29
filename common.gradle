@@ -136,8 +136,8 @@ def debug = true
 tasks.register("release") {
     group "publishing"
     dependsOn "modrinth"
-    dependsOn "githubRelease"
     dependsOn "curseforge"
+    dependsOn "githubRelease"
     if (!debug) dependsOn "publish"
 }
 
@@ -147,8 +147,8 @@ modrinth {
     versionName = "Elytra Trims " + project.mod_version + " for " + project.game_versions
     versionNumber = project.mod_version
     versionType = "beta"
-    uploadFile = remapJar
-    additionalFiles = [sourcesJar]
+    uploadFile = remapJar.archiveFile
+    additionalFiles = [sourcesJar.archiveFile]
     gameVersions = project.modrinth_versions.split(" ").toList()
     loaders = ["fabric", "quilt"]
     dependencies {
@@ -172,7 +172,7 @@ githubRelease {
     releaseName = project.mod_name + " " + project.mod_version
     body = rootProject.file("CHANGELOG.md").text
     draft = mcVersion >= 12000
-    releaseAssets = [remapJar, sourcesJar]
+    releaseAssets = [remapJar.archiveFile, sourcesJar.archiveFile]
     allowUploadToExisting = true
     overwrite = false
     dryRun = debug
@@ -183,7 +183,7 @@ tasks.register("curseforge", TaskPublishCurseForge) {
     disableVersionDetection()
     apiToken = env.fetch("CURSEFORGE_TOKEN", "")
 
-    def mainFile = upload(project.project_id, remapJar)
+    def mainFile = upload(project.project_id, remapJar.archiveFile)
     mainFile.releaseType = "beta"
     mainFile.displayName = "Elytra Trims " + project.mod_version + " for " + project.game_versions
     mainFile.changelog = rootProject.file("CHANGELOG.md").text
