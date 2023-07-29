@@ -7,7 +7,6 @@ import dev.kikugie.elytratrims.access.ElytraOverlaysAccessor;
 import dev.kikugie.elytratrims.access.LivingEntityAccessor;
 import dev.kikugie.elytratrims.compat.StackableTrimsList;
 import dev.kikugie.elytratrims.config.ConfigState;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
