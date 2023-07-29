@@ -1,0 +1,9 @@
+name: Question
+description: Ask about mod features
+labels: [question]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Write your question here.
