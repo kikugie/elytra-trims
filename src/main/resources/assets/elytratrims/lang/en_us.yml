@@ -39,7 +39,6 @@ elytratrims:
         .: Lock default pack
         tooltip: Keep default pack enabled even in case of failed resource reload. Requires restart to apply.
       material_patch:
-        .: $6Generate materials
+        .: Generate materials
         tooltip: "Generate elytra trims for every registered armor trim.\n
-        This will not create new textures for missing patterns, but works well for extra materials.\n
-        §6This is an experimental feature. Please report any issues with it on the GitHub page!"
+        This will not create new textures for missing patterns, but works well for extra materials."
