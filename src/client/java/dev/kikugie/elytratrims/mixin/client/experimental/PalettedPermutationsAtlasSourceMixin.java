@@ -9,6 +9,7 @@ import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -22,6 +23,7 @@ import java.util.Map;
  */
 @Mixin(PalettedPermutationsAtlasSource.class)
 public class PalettedPermutationsAtlasSourceMixin implements ElytraSourceAccessor {
+    @Unique
     private final String SUPPORTED_PATTERN = "trims/models/armor/[\\w_-]+";
     @Shadow
     @Final
@@ -32,6 +34,7 @@ public class PalettedPermutationsAtlasSourceMixin implements ElytraSourceAccesso
     @Shadow
     @Final
     public Map<String, Identifier> permutations;
+    @Unique
     private boolean elytra = false;
 
     @Inject(method = "load", at = @At("HEAD"))
@@ -43,7 +46,7 @@ public class PalettedPermutationsAtlasSourceMixin implements ElytraSourceAccesso
         List<Identifier> elytraTextures = new ArrayList<>(textures.size());
         for (Identifier texture : textures) {
             String path = texture.getPath();
-            if (!path.endsWith("_leggings") && path.matches(SUPPORTED_PATTERN))
+            if (!path.contains("leggings") && path.matches(SUPPORTED_PATTERN))
                 elytraTextures.add(new Identifier(texture.getNamespace(), path.replaceFirst("armor", "elytra")));
         }
         if (elytraTextures.isEmpty())
@@ -54,6 +57,7 @@ public class PalettedPermutationsAtlasSourceMixin implements ElytraSourceAccesso
         elytraSource.load(resourceManager, regions);
     }
 
+    @Unique
     @Override
     public void enableElytra() {
         elytra = true;
