@@ -53,13 +53,13 @@ public class PalettedPermutationsAtlasSourceMixin implements ElytraSourceAccesso
             return;
 
         PalettedPermutationsAtlasSource elytraSource = new PalettedPermutationsAtlasSource(elytraTextures, paletteKey, permutations);
-        ((ElytraSourceAccessor) elytraSource).enableElytra();
+        ((ElytraSourceAccessor) elytraSource).elytra_trims$enableElytra();
         elytraSource.load(resourceManager, regions);
     }
 
     @Unique
     @Override
-    public void enableElytra() {
+    public void elytra_trims$enableElytra() {
         elytra = true;
     }
 }

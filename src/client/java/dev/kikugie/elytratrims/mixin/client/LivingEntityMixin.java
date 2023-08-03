@@ -5,19 +5,21 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 
 @Environment(EnvType.CLIENT)
 @Mixin(LivingEntity.class)
 public class LivingEntityMixin implements LivingEntityAccessor {
+    @Unique
     private boolean isGui = false;
 
     @Override
-    public void markGui() {
+    public void elytra_trims$markGui() {
         isGui = true;
     }
 
     @Override
-    public boolean isGui() {
+    public boolean elytra_trims$isGui() {
         return isGui;
     }
 }

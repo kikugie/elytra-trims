@@ -63,7 +63,7 @@ public class ExtraElytraFeatureRenderer {
     }
 
     public static boolean skipRenderIfMissingTexture(LivingEntity entity) {
-        return !((LivingEntityAccessor) entity).isGui();
+        return !((LivingEntityAccessor) entity).elytra_trims$isGui();
     }
 
     private static boolean isMissing(Sprite sprite) {

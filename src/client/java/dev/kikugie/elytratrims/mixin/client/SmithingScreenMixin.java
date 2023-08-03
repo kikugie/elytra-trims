@@ -13,6 +13,7 @@ import org.jetbrains.annotations.Nullable;
 import org.joml.Quaternionf;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
@@ -23,17 +24,21 @@ import java.util.List;
 
 @Mixin(SmithingScreen.class)
 public abstract class SmithingScreenMixin {
+    @Unique
     private static final Identifier EMPTY_ARMOR_SLOT_ELYTRA_TEXTURE = new Identifier("elytratrims", "item/empty_armor_slot_elytra");
+    @Unique
     private final Quaternionf elytraRotation = new Quaternionf().rotationXYZ(0.43633232F, (float) Math.PI, (float) Math.PI);
     @Shadow
     private @Nullable ArmorStandEntity armorStand;
+    @Unique
     private boolean isElytra = false;
+    @Unique
     private boolean renderElytraOutline = false;
 
     @Inject(method = "setup", at = @At("TAIL"))
     private void markGuiArmorStand(CallbackInfo ci) {
         if (armorStand != null)
-            ((LivingEntityAccessor) armorStand).markGui();
+            ((LivingEntityAccessor) armorStand).elytra_trims$markGui();
         if (Items.ELYTRA.getDefaultStack().isIn(ItemTags.TRIMMABLE_ARMOR))
             renderElytraOutline = true;
     }
