@@ -15,6 +15,7 @@ import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.texture.MissingSprite;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteAtlasTexture;
+import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
@@ -186,17 +187,22 @@ public class ExtraElytraFeatureRenderer {
 
     private Sprite getPatternSprite(RegistryEntry<BannerPattern> pattern) {
         Optional<RegistryKey<BannerPattern>> optional = pattern.getKey();
-        if (optional.isPresent()) {
-            String[] path = TexturedRenderLayers.getShieldPatternTextureId(optional.get()).getTextureId().getPath().split("/");
-            String id = path[path.length - 1];
-            return atlas.getSprite(new Identifier("entity/elytra/patterns/" + id));
-        }
-        return atlas.getSprite(null);
+        if (optional.isEmpty())
+            return atlas.getSprite(null);
+
+        SpriteIdentifier shieldSprite = TexturedRenderLayers.getShieldPatternTextureId(optional.get());
+        Identifier patternTexture = shieldSprite.getTextureId();
+        int pathEnd = patternTexture.getPath().lastIndexOf('/');
+        if (pathEnd == -1)
+            return atlas.getSprite(null);
+
+        Identifier elytraTexture = patternTexture.withPath("entity/elytra/patterns%s".formatted(patternTexture.getPath().substring(pathEnd)));
+        return atlas.getSprite(elytraTexture);
     }
 
     private Sprite getTrimSprite(ArmorTrim trim) {
         String material = trim.getMaterial().value().assetName();
-        Identifier identifier = trim.getPattern().value().assetId().withPath(path -> "trims/models/elytra/" + path + "_" + material);
+        Identifier identifier = trim.getPattern().value().assetId().withPath(path -> "trims/models/elytra/%s_%s".formatted(path, material));
         return atlas.getSprite(identifier);
     }
 }
