@@ -1,7 +1,6 @@
 package dev.kikugie.elytratrims.config;
 
 import dev.isxander.yacl3.api.*;
-import dev.isxander.yacl3.api.controller.TickBoxControllerBuilder;
 import dev.isxander.yacl3.gui.controllers.cycling.EnumController;
 import dev.kikugie.elytratrims.ElytraTrimsMod;
 import dev.kikugie.elytratrims.config.ConfigState.RenderMode;
@@ -13,7 +12,6 @@ import java.util.Collection;
 
 public class YaclConfig {
     public static Screen createGui(Screen parent) {
-        ConfigState config = ElytraTrimsMod.getConfigState();
         return YetAnotherConfigLib.createBuilder()
                 .title(ConfigState.title)
                 .category(ConfigCategory.createBuilder()
@@ -21,27 +19,6 @@ public class YaclConfig {
                         .group(OptionGroup.createBuilder()
                                 .name(ConfigState.renderGroup)
                                 .options(allOptions())
-                                .build())
-                        .group(OptionGroup.createBuilder()
-                                .name(ConfigState.miscGroup)
-                                .option(Option.<Boolean>createBuilder()
-                                        .name(config.misc.lockDefaultPack.getName())
-                                        .description(OptionDescription.of(config.misc.lockDefaultPack.getTooltip()))
-                                        .binding(true,
-                                                () -> config.misc.lockDefaultPack.value,
-                                                (value) -> config.misc.lockDefaultPack.value = value)
-                                        .controller(TickBoxControllerBuilder::create)
-                                        .flag(OptionFlag.GAME_RESTART)
-                                        .build())
-                                .option(Option.<Boolean>createBuilder()
-                                        .name(config.misc.materialPatch.getName())
-                                        .description(OptionDescription.of(config.misc.materialPatch.getTooltip()))
-                                        .binding(true,
-                                                () -> config.misc.materialPatch.value,
-                                                (value) -> config.misc.materialPatch.value = value)
-                                        .controller(TickBoxControllerBuilder::create)
-                                        .flag(OptionFlag.ASSET_RELOAD)
-                                        .build())
                                 .build())
                         .build())
                 .save(ElytraTrimsMod.getConfigState()::save)

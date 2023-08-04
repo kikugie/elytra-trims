@@ -13,7 +13,7 @@ public class ElytraTrimsMod implements ClientModInitializer {
     public static final String MOD_ID = "elytratrims";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-    public static Identifier ELYTRA_TRIMS_ATLAS_TEXTURE = new Identifier("elytratrims", "textures/atlas/elytra_trims.png");
+    public static Identifier ELYTRA_TRIMS_ATLAS_TEXTURE = id("textures/atlas/elytra_trims.png");
     public static AtlasSourceType ELYTRA_TRIMS;
     public static AtlasSourceType ELYTRA_PATTERNS;
     public static AtlasSourceType ELYTRA_OVERLAY;

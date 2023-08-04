@@ -31,15 +31,12 @@ public class ConfigState {
             RenderMode.getCodec(RenderType.TRIMS).forGetter(state -> state.trims),
             RenderMode.getCodec(RenderType.CAPE).forGetter(state -> state.cape),
             RenderMode.getCodec(RenderType.GLOW).forGetter(state -> state.glow),
-            RenderMode.getCodec(RenderType.GLOBAL).forGetter(state -> state.global),
-            MiscConfig.getCodec().forGetter(state -> state.misc)
+            RenderMode.getCodec(RenderType.GLOBAL).forGetter(state -> state.global)
     ).apply(instance, ConfigState::new));
 
     public static final Text title = Text.translatable("elytratrims.config.title");
     public static final Text category = Text.translatable("elytratrims.config.category");
     public static final Text renderGroup = Text.translatable("elytratrims.config.category.render");
-    public static final Text miscGroup = Text.translatable("elytratrims.config.category.misc");
-    public final MiscConfig misc;
     private RenderMode color;
     private RenderMode patterns;
     private RenderMode trims;
@@ -47,18 +44,17 @@ public class ConfigState {
     private RenderMode glow;
     private RenderMode global;
 
-    private ConfigState(RenderMode colorMode, RenderMode patternsMode, RenderMode trimsMode, RenderMode capeMode, RenderMode glowMode, RenderMode globalMode, MiscConfig misc) {
+    private ConfigState(RenderMode colorMode, RenderMode patternsMode, RenderMode trimsMode, RenderMode capeMode, RenderMode glowMode, RenderMode globalMode) {
         this.color = colorMode;
         this.patterns = patternsMode;
         this.trims = trimsMode;
         this.cape = capeMode;
         this.glow = glowMode;
         this.global = globalMode;
-        this.misc = misc;
     }
 
     public ConfigState() {
-        this(RenderMode.ALL, RenderMode.ALL, RenderMode.ALL, RenderMode.ALL, RenderMode.ALL, RenderMode.ALL, new MiscConfig(true, true));
+        this(RenderMode.ALL, RenderMode.ALL, RenderMode.ALL, RenderMode.ALL, RenderMode.ALL, RenderMode.ALL);
     }
 
     public static ConfigState load() {

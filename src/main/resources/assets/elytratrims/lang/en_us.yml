@@ -34,11 +34,3 @@ elytratrims:
       self: Self
       others: Others
       all: All
-    misc:
-      lock_pack:
-        .: Lock default pack
-        tooltip: Keep default pack enabled even in case of failed resource reload. Requires restart to apply.
-      material_patch:
-        .: Generate materials
-        tooltip: "Generate elytra trims for every registered armor trim.\n
-        This will not create new textures for missing patterns, but works well for extra materials."

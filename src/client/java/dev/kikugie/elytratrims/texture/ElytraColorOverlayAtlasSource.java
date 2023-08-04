@@ -2,6 +2,7 @@ package dev.kikugie.elytratrims.texture;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import dev.kikugie.elytratrims.ElytraTrimsMod;
 import net.minecraft.client.resource.metadata.AnimationResourceMetadata;
 import net.minecraft.client.texture.NativeImage;
 import net.minecraft.client.texture.SpriteContents;
@@ -39,7 +40,7 @@ public class ElytraColorOverlayAtlasSource implements AtlasSource {
 
     @Override
     public AtlasSourceType getType() {
-        return null;
+        return ElytraTrimsMod.ELYTRA_OVERLAY;
     }
 
     private record ElytraColorOverlaySpriteRegion(

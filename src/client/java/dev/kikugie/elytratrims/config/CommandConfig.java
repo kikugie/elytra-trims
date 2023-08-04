@@ -4,8 +4,6 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import dev.kikugie.commandconfig.api.builders.CategoryBuilder;
 import dev.kikugie.commandconfig.api.builders.CommandConfigBuilder;
 import dev.kikugie.commandconfig.api.option.ExtendedOptions;
-import dev.kikugie.commandconfig.api.option.SimpleOptions;
-import dev.kikugie.commandconfig.api.util.Defaults;
 import dev.kikugie.elytratrims.ElytraTrimsMod;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
@@ -41,17 +39,6 @@ public class CommandConfig {
                     }
                     return category;
                 })
-                .category((source) -> CategoryBuilder.create("misc", source)
-                        .option((unused) -> SimpleOptions.bool("lock_pack", source)
-                                .valueAccess(Defaults.defaultValueAccess(
-                                        () -> config.misc.lockDefaultPack.value,
-                                        (value) -> config.misc.lockDefaultPack.value = value))
-                                .helpFunc(config.misc.lockDefaultPack::getTooltip))
-                        .option((unused) -> SimpleOptions.bool("material_patch", source)
-                                .valueAccess(Defaults.defaultValueAccess(
-                                        () -> config.misc.materialPatch.value,
-                                        (value) -> config.misc.materialPatch.value = value))
-                                .helpFunc(config.misc.materialPatch::getTooltip)))
                 .node((node) -> {
                     LiteralArgumentBuilder<FabricClientCommandSource> literal = literal("reset");
                     node.then(literal.executes(context -> {

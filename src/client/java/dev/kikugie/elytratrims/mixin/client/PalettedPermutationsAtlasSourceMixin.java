@@ -39,14 +39,14 @@ public class PalettedPermutationsAtlasSourceMixin implements ElytraSourceAccesso
 
     @Inject(method = "load", at = @At("HEAD"))
     private void loadElytraPermutations(ResourceManager resourceManager, AtlasSource.SpriteRegions regions, CallbackInfo ci) {
-        if (!ElytraTrimsMod.getConfigState().misc.materialPatch.value)
-            return;
         if (elytra)
             return;
         List<Identifier> elytraTextures = new ArrayList<>(textures.size());
         for (Identifier texture : textures) {
             String path = texture.getPath();
-            if (!path.contains("leggings") && path.matches(SUPPORTED_PATTERN))
+            if (path.contains("armor")
+                    && !path.contains("leggings")
+                    && path.matches(SUPPORTED_PATTERN))
                 elytraTextures.add(ElytraTrimsMod.id(path.replaceFirst("armor", "elytra")));
         }
         if (elytraTextures.isEmpty())

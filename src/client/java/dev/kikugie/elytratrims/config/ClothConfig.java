@@ -8,7 +8,6 @@ import net.minecraft.client.gui.screen.Screen;
 
 public class ClothConfig {
     public static Screen createGui(Screen parent) {
-        ConfigState config = ElytraTrimsMod.getConfigState();
         ConfigBuilder builder = ConfigBuilder.create()
                 .setParentScreen(parent)
                 .setTitle(ConfigState.title);
@@ -17,20 +16,6 @@ public class ClothConfig {
         for (ConfigState.RenderType type : ConfigState.RenderType.values()) {
             addOption(renderEntryBuilder, render, type);
         }
-        ConfigCategory misc = builder.getOrCreateCategory(ConfigState.miscGroup);
-        misc.addEntry(builder.entryBuilder().startBooleanToggle(config.misc.lockDefaultPack.getName(), config.misc.lockDefaultPack.value)
-                .setSaveConsumer((value) -> config.misc.lockDefaultPack.value = value)
-                .setDefaultValue(true)
-                .setTooltip(config.misc.lockDefaultPack.getTooltip())
-                .requireRestart()
-                .build());
-        misc.addEntry(builder.entryBuilder().startBooleanToggle(config.misc.materialPatch.getName(), config.misc.materialPatch.value)
-                .setSaveConsumer((value) -> config.misc.materialPatch.value = value)
-                .setDefaultValue(true)
-                .setTooltip(config.misc.materialPatch.getTooltip())
-                .requireRestart()
-                .build());
-
         builder.setSavingRunnable(ElytraTrimsMod.getConfigState()::save);
         return builder.build();
     }
