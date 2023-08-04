@@ -21,8 +21,7 @@ public class ElytraColorOverlayAtlasSource implements AtlasSource {
     ).apply(instance, ElytraColorOverlayAtlasSource::new));
     private final Identifier overlay;
 
-    private ElytraColorOverlayAtlasSource(Identifier overlay
-    ) {
+    private ElytraColorOverlayAtlasSource(Identifier overlay) {
         this.overlay = overlay;
     }
 

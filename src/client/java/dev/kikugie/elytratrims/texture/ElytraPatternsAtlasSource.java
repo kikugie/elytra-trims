@@ -44,7 +44,7 @@ public class ElytraPatternsAtlasSource implements AtlasSource {
         Identifier maskPath = RESOURCE_FINDER.toResourcePath(maskKey);
         Sprite mask;
 
-        ResourceFinder patternsFinder = new ResourceFinder("textures/" + patterns.getPath(), ".png");
+        ResourceFinder patternsFinder = new ResourceFinder("textures/%s".formatted(patterns.getPath()), ".png");
         Map<Identifier, Resource> resources = patternsFinder.findResources(resourceManager);
 
         try {

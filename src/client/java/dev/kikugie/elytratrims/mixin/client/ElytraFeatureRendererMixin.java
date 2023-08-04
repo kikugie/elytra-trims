@@ -3,11 +3,11 @@ package dev.kikugie.elytratrims.mixin.client;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
+import dev.kikugie.elytratrims.ElytraTrimsMod;
 import dev.kikugie.elytratrims.config.ConfigState;
 import dev.kikugie.elytratrims.render.ExtraElytraFeatureRenderer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.render.TexturedRenderLayers;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.PlayerModelPart;
@@ -40,7 +40,7 @@ public class ElytraFeatureRendererMixin {
 
     @Inject(method = "<init>", at = @At("TAIL"))
     private void initExtraRenderer(CallbackInfo ci) {
-        extraRenderer = new ExtraElytraFeatureRenderer(elytra, MinecraftClient.getInstance().getBakedModelManager().getAtlas(TexturedRenderLayers.ARMOR_TRIMS_ATLAS_TEXTURE));
+        extraRenderer = new ExtraElytraFeatureRenderer(elytra, MinecraftClient.getInstance().getBakedModelManager().getAtlas(ElytraTrimsMod.ELYTRA_TRIMS_ATLAS_TEXTURE));
     }
 
     @ModifyArg(method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/LivingEntity;FFFFFF)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/RenderLayer;getArmorCutoutNoCull(Lnet/minecraft/util/Identifier;)Lnet/minecraft/client/render/RenderLayer;"))

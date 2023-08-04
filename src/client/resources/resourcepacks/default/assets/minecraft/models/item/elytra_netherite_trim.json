@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "minecraft:item/elytra",
-    "layer1": "minecraft:trims/items/elytra_trim_netherite"
-  }
-}

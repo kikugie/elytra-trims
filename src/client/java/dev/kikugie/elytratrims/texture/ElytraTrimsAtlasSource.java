@@ -53,7 +53,7 @@ public class ElytraTrimsAtlasSource extends PalettedPermutationsAtlasSource {
             try {
                 Sprite source = ImageUtils.loadTexture(sourcePath, resourceManager, 1);
                 for (Map.Entry<String, Supplier<IntUnaryOperator>> entry : map.entrySet()) {
-                    Identifier trimmedPath = texture.withSuffixedPath("_" + entry.getKey());
+                    Identifier trimmedPath = texture.withSuffixedPath("_%s".formatted(entry.getKey()));
                     regions.add(trimmedPath, new ElytraTrimsSpriteRegion(source, mask, sourcePath, maskPath, trimmedPath, entry.getValue()));
                 }
             } catch (FileNotFoundException ignored) {

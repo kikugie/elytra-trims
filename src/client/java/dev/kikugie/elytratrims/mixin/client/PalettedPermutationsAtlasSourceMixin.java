@@ -47,7 +47,7 @@ public class PalettedPermutationsAtlasSourceMixin implements ElytraSourceAccesso
         for (Identifier texture : textures) {
             String path = texture.getPath();
             if (!path.contains("leggings") && path.matches(SUPPORTED_PATTERN))
-                elytraTextures.add(new Identifier(texture.getNamespace(), path.replaceFirst("armor", "elytra")));
+                elytraTextures.add(ElytraTrimsMod.id(path.replaceFirst("armor", "elytra")));
         }
         if (elytraTextures.isEmpty())
             return;
