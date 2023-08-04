@@ -89,10 +89,9 @@ public class ExtraElytraFeatureRenderer {
         if (ConfigState.cancelRender(ConfigState.RenderType.COLOR, entity))
             return;
 
-        int color = ((ElytraOverlaysAccessor) (Object) stack).getColor();
-        if (color != 0) {
+        int color = ((ElytraOverlaysAccessor) (Object) stack).elytra_trims$getColor();
+        if (color != 0)
             renderElytraColor(matrices, provider, entity, stack, light, color, alpha);
-        }
     }
 
     private void renderElytraColor(MatrixStack matrices, VertexConsumerProvider provider, LivingEntity ignoredEntity, ItemStack stack, int light, int color, float alpha) {
@@ -116,7 +115,7 @@ public class ExtraElytraFeatureRenderer {
         if (ConfigState.cancelRender(ConfigState.RenderType.PATTERNS, entity))
             return;
 
-        List<Pair<RegistryEntry<BannerPattern>, DyeColor>> patterns = ((ElytraOverlaysAccessor) (Object) stack).getPatterns();
+        List<Pair<RegistryEntry<BannerPattern>, DyeColor>> patterns = ((ElytraOverlaysAccessor) (Object) stack).elytra_trims$getPatterns();
 
         for (int i = 0; i < 17 && i < patterns.size(); i++) {
             Pair<RegistryEntry<BannerPattern>, DyeColor> pair = patterns.get(i);
@@ -171,7 +170,7 @@ public class ExtraElytraFeatureRenderer {
         if (ConfigState.cancelRender(ConfigState.RenderType.COLOR, entity))
             return true;
 
-        if (((ElytraOverlaysAccessor) (Object) stack).getPatterns().isEmpty() && stack.getName().getString().equals("jeb_")) {
+        if (((ElytraOverlaysAccessor) (Object) stack).elytra_trims$getPatterns().isEmpty() && stack.getName().getString().equals("jeb_")) {
             assert MinecraftClient.getInstance().world != null;
             long tick = MinecraftClient.getInstance().world.getTime() % 360;
             int color = MathHelper.hsvToRgb(tick / 360F, 1F, 1F);

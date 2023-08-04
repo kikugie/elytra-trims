@@ -13,6 +13,7 @@ import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.DyeColor;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -22,42 +23,45 @@ import java.util.List;
 @SuppressWarnings("DataFlowIssue")
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin implements ElytraOverlaysAccessor {
+    @Unique
     private static final String BASE_COLOR_KEY = "Base";
+    @Unique
     @Nullable
     private List<Pair<RegistryEntry<BannerPattern>, DyeColor>> patterns;
+    @Unique
     @Nullable
     private Integer color;
 
     @Inject(method = "setNbt", at = @At("HEAD"))
     private void resetPatternsOnNbt(CallbackInfo ci) {
-        patterns = null;
-        color = null;
+        this.patterns = null;
+        this.color = null;
     }
 
     @Override
-    public List<Pair<RegistryEntry<BannerPattern>, DyeColor>> getPatterns() {
-        if (patterns == null) {
+    public List<Pair<RegistryEntry<BannerPattern>, DyeColor>> elytra_trims$getPatterns() {
+        if (this.patterns == null) {
             NbtList list = BannerBlockEntity.getPatternListNbt((ItemStack) (Object) this);
             if (list == null) {
-                patterns = List.of();
-                return patterns;
+                this.patterns = List.of();
+                return this.patterns;
             }
 
             NbtCompound nbt = BlockItem.getBlockEntityNbt((ItemStack) (Object) this);
             assert nbt != null;
             DyeColor baseColor = nbt.contains(BASE_COLOR_KEY) ? DyeColor.byId(nbt.getInt(BASE_COLOR_KEY)) : DyeColor.WHITE;
-            patterns = BannerBlockEntity.getPatternsFromNbt(baseColor, list);
+            this.patterns = BannerBlockEntity.getPatternsFromNbt(baseColor, list);
         }
 
-        return patterns;
+        return this.patterns;
     }
 
     @Override
-    public int getColor() {
-        if (color == null) {
-            color = ElytraTrimsServer.DYEABLE.hasColor((ItemStack) (Object) this) ? ElytraTrimsServer.DYEABLE.getColor((ItemStack) (Object) this) : 0;
+    public int elytra_trims$getColor() {
+        if (this.color == null) {
+            this.color = ElytraTrimsServer.DYEABLE.hasColor((ItemStack) (Object) this) ? ElytraTrimsServer.DYEABLE.getColor((ItemStack) (Object) this) : 0;
         }
 
-        return color;
+        return this.color;
     }
 }

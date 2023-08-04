@@ -8,7 +8,7 @@ import net.minecraft.util.DyeColor;
 import java.util.List;
 
 public interface ElytraOverlaysAccessor {
-    List<Pair<RegistryEntry<BannerPattern>, DyeColor>> getPatterns();
+    List<Pair<RegistryEntry<BannerPattern>, DyeColor>> elytra_trims$getPatterns();
 
-    int getColor();
+    int elytra_trims$getColor();
 }

@@ -21,7 +21,7 @@ public class ImageUtils {
         Optional<Resource> resource = resourceManager.getResource(id);
         if (resource.isPresent()) return new Sprite(id, resource.get(), regions);
 
-        throw new FileNotFoundException("Can't find texture: " + id);
+        throw new FileNotFoundException("Can't find texture: %s".formatted(id));
     }
 
     @Nullable

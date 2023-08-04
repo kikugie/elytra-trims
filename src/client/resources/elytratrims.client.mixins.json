@@ -11,7 +11,8 @@
     "PalettedPermutationsAtlasSourceMixin",
     "SmithingScreenMixin",
     "compat.elytraslot.ElytraSlotLayerMixin",
-    "compat.elytratrinket.ElytraTrinketFeatureRendererMixin"
+    "compat.elytratrinket.ElytraTrinketFeatureRendererMixin",
+    "ItemRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
