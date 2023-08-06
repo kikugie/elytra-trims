@@ -126,9 +126,14 @@ java {
 }
 
 jar {
+    duplicatesStrategy DuplicatesStrategy.INCLUDE
     from(rootProject.file("LICENSE")) {
         rename { "${it}_${project.archivesBaseName}" }
     }
+}
+
+sourcesJar {
+    duplicatesStrategy DuplicatesStrategy.INCLUDE
 }
 
 def debug = true
@@ -146,7 +151,7 @@ modrinth {
     projectId = "elytra-trims"
     versionName = "Elytra Trims " + project.mod_version + " for " + project.game_versions
     versionNumber = project.mod_version
-    versionType = "beta"
+    versionType = "release"
     uploadFile = remapJar.archiveFile
     additionalFiles = [sourcesJar.archiveFile]
     gameVersions = project.modrinth_versions.split(" ").toList()
@@ -184,7 +189,7 @@ tasks.register("curseforge", TaskPublishCurseForge) {
     apiToken = env.fetch("CURSEFORGE_TOKEN", "")
 
     def mainFile = upload(project.project_id, remapJar.archiveFile)
-    mainFile.releaseType = "beta"
+    mainFile.releaseType = "release"
     mainFile.displayName = "Elytra Trims " + project.mod_version + " for " + project.game_versions
     mainFile.changelog = rootProject.file("CHANGELOG.md").text
     mainFile.changelogType = "markdown"

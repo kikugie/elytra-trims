@@ -32,7 +32,7 @@ public class ElytraColorOverlayAtlasSource implements AtlasSource {
 
         try {
             Sprite source = ImageUtils.loadTexture(sourcePath, resourceManager, 1);
-            Identifier key = RESOURCE_FINDER.toResourceId(sourcePath).withSuffixedPath("_overlay");
+            Identifier key = ElytraTrimsMod.id(RESOURCE_FINDER.toResourceId(sourcePath).withSuffixedPath("_overlay").getPath());
             regions.add(key, new ElytraColorOverlaySpriteRegion(source, sourcePath, key));
         } catch (FileNotFoundException ignored) {
         }

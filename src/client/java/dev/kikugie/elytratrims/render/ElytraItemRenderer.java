@@ -45,10 +45,13 @@ public class ElytraItemRenderer {
         assert renderer != null;
 
         matrices.push();
-        matrices.translate(0.95F, -0.25F, 1F);
+        matrices.translate(0.5F, 0.5F, 0.5F);
+        matrices.push();
+        matrices.translate(0.45F, 0.5F, 0F);
         matrices.scale(0.4F, -0.4F, -0.4F);
 
-        renderer.banner.render(matrices, SHIELD_BASE.getVertexConsumer(vertexConsumers, RenderLayer::getEntityNoOutline), light, overlay, red, blue, green, 1.0F);
+        renderer.banner.render(matrices, SHIELD_BASE.getVertexConsumer(vertexConsumers, RenderLayer::getEntityNoOutline), light, overlay, red, green, blue, 1.0F);
+        matrices.pop();
         matrices.pop();
     }
 
@@ -57,8 +60,11 @@ public class ElytraItemRenderer {
         assert renderer != null;
 
         matrices.push();
-        matrices.translate(0.95F, -0.25F, 1F);
+        matrices.translate(0.5F, 0.5F, 0.5F);
+        matrices.push();
+        matrices.translate(0.45F, 0.5F, 0F);
         matrices.scale(0.4F, -0.4F, -0.4F);
+
         for(int i = 0; i < 17 && i < patterns.size(); ++i) {
             Pair<RegistryEntry<BannerPattern>, DyeColor> pair = patterns.get(i);
             float[] fs = pair.getSecond().getColorComponents();
@@ -69,6 +75,7 @@ public class ElytraItemRenderer {
             SpriteIdentifier sprite = TexturedRenderLayers.getShieldPatternTextureId(key.get());
             renderer.banner.render(matrices, sprite.getVertexConsumer(vertexConsumers, RenderLayer::getEntityNoOutline), light, overlay, fs[0], fs[1], fs[2], 1.0F);
         }
+        matrices.pop();
         matrices.pop();
     }
 }

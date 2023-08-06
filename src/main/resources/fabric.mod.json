@@ -46,5 +46,8 @@
   "suggests": {
     "yet_another_config_lib_v3": "^3.0.0",
     "cloth-config": "*"
+  },
+  "conflicts": {
+    "elytra-trims-extensions": "<1.2.0"
   }
 }
