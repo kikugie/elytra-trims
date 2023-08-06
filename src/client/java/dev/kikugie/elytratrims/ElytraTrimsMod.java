@@ -2,6 +2,7 @@ package dev.kikugie.elytratrims;
 
 import dev.kikugie.elytratrims.config.CommandConfig;
 import dev.kikugie.elytratrims.config.ConfigState;
+import dev.kikugie.elytratrims.render.ExtraElytraFeatureRenderer;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.texture.atlas.AtlasSourceType;
@@ -17,6 +18,7 @@ public class ElytraTrimsMod implements ClientModInitializer {
     public static AtlasSourceType ELYTRA_TRIMS;
     public static AtlasSourceType ELYTRA_PATTERNS;
     public static AtlasSourceType ELYTRA_OVERLAY;
+    public static ExtraElytraFeatureRenderer ELYTRA_RENDERER;
     private static ConfigState configState;
 
     public static boolean stackedTrimsLoaded = false;

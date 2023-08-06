@@ -39,20 +39,20 @@ public class PalettedPermutationsAtlasSourceMixin implements ElytraSourceAccesso
 
     @Inject(method = "load", at = @At("HEAD"))
     private void loadElytraPermutations(ResourceManager resourceManager, AtlasSource.SpriteRegions regions, CallbackInfo ci) {
-        if (elytra)
+        if (this.elytra)
             return;
-        List<Identifier> elytraTextures = new ArrayList<>(textures.size());
-        for (Identifier texture : textures) {
+        List<Identifier> elytraTextures = new ArrayList<>(this.textures.size());
+        for (Identifier texture : this.textures) {
             String path = texture.getPath();
             if (path.contains("armor")
                     && !path.contains("leggings")
-                    && path.matches(SUPPORTED_PATTERN))
+                    && path.matches(this.SUPPORTED_PATTERN))
                 elytraTextures.add(ElytraTrimsMod.id(path.replaceFirst("armor", "elytra")));
         }
         if (elytraTextures.isEmpty())
             return;
 
-        PalettedPermutationsAtlasSource elytraSource = new PalettedPermutationsAtlasSource(elytraTextures, paletteKey, permutations);
+        PalettedPermutationsAtlasSource elytraSource = new PalettedPermutationsAtlasSource(elytraTextures, this.paletteKey, this.permutations);
         ((ElytraSourceAccessor) elytraSource).elytra_trims$enableElytra();
         elytraSource.load(resourceManager, regions);
     }
@@ -60,6 +60,6 @@ public class PalettedPermutationsAtlasSourceMixin implements ElytraSourceAccesso
     @Unique
     @Override
     public void elytra_trims$enableElytra() {
-        elytra = true;
+        this.elytra = true;
     }
 }

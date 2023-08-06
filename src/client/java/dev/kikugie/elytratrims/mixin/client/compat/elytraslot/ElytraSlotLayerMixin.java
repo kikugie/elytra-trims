@@ -6,13 +6,11 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
-import dev.kikugie.elytratrims.render.ExtraElytraFeatureRenderer;
+import dev.kikugie.elytratrims.ElytraTrimsMod;
 import me.fallenbreath.conditionalmixin.api.annotation.Condition;
 import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.TexturedRenderLayers;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
@@ -21,13 +19,9 @@ import net.minecraft.client.render.entity.model.ElytraEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @SuppressWarnings("ALL")
 @Environment(EnvType.CLIENT)
@@ -35,18 +29,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Pseudo
 @Mixin(targets = "com.illusivesoulworks.elytraslot.client.ElytraSlotLayer")
 public abstract class ElytraSlotLayerMixin extends FeatureRenderer {
-    @Shadow
-    @Final
-    private ElytraEntityModel<?> elytraModel;
-    private ExtraElytraFeatureRenderer extraRenderer;
-
     public ElytraSlotLayerMixin(FeatureRendererContext context) {
         super(context);
-    }
-
-    @Inject(method = "<init>", at = @At("TAIL"))
-    private void initExtraRenderer(CallbackInfo ci) {
-        extraRenderer = new ExtraElytraFeatureRenderer(elytraModel, MinecraftClient.getInstance().getBakedModelManager().getAtlas(TexturedRenderLayers.ARMOR_TRIMS_ATLAS_TEXTURE));
     }
 
     @ModifyExpressionValue(method = "lambda$render$0",
@@ -74,6 +58,6 @@ public abstract class ElytraSlotLayerMixin extends FeatureRenderer {
                                   @Local(argsOnly = true) LivingEntity entity,
                                   @Share("stack") LocalRef<ItemStack> stackRef) {
         original.call(model, matrices, vertices, light, overlay, red, green, blue, alpha);
-        extraRenderer.render(matrices, provider, entity, stackRef.get(), light, alpha);
+        ElytraTrimsMod.ELYTRA_RENDERER.render(model, matrices, provider, entity, stackRef.get(), light, alpha);
     }
 }

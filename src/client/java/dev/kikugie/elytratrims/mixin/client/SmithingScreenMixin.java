@@ -37,15 +37,15 @@ public abstract class SmithingScreenMixin {
 
     @Inject(method = "setup", at = @At("TAIL"))
     private void markGuiArmorStand(CallbackInfo ci) {
-        if (armorStand != null)
-            ((LivingEntityAccessor) armorStand).elytra_trims$markGui();
+        if (this.armorStand != null)
+            ((LivingEntityAccessor) this.armorStand).elytra_trims$markGui();
         if (Items.ELYTRA.getDefaultStack().isIn(ItemTags.TRIMMABLE_ARMOR))
-            renderElytraOutline = true;
+            this.renderElytraOutline = true;
     }
 
     @ModifyArg(method = "handledScreenTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/ingame/CyclingSlotIcon;updateTexture(Ljava/util/List;)V", ordinal = 1))
     private List<Identifier> renderElytraOutline(List<Identifier> original) {
-        if (!renderElytraOutline || original.isEmpty())
+        if (!this.renderElytraOutline || original.isEmpty())
             return original;
         ArrayList<Identifier> modified = new ArrayList<>(original);
         modified.add(EMPTY_ARMOR_SLOT_ELYTRA_TEXTURE);
@@ -54,14 +54,14 @@ public abstract class SmithingScreenMixin {
 
     @Inject(method = "equipArmorStand", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;isEmpty()Z"), cancellable = true)
     private void equipElytra(ItemStack stack, CallbackInfo ci) {
-        if (armorStand == null) return;
+        if (this.armorStand == null) return;
         if (stack.getItem() instanceof ElytraItem) {
-            isElytra = true;
-            armorStand.equipStack(EquipmentSlot.CHEST, stack.copy());
+            this.isElytra = true;
+            this.armorStand.equipStack(EquipmentSlot.CHEST, stack.copy());
             ci.cancel();
             return;
         }
-        isElytra = false;
+        this.isElytra = false;
     }
 
     @ModifyArg(method = "drawBackground", at = @At(value = "INVOKE",
@@ -72,6 +72,6 @@ public abstract class SmithingScreenMixin {
             //#endif
     ), index = 4)
     private Quaternionf rotateElytra(Quaternionf quaternionf) {
-        return isElytra ? elytraRotation : quaternionf;
+        return this.isElytra ? this.elytraRotation : quaternionf;
     }
 }

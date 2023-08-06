@@ -21,27 +21,14 @@ import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = ElytraFeatureRenderer.class, priority = 1100)
 public class ElytraFeatureRendererMixin {
     @Shadow
     @Final
     private static Identifier SKIN;
-    @Shadow
-    @Final
-    private ElytraEntityModel<?> elytra;
-    @Unique
-    private ExtraElytraFeatureRenderer extraRenderer;
-
-    @Inject(method = "<init>", at = @At("TAIL"))
-    private void initExtraRenderer(CallbackInfo ci) {
-        extraRenderer = new ExtraElytraFeatureRenderer(elytra, MinecraftClient.getInstance().getBakedModelManager().getAtlas(ElytraTrimsMod.ELYTRA_TRIMS_ATLAS_TEXTURE));
-    }
 
     @ModifyArg(method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/entity/LivingEntity;FFFFFF)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/RenderLayer;getArmorCutoutNoCull(Lnet/minecraft/util/Identifier;)Lnet/minecraft/client/render/RenderLayer;"))
     private Identifier renderCapeOnGuiArmorStand(Identifier texture, @Local(argsOnly = true) LivingEntity entity) {
@@ -74,6 +61,6 @@ public class ElytraFeatureRendererMixin {
                                   @Local(argsOnly = true) VertexConsumerProvider provider,
                                   @Local(argsOnly = true) LivingEntity entity) {
         original.call(model, matrices, vertices, light, overlay, red, green, blue, alpha);
-        extraRenderer.render(matrices, provider, entity, entity.getEquippedStack(EquipmentSlot.CHEST), light, alpha);
+        ElytraTrimsMod.ELYTRA_RENDERER.render(model, matrices, provider, entity, entity.getEquippedStack(EquipmentSlot.CHEST), light, alpha);
     }
 }

@@ -3,6 +3,7 @@ accessWidener v1 named
 accessible class net/minecraft/client/render/RenderPhase$Transparency
 accessible class net/minecraft/client/render/RenderLayer$MultiPhaseParameters
 accessible class net/minecraft/client/render/RenderPhase$Texture
+accessible class net/minecraft/client/render/model/BakedModelManager$BakingResult
 accessible method net/minecraft/client/texture/atlas/PalettedPermutationsAtlasSource <init> (Ljava/util/List;Lnet/minecraft/util/Identifier;Ljava/util/Map;)V
 accessible method net/minecraft/client/texture/atlas/PalettedPermutationsAtlasSource method_48492 ([I[I)Ljava/util/function/IntUnaryOperator;
 accessible method net/minecraft/client/texture/atlas/AtlasSourceManager register (Ljava/lang/String;Lcom/mojang/serialization/Codec;)Lnet/minecraft/client/texture/atlas/AtlasSourceType;

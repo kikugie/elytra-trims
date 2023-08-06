@@ -35,6 +35,7 @@ import java.util.function.Function;
 
 import static net.minecraft.client.render.RenderPhase.*;
 
+@SuppressWarnings("DataFlowIssue")
 public class ExtraElytraFeatureRenderer {
     private static final Function<Identifier, RenderLayer> ELYTRA_LAYER = Util.memoize(
             texture -> {
@@ -53,11 +54,9 @@ public class ExtraElytraFeatureRenderer {
                 );
             }
     );
-    private final ElytraEntityModel<?> elytra;
     private final SpriteAtlasTexture atlas;
 
-    public ExtraElytraFeatureRenderer(ElytraEntityModel<?> elytra, SpriteAtlasTexture atlas) {
-        this.elytra = elytra;
+    public ExtraElytraFeatureRenderer(SpriteAtlasTexture atlas) {
         this.atlas = atlas;
     }
 
@@ -69,13 +68,13 @@ public class ExtraElytraFeatureRenderer {
         return sprite.getContents().getId().equals(MissingSprite.getMissingSpriteId());
     }
 
-    public void render(MatrixStack matrices, VertexConsumerProvider provider, LivingEntity entity, ItemStack stack, int light, float alpha) {
+    public void render(ElytraEntityModel<?> elytra, MatrixStack matrices, VertexConsumerProvider provider, LivingEntity entity, ItemStack stack, int light, float alpha) {
         light = getLight(entity, stack, light);
-        if (!renderJebElytra(matrices, provider, entity, stack, light, alpha)) {
-            renderElytraOverlay(matrices, provider, entity, stack, light, alpha);
-            renderElytraPatterns(matrices, provider, entity, stack, light, alpha);
+        if (!renderJebElytra(elytra, matrices, provider, entity, stack, light, alpha)) {
+            renderElytraOverlay(elytra, matrices, provider, entity, stack, light, alpha);
+            renderElytraPatterns(elytra, matrices, provider, entity, stack, light, alpha);
         }
-        renderElytraTrims(matrices, provider, entity, stack, light, alpha);
+        renderElytraTrims(elytra, matrices, provider, entity, stack, light, alpha);
     }
 
     private int getLight(LivingEntity entity, ItemStack stack, int light) {
@@ -84,16 +83,16 @@ public class ExtraElytraFeatureRenderer {
         return light;
     }
 
-    private void renderElytraOverlay(MatrixStack matrices, VertexConsumerProvider provider, LivingEntity entity, ItemStack stack, int light, float alpha) {
+    private void renderElytraOverlay(ElytraEntityModel<?> elytra, MatrixStack matrices, VertexConsumerProvider provider, LivingEntity entity, ItemStack stack, int light, float alpha) {
         if (ConfigState.cancelRender(ConfigState.RenderType.COLOR, entity))
             return;
 
         int color = ((ElytraOverlaysAccessor) (Object) stack).elytra_trims$getColor();
         if (color != 0)
-            renderElytraColor(matrices, provider, entity, stack, light, color, alpha);
+            renderElytraColor(elytra, matrices, provider, entity, stack, light, color, alpha);
     }
 
-    private void renderElytraColor(MatrixStack matrices, VertexConsumerProvider provider, LivingEntity ignoredEntity, ItemStack stack, int light, int color, float alpha) {
+    private void renderElytraColor(ElytraEntityModel<?> elytra, MatrixStack matrices, VertexConsumerProvider provider, LivingEntity ignoredEntity, ItemStack stack, int light, int color, float alpha) {
         Sprite sprite = getOverlaySprite();
         if (isMissing(sprite))
             return;
@@ -110,7 +109,7 @@ public class ExtraElytraFeatureRenderer {
         elytra.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, red, green, blue, alpha);
     }
 
-    private void renderElytraPatterns(MatrixStack matrices, VertexConsumerProvider provider, LivingEntity entity, ItemStack stack, int light, float alpha) {
+    private void renderElytraPatterns(ElytraEntityModel<?> elytra, MatrixStack matrices, VertexConsumerProvider provider, LivingEntity entity, ItemStack stack, int light, float alpha) {
         if (ConfigState.cancelRender(ConfigState.RenderType.PATTERNS, entity))
             return;
 
@@ -133,7 +132,7 @@ public class ExtraElytraFeatureRenderer {
         }
     }
 
-    private void renderElytraTrims(MatrixStack matrices, VertexConsumerProvider provider, LivingEntity entity, ItemStack stack, int light, float alpha) {
+    private void renderElytraTrims(ElytraEntityModel<?> elytra, MatrixStack matrices, VertexConsumerProvider provider, LivingEntity entity, ItemStack stack, int light, float alpha) {
         if (ConfigState.cancelRender(ConfigState.RenderType.TRIMS, entity))
             return;
 
@@ -165,7 +164,7 @@ public class ExtraElytraFeatureRenderer {
         elytra.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1F, 1F, 1F, alpha);
     }
 
-    private boolean renderJebElytra(MatrixStack matrices, VertexConsumerProvider provider, LivingEntity entity, ItemStack stack, int light, float alpha) {
+    private boolean renderJebElytra(ElytraEntityModel<?> elytra, MatrixStack matrices, VertexConsumerProvider provider, LivingEntity entity, ItemStack stack, int light, float alpha) {
         if (ConfigState.cancelRender(ConfigState.RenderType.COLOR, entity))
             return true;
 
@@ -173,34 +172,34 @@ public class ExtraElytraFeatureRenderer {
             assert MinecraftClient.getInstance().world != null;
             long tick = MinecraftClient.getInstance().world.getTime() % 360;
             int color = MathHelper.hsvToRgb(tick / 360F, 1F, 1F);
-            renderElytraColor(matrices, provider, entity, stack, light, color, alpha);
+            renderElytraColor(elytra, matrices, provider, entity, stack, light, color, alpha);
             return true;
         }
         return false;
     }
 
     private Sprite getOverlaySprite() {
-        return atlas.getSprite(ElytraTrimsMod.id("entity/elytra_overlay"));
+        return this.atlas.getSprite(ElytraTrimsMod.id("entity/elytra_overlay"));
     }
 
     private Sprite getPatternSprite(RegistryEntry<BannerPattern> pattern) {
         Optional<RegistryKey<BannerPattern>> optional = pattern.getKey();
         if (optional.isEmpty())
-            return atlas.getSprite(null);
+            return this.atlas.getSprite(null);
 
         SpriteIdentifier shieldSprite = TexturedRenderLayers.getShieldPatternTextureId(optional.get());
         Identifier patternTexture = shieldSprite.getTextureId();
         int pathEnd = patternTexture.getPath().lastIndexOf('/');
         if (pathEnd == -1)
-            return atlas.getSprite(null);
+            return this.atlas.getSprite(null);
 
         Identifier elytraTexture = patternTexture.withPath("entity/elytra/patterns%s".formatted(patternTexture.getPath().substring(pathEnd)));
-        return atlas.getSprite(elytraTexture);
+        return this.atlas.getSprite(elytraTexture);
     }
 
     private Sprite getTrimSprite(ArmorTrim trim) {
         String material = trim.getMaterial().value().assetName();
         Identifier id = ElytraTrimsMod.id("trims/models/elytra/%s_%s".formatted(trim.getPattern().value().assetId().getPath(), material));
-        return atlas.getSprite(id);
+        return this.atlas.getSprite(id);
     }
 }

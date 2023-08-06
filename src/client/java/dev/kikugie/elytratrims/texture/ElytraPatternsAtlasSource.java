@@ -41,10 +41,10 @@ public class ElytraPatternsAtlasSource implements AtlasSource {
 
     @Override
     public void load(ResourceManager resourceManager, SpriteRegions regions) {
-        Identifier maskPath = RESOURCE_FINDER.toResourcePath(maskKey);
+        Identifier maskPath = RESOURCE_FINDER.toResourcePath(this.maskKey);
         Sprite mask;
 
-        ResourceFinder patternsFinder = new ResourceFinder("textures/%s".formatted(patterns.getPath()), ".png");
+        ResourceFinder patternsFinder = new ResourceFinder("textures/%s".formatted(this.patterns.getPath()), ".png");
         Map<Identifier, Resource> resources = patternsFinder.findResources(resourceManager);
 
         try {
@@ -56,9 +56,9 @@ public class ElytraPatternsAtlasSource implements AtlasSource {
         resources.forEach((identifier, resource) -> {
             try {
                 Identifier sourcePath = patternsFinder.toResourcePath(identifier);
-                Identifier sourceId = patternsFinder.toResourceId(identifier).withPrefixedPath(maskKey.getPath() + "/patterns/");
+                Identifier sourceId = patternsFinder.toResourceId(identifier).withPrefixedPath(this.maskKey.getPath() + "/patterns/");
                 Sprite source = ImageUtils.loadTexture(identifier, resourceManager, 1);
-                regions.add(sourceId, new ElytraPatternsSpriteRegion(source, mask, sourcePath, maskPath, yOffset, xOffset, sourceId));
+                regions.add(sourceId, new ElytraPatternsSpriteRegion(source, mask, sourcePath, maskPath, this.yOffset, this.xOffset, sourceId));
             } catch (FileNotFoundException ignored) {
             }
         });
@@ -84,13 +84,13 @@ public class ElytraPatternsAtlasSource implements AtlasSource {
             NativeImage tempSource;
             NativeImage tempMask;
             try {
-                tempSource = source.read();
-                tempMask = mask.read();
+                tempSource = this.source.read();
+                tempMask = this.mask.read();
             } catch (IOException e) {
                 return null;
             }
 
-            Pair<NativeImage, NativeImage> pair = ImageUtils.matchWidth(tempSource, tempMask, sourceId, maskId);
+            Pair<NativeImage, NativeImage> pair = ImageUtils.matchWidth(tempSource, tempMask, this.sourceId, this.maskId);
             if (pair == null) return null;
 
             NativeImage localSource = pair.getLeft();
@@ -99,14 +99,14 @@ public class ElytraPatternsAtlasSource implements AtlasSource {
             int height = localMask.getHeight();
             int scale = tempSource.getWidth() / tempMask.getWidth();
 
-            NativeImage offsetSource = ImageUtils.offsetClosing(localSource, xOffset * scale, yOffset * scale, width, height);
+            NativeImage offsetSource = ImageUtils.offsetClosing(localSource, this.xOffset * scale, this.yOffset * scale, width, height);
             ImageUtils.applyMaskClosing(offsetSource, localMask);
-            return new SpriteContents(key, new SpriteDimensions(width, height), offsetSource, AnimationResourceMetadata.EMPTY);
+            return new SpriteContents(this.key, new SpriteDimensions(width, height), offsetSource, AnimationResourceMetadata.EMPTY);
         }
 
         @Override
         public void close() {
-            source.close();
+            this.source.close();
         }
     }
 }

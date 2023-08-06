@@ -82,7 +82,7 @@ public class ElytraTrimsAtlasSource extends PalettedPermutationsAtlasSource {
 
         @Override
         public void close() {
-            source.close();
+            this.source.close();
         }
     }
 }

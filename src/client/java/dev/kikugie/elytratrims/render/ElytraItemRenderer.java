@@ -26,6 +26,7 @@ public class ElytraItemRenderer {
     private static final BannerBlockEntity DUMMY_BANNER = new BannerBlockEntity(BlockPos.ORIGIN, Blocks.WHITE_BANNER.getDefaultState());
     private static final SpriteIdentifier SHIELD_BASE = new SpriteIdentifier(TexturedRenderLayers.SHIELD_PATTERNS_ATLAS_TEXTURE, new Identifier("entity/shield/base"));
 
+    @SuppressWarnings("DataFlowIssue")
     public static void renderElytraItemFeatures(ItemStack stack, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
         List<Pair<RegistryEntry<BannerPattern>, DyeColor>> patterns = ((ElytraOverlaysAccessor) (Object) stack).elytra_trims$getPatterns();
         int color = ((ElytraOverlaysAccessor) (Object) stack).elytra_trims$getColor();
