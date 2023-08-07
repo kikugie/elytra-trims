@@ -138,10 +138,16 @@ public class ExtraElytraFeatureRenderer {
 
         World world = entity.getWorld();
 
-        // Readable code is my passion
-        List<ArmorTrim> trims = ElytraTrimsMod.stackedTrimsLoaded
-                ? StackableTrimsList.getTrims(world.getRegistryManager(), stack).orElse(Collections.emptyList())
-                : ArmorTrim.getTrim(world.getRegistryManager(), stack).map(Collections::singletonList).orElse(Collections.emptyList());
+        List<ArmorTrim> trims;
+        if (ElytraTrimsMod.stackedTrimsLoaded)
+            trims = StackableTrimsList.getTrims(world.getRegistryManager(), stack);
+        else
+            trims = ArmorTrim.getTrim(world.getRegistryManager(),
+                            stack
+                            //#if MC > 12001
+                            //$$ , true
+                            //#endif
+                    ).map(Collections::singletonList).orElse(Collections.emptyList());
 
         for (ArmorTrim trim : trims)
             renderTrim(elytra, trim, matrices, provider, entity, stack, light, alpha);

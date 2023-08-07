@@ -28,7 +28,7 @@ public class ElytraColorOverlayAtlasSource implements AtlasSource {
 
     @Override
     public void load(ResourceManager resourceManager, SpriteRegions regions) {
-        Identifier sourcePath = RESOURCE_FINDER.toResourcePath(overlay);
+        Identifier sourcePath = RESOURCE_FINDER.toResourcePath(this.overlay);
 
         try {
             Sprite source = ImageUtils.loadTexture(sourcePath, resourceManager, 1);
@@ -48,21 +48,34 @@ public class ElytraColorOverlayAtlasSource implements AtlasSource {
             Identifier sourceId,
             Identifier key) implements SpriteRegion {
         @Override
-        public SpriteContents get() {
+        //#if MC < 12002
+        public SpriteContents get()
+        //#else
+        //$$ public SpriteContents apply(net.minecraft.client.texture.SpriteOpener unused)
+        //#endif
+        {
             NativeImage image;
             try {
-                image = source.read();
+                image = this.source.read();
                 ImageUtils.createSaturationMask(image);
             } catch (IOException e) {
                 return null;
             }
-            return new SpriteContents(key, new SpriteDimensions(image.getWidth(), image.getHeight()), image, AnimationResourceMetadata.EMPTY);
+            return new SpriteContents(this.key,
+                    new SpriteDimensions(image.getWidth(), image.getHeight()),
+                    image,
+                    //#if MC < 12002
+                    AnimationResourceMetadata.EMPTY
+                    //#else
+                    //$$ net.minecraft.resource.metadata.ResourceMetadata.NONE
+                    //#endif
+            );
         }
 
 
         @Override
         public void close() {
-            source.close();
+            this.source.close();
         }
     }
 }

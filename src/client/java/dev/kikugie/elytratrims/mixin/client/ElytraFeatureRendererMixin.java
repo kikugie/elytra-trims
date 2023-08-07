@@ -34,15 +34,19 @@ public class ElytraFeatureRendererMixin {
     private Identifier renderCapeOnGuiArmorStand(Identifier texture, @Local(argsOnly = true) LivingEntity entity) {
         ClientPlayerEntity player = MinecraftClient.getInstance().player;
         assert player != null;
+        //#if MC < 12002
         Identifier cape = player.getCapeTexture();
+        //#else
+        //$$ Identifier cape = player.method_52814().capeTexture();
+        //#endif
         if (texture.equals(SKIN) || texture.equals(cape)) {
             if (entity instanceof PlayerEntity
                     && ConfigState.cancelRender(ConfigState.RenderType.CAPE, entity))
                 return SKIN;
             if (!ExtraElytraFeatureRenderer.skipRenderIfMissingTexture(entity)
-                    && player.getCapeTexture() != null
+                    && cape != null
                     && player.isPartVisible(PlayerModelPart.CAPE))
-                return player.getCapeTexture();
+                return cape;
         }
         return texture;
     }

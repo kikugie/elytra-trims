@@ -80,7 +80,12 @@ public class ElytraPatternsAtlasSource implements AtlasSource {
     ) implements SpriteRegion {
 
         @Override
-        public SpriteContents get() {
+        //#if MC < 12002
+        public SpriteContents get()
+        //#else
+        //$$ public SpriteContents apply(net.minecraft.client.texture.SpriteOpener unused)
+        //#endif
+        {
             NativeImage tempSource;
             NativeImage tempMask;
             try {
@@ -101,7 +106,15 @@ public class ElytraPatternsAtlasSource implements AtlasSource {
 
             NativeImage offsetSource = ImageUtils.offsetClosing(localSource, this.xOffset * scale, this.yOffset * scale, width, height);
             ImageUtils.applyMaskClosing(offsetSource, localMask);
-            return new SpriteContents(this.key, new SpriteDimensions(width, height), offsetSource, AnimationResourceMetadata.EMPTY);
+            return new SpriteContents(this.key,
+                    new SpriteDimensions(width, height),
+                    offsetSource,
+                    //#if MC < 12002
+                    AnimationResourceMetadata.EMPTY
+                    //#else
+                    //$$ net.minecraft.resource.metadata.ResourceMetadata.NONE
+                    //#endif
+            );
         }
 
         @Override

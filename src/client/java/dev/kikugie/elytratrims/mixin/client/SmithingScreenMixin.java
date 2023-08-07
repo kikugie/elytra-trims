@@ -65,12 +65,21 @@ public abstract class SmithingScreenMixin {
     }
 
     @ModifyArg(method = "drawBackground", at = @At(value = "INVOKE",
-            //#if MC >= 12000
+            // What the fuck is this
+            //#if MC >= 12002
+            //$$ target = "Lnet/minecraft/client/gui/screen/ingame/InventoryScreen;drawEntity(Lnet/minecraft/client/gui/DrawContext;FFILorg/joml/Vector3f;Lorg/joml/Quaternionf;Lorg/joml/Quaternionf;Lnet/minecraft/entity/LivingEntity;)V"
+            //#else if MC >= 12000
             target = "Lnet/minecraft/client/gui/screen/ingame/InventoryScreen;drawEntity(Lnet/minecraft/client/gui/DrawContext;IIILorg/joml/Quaternionf;Lorg/joml/Quaternionf;Lnet/minecraft/entity/LivingEntity;)V"
             //#else
             //$$ target = "Lnet/minecraft/client/gui/screen/ingame/InventoryScreen;drawEntity(Lnet/minecraft/client/util/math/MatrixStack;IIILorg/joml/Quaternionf;Lorg/joml/Quaternionf;Lnet/minecraft/entity/LivingEntity;)V"
             //#endif
-    ), index = 4)
+    ),
+            //#if MC < 12002
+            index = 4
+            //#else
+            //$$ index = 5
+            //#endif
+    )
     private Quaternionf rotateElytra(Quaternionf quaternionf) {
         return this.isElytra ? this.elytraRotation : quaternionf;
     }

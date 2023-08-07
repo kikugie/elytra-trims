@@ -5,11 +5,11 @@ accessible class net/minecraft/client/render/RenderLayer$MultiPhaseParameters
 accessible class net/minecraft/client/render/RenderPhase$Texture
 accessible class net/minecraft/client/render/model/BakedModelManager$BakingResult
 accessible method net/minecraft/client/texture/atlas/PalettedPermutationsAtlasSource <init> (Ljava/util/List;Lnet/minecraft/util/Identifier;Ljava/util/Map;)V
-accessible method net/minecraft/client/texture/atlas/PalettedPermutationsAtlasSource method_48492 ([I[I)Ljava/util/function/IntUnaryOperator;
+#accessible method net/minecraft/client/texture/atlas/PalettedPermutationsAtlasSource method_48492 ([I[I)Ljava/util/function/IntUnaryOperator;
 accessible method net/minecraft/client/texture/atlas/AtlasSourceManager register (Ljava/lang/String;Lcom/mojang/serialization/Codec;)Lnet/minecraft/client/texture/atlas/AtlasSourceType;
-accessible field net/minecraft/client/texture/atlas/PalettedPermutationsAtlasSource textures Ljava/util/List;
-accessible field net/minecraft/client/texture/atlas/PalettedPermutationsAtlasSource permutations Ljava/util/Map;
-accessible field net/minecraft/client/texture/atlas/PalettedPermutationsAtlasSource paletteKey Lnet/minecraft/util/Identifier;
+#accessible field net/minecraft/client/texture/atlas/PalettedPermutationsAtlasSource textures Ljava/util/List;
+#accessible field net/minecraft/client/texture/atlas/PalettedPermutationsAtlasSource permutations Ljava/util/Map;
+#accessible field net/minecraft/client/texture/atlas/PalettedPermutationsAtlasSource paletteKey Lnet/minecraft/util/Identifier;
 accessible field net/minecraft/client/texture/atlas/Sprite resource Lnet/minecraft/resource/Resource;
 accessible field net/minecraft/client/texture/atlas/Sprite id Lnet/minecraft/util/Identifier;
 accessible field net/minecraft/client/texture/SpriteContents image Lnet/minecraft/client/texture/NativeImage;

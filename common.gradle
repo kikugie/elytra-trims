@@ -63,14 +63,15 @@ dependencies {
     include api(clientAnnotationProcessor("com.github.LlamaLad7.mixinextras:mixinextras-fabric:${project.mixin_extras_version}"))
     include modImplementation("com.github.Fallen-Breath:conditional-mixin:v${project.conditional_mixin_version}")
 
-    modApi "com.terraformersmc:modmenu:${project.modmenu_version}"
-    modApi("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_version}") {
-        exclude(group: "net.fabricmc.fabric-api")
+    if (mcVersion < 12002) {
+        modApi "com.terraformersmc:modmenu:${project.modmenu_version}"
+        modApi("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_version}") {
+            exclude(group: "net.fabricmc.fabric-api")
+        }
+        modApi "dev.isxander.yacl:yet-another-config-lib-fabric:${project.yacl_version}"
+        modCompileOnly "maven.modrinth:stacked-armor-trims:${project.stacked_trims_version}"
     }
-    modApi "dev.isxander.yacl:yet-another-config-lib-fabric:${project.yacl_version}"
     modApi "dev.kikugie.command-config:${project.cmd_config_version}"
-
-    modCompileOnly "maven.modrinth:stacked-armor-trims:${project.stacked_trims_version}"
 }
 
 loom {
@@ -89,7 +90,7 @@ remapJar {
 }
 
 group = project.maven_group
-archivesBaseName = project.archives_base_name + "-" + project.mod_version + "+" + project.game_versions
+archivesBaseName = project.archives_base_name + "-" + project.mod_version + "+" + project.title_version
 
 processResources {
     inputs.property "version", project.mod_version
@@ -149,12 +150,12 @@ tasks.register("release") {
 modrinth {
     token = env.fetchOrNull("MODRINTH_TOKEN")
     projectId = "elytra-trims"
-    versionName = "Elytra Trims " + project.mod_version + " for " + project.game_versions
+    versionName = "Elytra Trims %s for %s".formatted(project.mod_version, project.title_version)
     versionNumber = project.mod_version
     versionType = "release"
     uploadFile = remapJar.archiveFile
     additionalFiles = [sourcesJar.archiveFile]
-    gameVersions = project.modrinth_versions.split(" ").toList()
+    gameVersions = project.release_versions.split(" ").toList()
     loaders = ["fabric", "quilt"]
     dependencies {
         required.project "fabric-api"
@@ -190,16 +191,19 @@ tasks.register("curseforge", TaskPublishCurseForge) {
 
     def mainFile = upload(project.project_id, remapJar.archiveFile)
     mainFile.releaseType = "release"
-    mainFile.displayName = "Elytra Trims " + project.mod_version + " for " + project.game_versions
+    mainFile.displayName = "Elytra Trims %s for %s".formatted(project.mod_version, project.title_version)
     mainFile.changelog = rootProject.file("CHANGELOG.md").text
     mainFile.changelogType = "markdown"
     mainFile.addRequirement "fabric-api"
     mainFile.addOptional "yacl", "cloth-config"
     mainFile.addModLoader "fabric", "quilt"
     mainFile.addGameVersion "client"
-    for (String version : project.modrinth_versions.split(" ")) {
-        mainFile.addGameVersion version
-    }
+    if (mcVersion < 12002)
+        for (String version : project.release_versions.split(" ")) {
+            mainFile.addGameVersion version
+        }
+    else
+        mainFile.addGameVersion "1.20.2-Snapshot"
     debugMode = debug
 }
 
@@ -219,7 +223,7 @@ publishing {
         mavenJava(MavenPublication) {
             groupId = project.maven_group + "." + project.archives_base_name
             artifactId = project.mod_version
-            version = project.game_versions
+            version = project.title_version
 
             from components.java
         }
