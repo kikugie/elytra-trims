@@ -4,5 +4,8 @@
   },
   {
     "subproject_dir": "1.20"
+  },
+  {
+    "subproject_dir": "snapshot"
   }
 ]
