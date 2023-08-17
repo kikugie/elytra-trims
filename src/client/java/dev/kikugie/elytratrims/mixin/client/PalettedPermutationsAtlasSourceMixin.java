@@ -1,6 +1,6 @@
 package dev.kikugie.elytratrims.mixin.client;
 
-import dev.kikugie.elytratrims.ElytraTrimsMod;
+import dev.kikugie.elytratrims.ElytraTrims;
 import dev.kikugie.elytratrims.access.ElytraSourceAccessor;
 import net.minecraft.client.texture.atlas.AtlasSource;
 import net.minecraft.client.texture.atlas.PalettedPermutationsAtlasSource;
@@ -47,7 +47,7 @@ public class PalettedPermutationsAtlasSourceMixin implements ElytraSourceAccesso
             if (path.contains("armor")
                     && !path.contains("leggings")
                     && path.matches(this.SUPPORTED_PATTERN))
-                elytraTextures.add(ElytraTrimsMod.id(path.replaceFirst("armor", "elytra")));
+                elytraTextures.add(ElytraTrims.id(path.replaceFirst("armor", "elytra")));
         }
         if (elytraTextures.isEmpty())
             return;

@@ -2,7 +2,7 @@ package dev.kikugie.elytratrims.texture;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import dev.kikugie.elytratrims.ElytraTrimsMod;
+import dev.kikugie.elytratrims.ElytraTrims;
 import net.minecraft.client.resource.metadata.AnimationResourceMetadata;
 import net.minecraft.client.texture.NativeImage;
 import net.minecraft.client.texture.SpriteContents;
@@ -66,7 +66,7 @@ public class ElytraPatternsAtlasSource implements AtlasSource {
 
     @Override
     public AtlasSourceType getType() {
-        return ElytraTrimsMod.ELYTRA_PATTERNS;
+        return ElytraTrims.ELYTRA_PATTERNS;
     }
 
     private record ElytraPatternsSpriteRegion(

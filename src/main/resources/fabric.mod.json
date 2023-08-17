@@ -22,7 +22,7 @@
       "dev.kikugie.elytratrims.ElytraTrimsServer"
     ],
     "client": [
-      "dev.kikugie.elytratrims.ElytraTrimsMod"
+      "dev.kikugie.elytratrims.ElytraTrims"
     ],
     "modmenu": [
       "dev.kikugie.elytratrims.compat.ModMenuIntegration"

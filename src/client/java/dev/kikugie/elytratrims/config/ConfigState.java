@@ -8,7 +8,7 @@ import com.mojang.serialization.DataResult;
 import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import dev.kikugie.elytratrims.ElytraTrimsMod;
+import dev.kikugie.elytratrims.ElytraTrims;
 import dev.kikugie.elytratrims.render.ExtraElytraFeatureRenderer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
@@ -62,9 +62,9 @@ public class ConfigState {
             try {
                 String jsonString = FileUtils.readFileToString(CONFIG_FILE.toFile(), StandardCharsets.UTF_8);
                 JsonElement json = JsonParser.parseString(jsonString);
-                return CODEC.decode(JsonOps.INSTANCE, json).resultOrPartial(s -> ElytraTrimsMod.LOGGER.error("Error reading config data!\n{}", s)).orElse(new Pair<>(new ConfigState(), json)).getFirst();
+                return CODEC.decode(JsonOps.INSTANCE, json).resultOrPartial(s -> ElytraTrims.LOGGER.error("Error reading config data!\n{}", s)).orElse(new Pair<>(new ConfigState(), json)).getFirst();
             } catch (IOException e) {
-                ElytraTrimsMod.LOGGER.error("Error reading config file!\n", e);
+                ElytraTrims.LOGGER.error("Error reading config file!\n", e);
             } catch (NoSuchElementException ignored) {
             }
         }
@@ -74,13 +74,13 @@ public class ConfigState {
             Files.createFile(CONFIG_FILE);
             state.save();
         } catch (IOException e) {
-            ElytraTrimsMod.LOGGER.error("Couldn't create config file!\n", e);
+            ElytraTrims.LOGGER.error("Couldn't create config file!\n", e);
         }
         return state;
     }
 
     public static boolean cancelRender(RenderType type, LivingEntity entity) {
-        RenderMode mode = ElytraTrimsMod.getConfigState().getConfigFor(type);
+        RenderMode mode = ElytraTrims.getConfigState().getConfigFor(type);
         return switch (mode) {
             case ALL -> false;
             case NONE -> true;
@@ -94,10 +94,10 @@ public class ConfigState {
     public void save() {
         try {
             DataResult<JsonElement> result = CODEC.encodeStart(JsonOps.INSTANCE, this);
-            String jsonString = result.resultOrPartial(s -> ElytraTrimsMod.LOGGER.error("Error saving config data! How odd...\n{}", s)).orElseThrow().toString();
+            String jsonString = result.resultOrPartial(s -> ElytraTrims.LOGGER.error("Error saving config data! How odd...\n{}", s)).orElseThrow().toString();
             Files.writeString(CONFIG_FILE, jsonString, StandardCharsets.UTF_8);
         } catch (IOException e) {
-            ElytraTrimsMod.LOGGER.error("Error writing config file!\n", e);
+            ElytraTrims.LOGGER.error("Error writing config file!\n", e);
         } catch (NoSuchElementException ignored) {
         }
     }

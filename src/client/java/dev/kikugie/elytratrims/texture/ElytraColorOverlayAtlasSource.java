@@ -2,7 +2,7 @@ package dev.kikugie.elytratrims.texture;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import dev.kikugie.elytratrims.ElytraTrimsMod;
+import dev.kikugie.elytratrims.ElytraTrims;
 import net.minecraft.client.resource.metadata.AnimationResourceMetadata;
 import net.minecraft.client.texture.NativeImage;
 import net.minecraft.client.texture.SpriteContents;
@@ -32,7 +32,7 @@ public class ElytraColorOverlayAtlasSource implements AtlasSource {
 
         try {
             Sprite source = ImageUtils.loadTexture(sourcePath, resourceManager, 1);
-            Identifier key = ElytraTrimsMod.id(RESOURCE_FINDER.toResourceId(sourcePath).withSuffixedPath("_overlay").getPath());
+            Identifier key = ElytraTrims.id(RESOURCE_FINDER.toResourceId(sourcePath).withSuffixedPath("_overlay").getPath());
             regions.add(key, new ElytraColorOverlaySpriteRegion(source, sourcePath, key));
         } catch (FileNotFoundException ignored) {
         }
@@ -40,7 +40,7 @@ public class ElytraColorOverlayAtlasSource implements AtlasSource {
 
     @Override
     public AtlasSourceType getType() {
-        return ElytraTrimsMod.ELYTRA_OVERLAY;
+        return ElytraTrims.ELYTRA_OVERLAY;
     }
 
     private record ElytraColorOverlaySpriteRegion(

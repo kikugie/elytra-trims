@@ -4,7 +4,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import dev.kikugie.commandconfig.api.builders.CategoryBuilder;
 import dev.kikugie.commandconfig.api.builders.CommandConfigBuilder;
 import dev.kikugie.commandconfig.api.option.ExtendedOptions;
-import dev.kikugie.elytratrims.ElytraTrimsMod;
+import dev.kikugie.elytratrims.ElytraTrims;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.text.Text;
@@ -18,7 +18,7 @@ public class CommandConfig {
     }
 
     private static LiteralArgumentBuilder<FabricClientCommandSource> command() {
-        ConfigState config = ElytraTrimsMod.getConfigState();
+        ConfigState config = ElytraTrims.getConfigState();
         return CommandConfigBuilder.client("et-config").
                 category((source) -> {
                     var category = CategoryBuilder.create("render", source);
@@ -27,7 +27,7 @@ public class CommandConfig {
                                 .valueAccess(
                                         () -> Text.translatable("elytratrims.command.response.get_mode",
                                                 type.getName(),
-                                                ElytraTrimsMod.getConfigState().getFor(type).getName()).formatted(Formatting.GREEN),
+                                                ElytraTrims.getConfigState().getFor(type).getName()).formatted(Formatting.GREEN),
                                         (value) -> {
                                             config.setFor(type, value);
                                             return Text.translatable("elytratrims.command.response.set_mode",

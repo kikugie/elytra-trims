@@ -1,6 +1,6 @@
 package dev.kikugie.elytratrims.texture;
 
-import dev.kikugie.elytratrims.ElytraTrimsMod;
+import dev.kikugie.elytratrims.ElytraTrims;
 import net.minecraft.client.texture.NativeImage;
 import net.minecraft.client.texture.atlas.Sprite;
 import net.minecraft.resource.Resource;
@@ -29,9 +29,9 @@ public class ImageUtils {
         float scaleFactor = (float) source.getWidth() / mask.getWidth();
         if (!ImageUtils.isPowerOf2(scaleFactor)) {
             if (scaleFactor > 1) {
-                ElytraTrimsMod.LOGGER.error("Unable to scale mask {} ({}px) to {} ({}px)", maskId, mask.getWidth(), sourceId, source.getWidth());
+                ElytraTrims.LOGGER.error("Unable to scale mask {} ({}px) to {} ({}px)", maskId, mask.getWidth(), sourceId, source.getWidth());
             } else {
-                ElytraTrimsMod.LOGGER.error("Unable to scale source {} ({}px) to {} ({}px)", sourceId, source.getWidth(), maskId, mask.getWidth());
+                ElytraTrims.LOGGER.error("Unable to scale source {} ({}px) to {} ({}px)", sourceId, source.getWidth(), maskId, mask.getWidth());
             }
             return null;
         }

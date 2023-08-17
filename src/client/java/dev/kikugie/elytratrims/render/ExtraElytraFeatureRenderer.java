@@ -1,7 +1,7 @@
 package dev.kikugie.elytratrims.render;
 
 import com.mojang.datafixers.util.Pair;
-import dev.kikugie.elytratrims.ElytraTrimsMod;
+import dev.kikugie.elytratrims.ElytraTrims;
 import dev.kikugie.elytratrims.ElytraTrimsServer;
 import dev.kikugie.elytratrims.access.ElytraOverlaysAccessor;
 import dev.kikugie.elytratrims.access.LivingEntityAccessor;
@@ -103,7 +103,7 @@ public class ExtraElytraFeatureRenderer {
         VertexConsumer vertexConsumer = sprite.getTextureSpecificVertexConsumer(
                 ItemRenderer.getDirectItemGlintConsumer(
                         provider,
-                        ELYTRA_LAYER.apply(ElytraTrimsMod.ELYTRA_TRIMS_ATLAS_TEXTURE),
+                        ELYTRA_LAYER.apply(ElytraTrims.ELYTRA_TRIMS_ATLAS_TEXTURE),
                         false,
                         stack.hasGlint()));
         elytra.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, red, green, blue, alpha);
@@ -125,7 +125,7 @@ public class ExtraElytraFeatureRenderer {
             VertexConsumer vertexConsumer = sprite.getTextureSpecificVertexConsumer(
                     ItemRenderer.getDirectItemGlintConsumer(
                             provider,
-                            ELYTRA_LAYER.apply(ElytraTrimsMod.ELYTRA_TRIMS_ATLAS_TEXTURE),
+                            ELYTRA_LAYER.apply(ElytraTrims.ELYTRA_TRIMS_ATLAS_TEXTURE),
                             false,
                             stack.hasGlint()));
             elytra.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, color[0], color[1], color[2], alpha);
@@ -139,7 +139,7 @@ public class ExtraElytraFeatureRenderer {
         World world = entity.getWorld();
 
         List<ArmorTrim> trims;
-        if (ElytraTrimsMod.stackedTrimsLoaded)
+        if (ElytraTrims.stackedTrimsLoaded)
             trims = StackableTrimsList.getTrims(world.getRegistryManager(), stack);
         else
             trims = ArmorTrim.getTrim(world.getRegistryManager(),
@@ -164,7 +164,7 @@ public class ExtraElytraFeatureRenderer {
         VertexConsumer vertexConsumer = sprite.getTextureSpecificVertexConsumer(
                 ItemRenderer.getDirectItemGlintConsumer(
                         provider,
-                        ELYTRA_LAYER.apply(ElytraTrimsMod.ELYTRA_TRIMS_ATLAS_TEXTURE),
+                        ELYTRA_LAYER.apply(ElytraTrims.ELYTRA_TRIMS_ATLAS_TEXTURE),
                         false,
                         stack.hasGlint()));
         elytra.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1F, 1F, 1F, alpha);
@@ -185,7 +185,7 @@ public class ExtraElytraFeatureRenderer {
     }
 
     private Sprite getOverlaySprite() {
-        return this.atlas.getSprite(ElytraTrimsMod.id("entity/elytra_overlay"));
+        return this.atlas.getSprite(ElytraTrims.id("entity/elytra_overlay"));
     }
 
     private Sprite getPatternSprite(RegistryEntry<BannerPattern> pattern) {
@@ -205,7 +205,7 @@ public class ExtraElytraFeatureRenderer {
 
     private Sprite getTrimSprite(ArmorTrim trim) {
         String material = trim.getMaterial().value().assetName();
-        Identifier id = ElytraTrimsMod.id("trims/models/elytra/%s_%s".formatted(trim.getPattern().value().assetId().getPath(), material));
+        Identifier id = ElytraTrims.id("trims/models/elytra/%s_%s".formatted(trim.getPattern().value().assetId().getPath(), material));
         return this.atlas.getSprite(id);
     }
 }

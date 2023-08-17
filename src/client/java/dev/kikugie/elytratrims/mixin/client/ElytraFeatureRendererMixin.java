@@ -3,7 +3,7 @@ package dev.kikugie.elytratrims.mixin.client;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
-import dev.kikugie.elytratrims.ElytraTrimsMod;
+import dev.kikugie.elytratrims.ElytraTrims;
 import dev.kikugie.elytratrims.config.ConfigState;
 import dev.kikugie.elytratrims.render.ExtraElytraFeatureRenderer;
 import net.minecraft.client.MinecraftClient;
@@ -65,6 +65,6 @@ public class ElytraFeatureRendererMixin {
                                   @Local(argsOnly = true) VertexConsumerProvider provider,
                                   @Local(argsOnly = true) LivingEntity entity) {
         original.call(model, matrices, vertices, light, overlay, red, green, blue, alpha);
-        ElytraTrimsMod.ELYTRA_RENDERER.render(model, matrices, provider, entity, entity.getEquippedStack(EquipmentSlot.CHEST), light, alpha);
+        ElytraTrims.ELYTRA_RENDERER.render(model, matrices, provider, entity, entity.getEquippedStack(EquipmentSlot.CHEST), light, alpha);
     }
 }

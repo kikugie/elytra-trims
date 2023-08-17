@@ -2,7 +2,7 @@ package dev.kikugie.elytratrims.config;
 
 import dev.isxander.yacl3.api.*;
 import dev.isxander.yacl3.gui.controllers.cycling.EnumController;
-import dev.kikugie.elytratrims.ElytraTrimsMod;
+import dev.kikugie.elytratrims.ElytraTrims;
 import dev.kikugie.elytratrims.config.ConfigState.RenderMode;
 import dev.kikugie.elytratrims.config.ConfigState.RenderType;
 import net.minecraft.client.gui.screen.Screen;
@@ -21,7 +21,7 @@ public class YaclConfig {
                                 .options(allOptions())
                                 .build())
                         .build())
-                .save(ElytraTrimsMod.getConfigState()::save)
+                .save(ElytraTrims.getConfigState()::save)
                 .build()
                 .generateScreen(parent);
     }
@@ -39,8 +39,8 @@ public class YaclConfig {
                 .name(type.getName())
                 .description(OptionDescription.of(type.getTooltip()))
                 .binding(RenderMode.ALL,
-                        () -> ElytraTrimsMod.getConfigState().getFor(type),
-                        mode -> ElytraTrimsMod.getConfigState().setFor(type, mode))
+                        () -> ElytraTrims.getConfigState().getFor(type),
+                        mode -> ElytraTrims.getConfigState().setFor(type, mode))
                 .customController(opt -> new EnumController<>(opt, ConfigState.RenderMode::getName, ConfigState.RenderMode.values()))
                 .build();
     }

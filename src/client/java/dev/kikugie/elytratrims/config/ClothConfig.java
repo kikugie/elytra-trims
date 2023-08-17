@@ -1,6 +1,6 @@
 package dev.kikugie.elytratrims.config;
 
-import dev.kikugie.elytratrims.ElytraTrimsMod;
+import dev.kikugie.elytratrims.ElytraTrims;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
@@ -16,18 +16,18 @@ public class ClothConfig {
         for (ConfigState.RenderType type : ConfigState.RenderType.values()) {
             addOption(renderEntryBuilder, render, type);
         }
-        builder.setSavingRunnable(ElytraTrimsMod.getConfigState()::save);
+        builder.setSavingRunnable(ElytraTrims.getConfigState()::save);
         return builder.build();
     }
 
     private static void addOption(ConfigEntryBuilder builder, ConfigCategory category, ConfigState.RenderType type) {
         category.addEntry(builder.startEnumSelector(type.getName(),
                         ConfigState.RenderMode.class,
-                        ElytraTrimsMod.getConfigState().getFor(type))
+                        ElytraTrims.getConfigState().getFor(type))
                 .setEnumNameProvider(mode -> ((ConfigState.RenderMode) mode).getName())
                 .setTooltip(type.getTooltip())
                 .setDefaultValue(ConfigState.RenderMode.ALL)
-                .setSaveConsumer(mode -> ElytraTrimsMod.getConfigState().setFor(type, mode))
+                .setSaveConsumer(mode -> ElytraTrims.getConfigState().setFor(type, mode))
                 .build());
     }
 }

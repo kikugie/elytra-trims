@@ -10,7 +10,7 @@ import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ElytraTrimsMod implements ClientModInitializer {
+public class ElytraTrims implements ClientModInitializer {
     public static final String MOD_ID = "elytratrims";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
@@ -43,5 +43,6 @@ public class ElytraTrimsMod implements ClientModInitializer {
         stackedTrimsLoaded = fabric.isModLoaded("stacked_trims");
         if (fabric.isModLoaded("command-config"))
             CommandConfig.register();
+        Resources.init();
     }
 }

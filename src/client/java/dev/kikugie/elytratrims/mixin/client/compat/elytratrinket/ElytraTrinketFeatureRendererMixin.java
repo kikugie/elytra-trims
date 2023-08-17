@@ -6,7 +6,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
-import dev.kikugie.elytratrims.ElytraTrimsMod;
+import dev.kikugie.elytratrims.ElytraTrims;
 import me.fallenbreath.conditionalmixin.api.annotation.Condition;
 import me.fallenbreath.conditionalmixin.api.annotation.Restriction;
 import net.fabricmc.api.EnvType;
@@ -62,6 +62,6 @@ public abstract class ElytraTrinketFeatureRendererMixin extends FeatureRenderer 
                                   @Local(argsOnly = true) LivingEntity entity,
                                   @Share("stack") LocalRef<ItemStack> stackRef) {
         original.call(model, matrices, vertices, light, overlay, red, green, blue, alpha);
-        ElytraTrimsMod.ELYTRA_RENDERER.render(model, matrices, provider, entity, stackRef.get(), light, alpha);
+        ElytraTrims.ELYTRA_RENDERER.render(model, matrices, provider, entity, stackRef.get(), light, alpha);
     }
 }
