@@ -2,6 +2,7 @@ package dev.kikugie.elytratrims.mixin.client;
 
 import dev.kikugie.elytratrims.ElytraTrims;
 import dev.kikugie.elytratrims.access.ElytraSourceAccessor;
+import dev.kikugie.elytratrims.resource.ETResourceListener;
 import net.minecraft.client.texture.atlas.AtlasSource;
 import net.minecraft.client.texture.atlas.PalettedPermutationsAtlasSource;
 import net.minecraft.resource.ResourceManager;
@@ -27,19 +28,19 @@ public class PalettedPermutationsAtlasSourceMixin implements ElytraSourceAccesso
     private final String SUPPORTED_PATTERN = "trims/models/armor/[\\w_-]+";
     @Shadow
     @Final
-    public List<Identifier> textures;
+    private List<Identifier> textures;
     @Shadow
     @Final
-    public Identifier paletteKey;
+    private Identifier paletteKey;
     @Shadow
     @Final
-    public Map<String, Identifier> permutations;
+    private Map<String, Identifier> permutations;
     @Unique
-    private boolean elytra = false;
+    private boolean noCallback = false;
 
     @Inject(method = "load", at = @At("HEAD"))
     private void loadElytraPermutations(ResourceManager resourceManager, AtlasSource.SpriteRegions regions, CallbackInfo ci) {
-        if (this.elytra)
+        if (this.noCallback)
             return;
         List<Identifier> elytraTextures = new ArrayList<>(this.textures.size());
         for (Identifier texture : this.textures) {
@@ -47,19 +48,15 @@ public class PalettedPermutationsAtlasSourceMixin implements ElytraSourceAccesso
             if (path.contains("armor")
                     && !path.contains("leggings")
                     && path.matches(this.SUPPORTED_PATTERN))
-                elytraTextures.add(ElytraTrims.id(path.replaceFirst("armor", "elytra")));
+                elytraTextures.add(new Identifier(texture.getNamespace(), path.replaceFirst("armor", "elytra")));
         }
-        if (elytraTextures.isEmpty())
-            return;
-
-        PalettedPermutationsAtlasSource elytraSource = new PalettedPermutationsAtlasSource(elytraTextures, this.paletteKey, this.permutations);
-        ((ElytraSourceAccessor) elytraSource).elytra_trims$enableElytra();
-        elytraSource.load(resourceManager, regions);
+        if (!elytraTextures.isEmpty())
+            ETResourceListener.addTrims(elytraTextures, this.paletteKey, this.permutations);
     }
 
     @Unique
     @Override
-    public void elytra_trims$enableElytra() {
-        this.elytra = true;
+    public void elytra_trims$ignoreListener() {
+        this.noCallback = true;
     }
 }

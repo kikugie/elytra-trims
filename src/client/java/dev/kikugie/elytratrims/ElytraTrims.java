@@ -5,7 +5,6 @@ import dev.kikugie.elytratrims.config.ConfigState;
 import dev.kikugie.elytratrims.render.ExtraElytraFeatureRenderer;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.client.texture.atlas.AtlasSourceType;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,10 +12,6 @@ import org.slf4j.LoggerFactory;
 public class ElytraTrims implements ClientModInitializer {
     public static final String MOD_ID = "elytratrims";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-
-    public static Identifier ELYTRA_TRIMS_ATLAS_TEXTURE = id("textures/atlas/elytra_trims.png");
-    public static AtlasSourceType ELYTRA_PATTERNS;
-    public static AtlasSourceType ELYTRA_OVERLAY;
     public static ExtraElytraFeatureRenderer ELYTRA_RENDERER;
     private static ConfigState configState;
 
@@ -43,6 +38,5 @@ public class ElytraTrims implements ClientModInitializer {
         stackedTrimsLoaded = fabric.isModLoaded("stacked_trims");
         if (fabric.isModLoaded("command-config"))
             CommandConfig.register();
-        Resources.init();
     }
 }

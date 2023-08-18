@@ -9,7 +9,6 @@
     "ElytraFeatureRendererMixin",
     "ItemRendererMixin",
     "LivingEntityMixin",
-    "MinecraftClientMixin",
     "PalettedPermutationsAtlasSourceMixin",
     "SmithingScreenMixin",
     "compat.elytraslot.ElytraSlotLayerMixin",

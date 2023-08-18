@@ -71,8 +71,6 @@ dependencies {
         }
         modApi "dev.isxander.yacl:yet-another-config-lib-fabric:${project.yacl_version}"
         modCompileOnly "maven.modrinth:stacked-armor-trims:${project.stacked_trims_version}"
-
-        modImplementation "pers.solid:brrp-fabric:${project.brrp_version}-${project.minecraft_version}"
     }
     modApi "dev.kikugie.command-config:${project.cmd_config_version}"
 }
