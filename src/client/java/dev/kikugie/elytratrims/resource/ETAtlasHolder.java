@@ -1,6 +1,7 @@
 package dev.kikugie.elytratrims.resource;
 
 import dev.kikugie.elytratrims.ElytraTrims;
+import dev.kikugie.elytratrims.config.TextureConfig;
 import dev.kikugie.elytratrims.render.ExtraElytraFeatureRenderer;
 import dev.kikugie.elytratrims.util.LogWrapper;
 import net.fabricmc.fabric.api.resource.SimpleResourceReloadListener;
@@ -83,15 +84,19 @@ public class ETAtlasHolder implements SimpleResourceReloadListener<StitchResult>
 
     private Collection<Supplier<SpriteContents>> getTrims(ResourceManager manager, Sprite elytraModel) {
         AtlasLoader trimSources = new AtlasLoader(ETResourceListener.getTrims());
+        TextureConfig config = ElytraTrims.getConfig().texture;
         return ImageUtils.transform(trimSources.loadSources(manager),
-                image -> ImageUtils.mask(image, elytraModel));
+                image -> config.cropTrims ? ImageUtils.mask(image, elytraModel) : image);
     }
 
     private Collection<Supplier<SpriteContents>> getPatterns(ResourceManager manager, Sprite elytraModel) {
         List<Supplier<SpriteContents>> patterns = new ArrayList<>();
+        TextureConfig config = ElytraTrims.getConfig().texture;
         ResourceFinder finder = new ResourceFinder("textures", ".png");
         Registries.BANNER_PATTERN.getKeys().forEach(key -> patterns.add(() -> {
-            SpriteIdentifier sprite = TexturedRenderLayers.getShieldPatternTextureId(key);
+            SpriteIdentifier sprite = config.useBannerTextures
+                    ? TexturedRenderLayers.getBannerPatternTextureId(key)
+                    : TexturedRenderLayers.getShieldPatternTextureId(key);
             Identifier id = finder.toResourcePath(sprite.getTextureId());
             NativeImage pattern;
             try {
@@ -100,15 +105,16 @@ public class ETAtlasHolder implements SimpleResourceReloadListener<StitchResult>
                 LOGGER.error("Failed to load pattern texture: {}", id);
                 return null;
             }
+            // FIXME: Crops to a quarter of the pattern
             int scale = pattern.getWidth() / 64;
             NativeImage offset = ImageUtils.offsetNotClosing(pattern, 34 * scale, 0, pattern.getWidth(), pattern.getHeight() / 2);
-            return ImageUtils.mask(ImageUtils.createContents(offset, id), elytraModel);
+            return ImageUtils.mask(ImageUtils.createContents(offset, id.withPath(path -> path.replace("textures/", "").replace(".png", ""))), elytraModel);
         }));
         return patterns;
     }
 
     private Supplier<SpriteContents> getOverlay(Sprite elytraModel) {
-        return () -> ImageUtils.createContents(ImageUtils.createSaturationMaskNotClosing(elytraModel), elytraModel.id.withSuffixedPath("_overlay"));
+        return () -> ImageUtils.createContents(ImageUtils.createSaturationMaskNotClosing(elytraModel), elytraModel.id.withPath(path -> path.replace("textures/", "").replace(".png", "")));
     }
 
     @Override

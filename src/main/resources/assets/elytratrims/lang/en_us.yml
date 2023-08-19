@@ -9,7 +9,14 @@ elytratrims:
     category:
       .: Config
       render: Render
-      misc: Misc
+      texture: Texture
+    texture:
+      useBannerTextures:
+        .: Use Banner Textures
+        tooltip: Use banner textures for elytra patterns instead of shield's.
+      cropTrims:
+        .: Crop Trims
+        tooltip: Crop armor trims to fit elytra.
     type:
       color:
         .: Dye

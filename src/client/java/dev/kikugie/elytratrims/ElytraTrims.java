@@ -1,7 +1,8 @@
 package dev.kikugie.elytratrims;
 
-import dev.kikugie.elytratrims.config.CommandConfig;
-import dev.kikugie.elytratrims.config.ConfigState;
+import dev.kikugie.elytratrims.config.lib.CommandConfig;
+import dev.kikugie.elytratrims.config.ConfigLoader;
+import dev.kikugie.elytratrims.config.ModConfig;
 import dev.kikugie.elytratrims.render.ExtraElytraFeatureRenderer;
 import dev.kikugie.elytratrims.resource.ETAtlasHolder;
 import net.fabricmc.api.ClientModInitializer;
@@ -16,26 +17,21 @@ public class ElytraTrims implements ClientModInitializer {
     public static final String MOD_ID = "elytratrims";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
     public static ExtraElytraFeatureRenderer ELYTRA_RENDERER;
-    private static ConfigState configState;
-
     public static boolean stackedTrimsLoaded = false;
-
-    public static ConfigState getConfigState() {
-        return configState;
-    }
-
-    private void loadConfig() {
-        configState = ConfigState.load();
-    }
+    private static ModConfig config;
 
     public static Identifier id(String path) {
         return new Identifier(MOD_ID, path);
     }
 
+    public static ModConfig getConfig() {
+        return config;
+    }
+
     @Override
     public void onInitializeClient() {
         LOGGER.info("Making elytras fancier!");
-        loadConfig();
+        config = ConfigLoader.loadConfig();
 
         FabricLoader fabric = FabricLoader.getInstance();
         stackedTrimsLoaded = fabric.isModLoaded("stacked_trims");

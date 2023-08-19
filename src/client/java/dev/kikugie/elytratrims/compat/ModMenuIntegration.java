@@ -2,8 +2,8 @@ package dev.kikugie.elytratrims.compat;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
-import dev.kikugie.elytratrims.config.ClothConfig;
-import dev.kikugie.elytratrims.config.YaclConfig;
+import dev.kikugie.elytratrims.config.lib.ClothConfig;
+import dev.kikugie.elytratrims.config.lib.YaclConfig;
 import net.fabricmc.loader.api.FabricLoader;
 
 public class ModMenuIntegration implements ModMenuApi {

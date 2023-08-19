@@ -4,7 +4,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import dev.kikugie.elytratrims.ElytraTrims;
-import dev.kikugie.elytratrims.config.ConfigState;
+import dev.kikugie.elytratrims.config.RenderConfig;
 import dev.kikugie.elytratrims.render.ExtraElytraFeatureRenderer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -41,7 +41,7 @@ public class ElytraFeatureRendererMixin {
         //#endif
         if (texture.equals(SKIN) || texture.equals(cape)) {
             if (entity instanceof PlayerEntity
-                    && ConfigState.cancelRender(ConfigState.RenderType.CAPE, entity))
+                    && ExtraElytraFeatureRenderer.cancelRender(RenderConfig.RenderType.CAPE, entity))
                 return SKIN;
             if (!ExtraElytraFeatureRenderer.skipRenderIfMissingTexture(entity)
                     && cape != null

@@ -6,7 +6,7 @@ import dev.kikugie.elytratrims.ElytraTrimsServer;
 import dev.kikugie.elytratrims.access.ElytraOverlaysAccessor;
 import dev.kikugie.elytratrims.access.LivingEntityAccessor;
 import dev.kikugie.elytratrims.compat.StackableTrimsList;
-import dev.kikugie.elytratrims.config.ConfigState;
+import dev.kikugie.elytratrims.config.RenderConfig;
 import dev.kikugie.elytratrims.resource.ETAtlasHolder;
 import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.client.MinecraftClient;
@@ -61,12 +61,24 @@ public class ExtraElytraFeatureRenderer {
         this.atlas = atlas;
     }
 
+    public static boolean cancelRender(RenderConfig.RenderType type, LivingEntity entity) {
+        RenderConfig.RenderMode mode = ElytraTrims.getConfig().render.getEffective(type);
+        return switch (mode) {
+            case ALL -> false;
+            case NONE -> true;
+            case SELF ->
+                    entity != MinecraftClient.getInstance().player && ExtraElytraFeatureRenderer.skipRenderIfMissingTexture(entity);
+            case OTHERS ->
+                    entity == MinecraftClient.getInstance().player || !ExtraElytraFeatureRenderer.skipRenderIfMissingTexture(entity);
+        };
+    }
+
     public static boolean skipRenderIfMissingTexture(LivingEntity entity) {
         return !((LivingEntityAccessor) entity).elytra_trims$isGui();
     }
 
     private static boolean isMissing(Sprite sprite) {
-        return sprite.getContents().getId().equals(MissingSprite.getMissingSpriteId());
+        return sprite == null || sprite.getContents().getId().equals(MissingSprite.getMissingSpriteId());
     }
 
     public void render(ElytraEntityModel<?> elytra, MatrixStack matrices, VertexConsumerProvider provider, LivingEntity entity, ItemStack stack, int light, float alpha) {
@@ -79,13 +91,13 @@ public class ExtraElytraFeatureRenderer {
     }
 
     private int getLight(LivingEntity entity, ItemStack stack, int light) {
-        if (!ConfigState.cancelRender(ConfigState.RenderType.GLOW, entity) && ElytraTrimsServer.GLOWING.hasGlow(stack))
+        if (!cancelRender(RenderConfig.RenderType.GLOW, entity) && ElytraTrimsServer.GLOWING.hasGlow(stack))
             return 0xFF00FF;
         return light;
     }
 
     private void renderElytraOverlay(ElytraEntityModel<?> elytra, MatrixStack matrices, VertexConsumerProvider provider, LivingEntity entity, ItemStack stack, int light, float alpha) {
-        if (ConfigState.cancelRender(ConfigState.RenderType.COLOR, entity))
+        if (cancelRender(RenderConfig.RenderType.COLOR, entity))
             return;
 
         int color = ((ElytraOverlaysAccessor) (Object) stack).elytra_trims$getColor();
@@ -104,14 +116,14 @@ public class ExtraElytraFeatureRenderer {
         VertexConsumer vertexConsumer = sprite.getTextureSpecificVertexConsumer(
                 ItemRenderer.getDirectItemGlintConsumer(
                         provider,
-                        ELYTRA_LAYER.apply(ETAtlasHolder.TEXTURE),
+                        ELYTRA_LAYER.apply(ETAtlasHolder.NAME),
                         false,
                         stack.hasGlint()));
         elytra.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, red, green, blue, alpha);
     }
 
     private void renderElytraPatterns(ElytraEntityModel<?> elytra, MatrixStack matrices, VertexConsumerProvider provider, LivingEntity entity, ItemStack stack, int light, float alpha) {
-        if (ConfigState.cancelRender(ConfigState.RenderType.PATTERNS, entity))
+        if (cancelRender(RenderConfig.RenderType.PATTERNS, entity))
             return;
 
         List<Pair<RegistryEntry<BannerPattern>, DyeColor>> patterns = ((ElytraOverlaysAccessor) (Object) stack).elytra_trims$getPatterns();
@@ -126,7 +138,7 @@ public class ExtraElytraFeatureRenderer {
             VertexConsumer vertexConsumer = sprite.getTextureSpecificVertexConsumer(
                     ItemRenderer.getDirectItemGlintConsumer(
                             provider,
-                            ELYTRA_LAYER.apply(ETAtlasHolder.TEXTURE),
+                            ELYTRA_LAYER.apply(ETAtlasHolder.NAME),
                             false,
                             stack.hasGlint()));
             elytra.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, color[0], color[1], color[2], alpha);
@@ -134,7 +146,7 @@ public class ExtraElytraFeatureRenderer {
     }
 
     private void renderElytraTrims(ElytraEntityModel<?> elytra, MatrixStack matrices, VertexConsumerProvider provider, LivingEntity entity, ItemStack stack, int light, float alpha) {
-        if (ConfigState.cancelRender(ConfigState.RenderType.TRIMS, entity))
+        if (cancelRender(RenderConfig.RenderType.TRIMS, entity))
             return;
 
         World world = entity.getWorld();
@@ -144,11 +156,11 @@ public class ExtraElytraFeatureRenderer {
             trims = StackableTrimsList.getTrims(world.getRegistryManager(), stack);
         else
             trims = ArmorTrim.getTrim(world.getRegistryManager(),
-                            stack
-                            //#if MC > 12001
-                            //$$ , true
-                            //#endif
-                    ).map(Collections::singletonList).orElse(Collections.emptyList());
+                    stack
+                    //#if MC > 12001
+                    //$$ , true
+                    //#endif
+            ).map(Collections::singletonList).orElse(Collections.emptyList());
 
         for (ArmorTrim trim : trims)
             renderTrim(elytra, trim, matrices, provider, entity, stack, light, alpha);
@@ -165,14 +177,14 @@ public class ExtraElytraFeatureRenderer {
         VertexConsumer vertexConsumer = sprite.getTextureSpecificVertexConsumer(
                 ItemRenderer.getDirectItemGlintConsumer(
                         provider,
-                        ELYTRA_LAYER.apply(ETAtlasHolder.TEXTURE),
+                        ELYTRA_LAYER.apply(ETAtlasHolder.NAME),
                         false,
                         stack.hasGlint()));
         elytra.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1F, 1F, 1F, alpha);
     }
 
     private boolean renderJebElytra(ElytraEntityModel<?> elytra, MatrixStack matrices, VertexConsumerProvider provider, LivingEntity entity, ItemStack stack, int light, float alpha) {
-        if (ConfigState.cancelRender(ConfigState.RenderType.COLOR, entity))
+        if (cancelRender(RenderConfig.RenderType.COLOR, entity))
             return true;
 
         if (((ElytraOverlaysAccessor) (Object) stack).elytra_trims$getPatterns().isEmpty() && stack.getName().getString().equals("jeb_")) {
@@ -186,7 +198,7 @@ public class ExtraElytraFeatureRenderer {
     }
 
     private Sprite getOverlaySprite() {
-        return this.atlas.getSprite(ElytraTrims.id("entity/elytra_overlay"));
+        return this.atlas.getSprite(ElytraTrims.id("entity/elytra"));
     }
 
     private Sprite getPatternSprite(RegistryEntry<BannerPattern> pattern) {
@@ -194,14 +206,10 @@ public class ExtraElytraFeatureRenderer {
         if (optional.isEmpty())
             return this.atlas.getSprite(null);
 
-        SpriteIdentifier shieldSprite = TexturedRenderLayers.getShieldPatternTextureId(optional.get());
-        Identifier patternTexture = shieldSprite.getTextureId();
-        int pathEnd = patternTexture.getPath().lastIndexOf('/');
-        if (pathEnd == -1)
-            return this.atlas.getSprite(null);
-
-        Identifier elytraTexture = patternTexture.withPath("entity/elytra/patterns%s".formatted(patternTexture.getPath().substring(pathEnd)));
-        return this.atlas.getSprite(elytraTexture);
+        SpriteIdentifier shieldSprite = ElytraTrims.getConfig().texture.useBannerTextures
+                ? TexturedRenderLayers.getBannerPatternTextureId(optional.get())
+                : TexturedRenderLayers.getShieldPatternTextureId(optional.get());
+        return this.atlas.getSprite(shieldSprite.getTextureId());
     }
 
     private Sprite getTrimSprite(ArmorTrim trim) {
