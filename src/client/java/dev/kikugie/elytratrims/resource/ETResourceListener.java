@@ -1,6 +1,5 @@
 package dev.kikugie.elytratrims.resource;
 
-import com.google.common.base.Preconditions;
 import dev.kikugie.elytratrims.access.ElytraSourceAccessor;
 import dev.kikugie.elytratrims.util.LogWrapper;
 import net.minecraft.client.texture.atlas.AtlasSource;
@@ -27,7 +26,16 @@ public class ETResourceListener {
 
     public static void addTrims(List<Identifier> patterns, Identifier palette, Map<String, Identifier> materials) {
         checkActive();
-        instance.trims.add(patterns, palette, materials);
+        List<Identifier> elytraPatterns = new ArrayList<>(patterns.size());
+        for (Identifier texture : patterns) {
+            String path = texture.getPath();
+            if (path.contains("armor")
+                    && !path.contains("leggings")
+                    && path.matches("trims/models/armor/[\\w_-]+"))
+                elytraPatterns.add(new Identifier(texture.getNamespace(), path.replaceFirst("armor", "elytra")));
+        }
+        if (!elytraPatterns.isEmpty())
+            instance.trims.add(elytraPatterns, palette, materials);
     }
 
     public static List<AtlasSource> getTrims() {
@@ -45,7 +53,10 @@ public class ETResourceListener {
     }
 
     private static void checkActive() {
-        Preconditions.checkState(instance != null, "Resource listener not initialized");
+        if (instance == null) {
+            LOGGER.error("Resource listener not initialized");
+            throw new IllegalStateException();
+        }
     }
 
     private static class TrimEntries implements Iterable<Identifier> {

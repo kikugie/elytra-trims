@@ -3,6 +3,7 @@ package dev.kikugie.elytratrims.resource;
 import com.google.common.base.Preconditions;
 import dev.kikugie.elytratrims.util.LogWrapper;
 import net.minecraft.client.resource.metadata.AnimationResourceMetadata;
+import net.minecraft.client.texture.MissingSprite;
 import net.minecraft.client.texture.NativeImage;
 import net.minecraft.client.texture.SpriteContents;
 import net.minecraft.client.texture.SpriteDimensions;
@@ -35,6 +36,10 @@ public class ImageUtils {
         return result;
     }
 
+    public static SpriteContents createContents(NativeImage image, Identifier id) {
+        return new SpriteContents(id, new SpriteDimensions(image.getWidth(), image.getHeight()), image, AnimationResourceMetadata.EMPTY);
+    }
+
     @Nullable
     @Contract("!null, _ -> new")
     public static SpriteContents mask(@Nullable SpriteContents image, Sprite mask) {
@@ -47,7 +52,7 @@ public class ImageUtils {
         NativeImage masked = applyMask(image, mask);
         if (masked == null)
             return null;
-        SpriteContents newContents = new SpriteContents(image.getId(), new SpriteDimensions(image.getWidth(), image.getHeight()), masked, AnimationResourceMetadata.EMPTY);
+        SpriteContents newContents = createContents(masked, image.getId());
         image.close();
         return newContents;
     }
@@ -71,8 +76,58 @@ public class ImageUtils {
             }
             return masked;
         } catch (IOException e) {
+            //TODO: Do something idk
             throw new RuntimeException(e);
         }
+    }
+
+    public static NativeImage createSaturationMaskNotClosing(Sprite sprite) {
+        try {
+            NativeImage image = sprite.read();
+            int maxSaturation = 0;
+            for (int y = 0; y < image.getHeight(); y++) {
+                for (int x = 0; x < image.getWidth(); x++) {
+                    int color = image.getColor(x, y);
+                    int red = (color >> 16 & 0xFF);
+                    int green = (color >> 8 & 0xFF);
+                    int blue = (color & 0xFF);
+                    int alpha = (color >> 24 & 0xFF);
+                    if (alpha == 0) continue;
+                    maxSaturation = Math.max(maxSaturation, Math.max(red, Math.max(green, blue)));
+                }
+            }
+            int saturationDiff = 255 - maxSaturation;
+            NativeImage masked = new NativeImage(image.getWidth(), image.getHeight(), true);
+
+            for (int y = 0; y < image.getHeight(); y++) {
+                for (int x = 0; x < image.getWidth(); x++) {
+                    int color = image.getColor(x, y);
+                    int red = (color >> 16 & 0xFF);
+                    int green = (color >> 8 & 0xFF);
+                    int blue = (color & 0xFF);
+                    int saturation = (Math.max(red, Math.max(green, blue)) + saturationDiff);
+                    masked.setColor(x, y, color & 0xFF000000 | saturation << 16 | saturation << 8 | saturation);
+                }
+            }
+            return masked;
+        } catch (IOException e) {
+            //TODO: Do something idk
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static NativeImage offsetNotClosing(NativeImage source, int dx, int dy, int width, int height) {
+        NativeImage offset = new NativeImage(width, height, true);
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                try {
+                    offset.setColor(x + dx, y + dy, source.getColor(x, y));
+                } catch (IllegalArgumentException ignored) {
+                    // Ignore out of bounds
+                }
+            }
+        }
+        return offset;
     }
 
     @Nullable
@@ -117,7 +172,7 @@ public class ImageUtils {
     }
 
     @Contract("_ -> new")
-    private static NativeImage copy(NativeImage source) {
+    public static NativeImage copy(NativeImage source) {
         NativeImage copy = new NativeImage(source.getWidth(), source.getHeight(), true);
         copy.copyFrom(source);
         return copy;
@@ -133,5 +188,9 @@ public class ImageUtils {
             return new net.minecraft.client.texture.atlas.Sprite(id, resource.get(), regions);
         LOGGER.error("Can't find texture: %s".formatted(id));
         throw new FileNotFoundException();
+    }
+
+    public static boolean isMissing(SpriteContents sprite) {
+        return sprite.getId().equals(MissingSprite.getMissingSpriteId());
     }
 }

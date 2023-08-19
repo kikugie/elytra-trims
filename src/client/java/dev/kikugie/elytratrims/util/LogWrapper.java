@@ -18,6 +18,10 @@ public class LogWrapper {
         return new LogWrapper(ElytraTrims.LOGGER, executor);
     }
 
+    public static LogWrapper of(Class<?> executor) {
+        return new LogWrapper(ElytraTrims.LOGGER, executor.getSimpleName());
+    }
+
     public void info(String message, Object... args) {
         this.logger.info(TEMPLATE.formatted(this.executor, message), args);
     }

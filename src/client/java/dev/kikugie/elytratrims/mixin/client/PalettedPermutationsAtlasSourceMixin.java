@@ -1,6 +1,5 @@
 package dev.kikugie.elytratrims.mixin.client;
 
-import dev.kikugie.elytratrims.ElytraTrims;
 import dev.kikugie.elytratrims.access.ElytraSourceAccessor;
 import dev.kikugie.elytratrims.resource.ETResourceListener;
 import net.minecraft.client.texture.atlas.AtlasSource;
@@ -15,7 +14,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -24,8 +22,6 @@ import java.util.Map;
  */
 @Mixin(PalettedPermutationsAtlasSource.class)
 public class PalettedPermutationsAtlasSourceMixin implements ElytraSourceAccessor {
-    @Unique
-    private final String SUPPORTED_PATTERN = "trims/models/armor/[\\w_-]+";
     @Shadow
     @Final
     private List<Identifier> textures;
@@ -42,16 +38,7 @@ public class PalettedPermutationsAtlasSourceMixin implements ElytraSourceAccesso
     private void loadElytraPermutations(ResourceManager resourceManager, AtlasSource.SpriteRegions regions, CallbackInfo ci) {
         if (this.noCallback)
             return;
-        List<Identifier> elytraTextures = new ArrayList<>(this.textures.size());
-        for (Identifier texture : this.textures) {
-            String path = texture.getPath();
-            if (path.contains("armor")
-                    && !path.contains("leggings")
-                    && path.matches(this.SUPPORTED_PATTERN))
-                elytraTextures.add(new Identifier(texture.getNamespace(), path.replaceFirst("armor", "elytra")));
-        }
-        if (!elytraTextures.isEmpty())
-            ETResourceListener.addTrims(elytraTextures, this.paletteKey, this.permutations);
+        ETResourceListener.addTrims(this.textures, this.paletteKey, this.permutations);
     }
 
     @Unique
