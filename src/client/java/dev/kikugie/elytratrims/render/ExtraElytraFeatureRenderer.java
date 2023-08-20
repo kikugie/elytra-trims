@@ -57,6 +57,9 @@ public class ExtraElytraFeatureRenderer {
     );
     private final SpriteAtlasTexture atlas;
 
+    private final Function<ArmorTrim, Sprite> trimGetter = Util.memoize(this::trimSpriteGetter);
+    private final Function<RegistryEntry<BannerPattern>, Sprite> patternGetter = Util.memoize(this::patternSpriteGetter);
+
     public ExtraElytraFeatureRenderer(SpriteAtlasTexture atlas) {
         this.atlas = atlas;
     }
@@ -197,11 +200,30 @@ public class ExtraElytraFeatureRenderer {
         return false;
     }
 
+    private Sprite getTrimSprite(ArmorTrim trim) {
+        return this.trimGetter.apply(trim);
+    }
+
+    private Sprite getPatternSprite(RegistryEntry<BannerPattern> pattern) {
+        return this.patternGetter.apply(pattern);
+    }
+
     private Sprite getOverlaySprite() {
         return this.atlas.getSprite(ElytraTrims.id("entity/elytra"));
     }
 
-    private Sprite getPatternSprite(RegistryEntry<BannerPattern> pattern) {
+    private Sprite trimSpriteGetter(ArmorTrim trim) {
+        String material = trim.getMaterial().value().assetName();
+        Identifier identifier = trim.getPattern().value().assetId().withPath(path -> "trims/models/elytra/%s_%s".formatted(path, material));
+        if (ElytraTrims.getConfig().texture.useDarkerTrim) {
+            Sprite sprite = this.atlas.getSprite(identifier.withSuffixedPath("_darker"));
+            if (!isMissing(sprite))
+                return sprite;
+        }
+        return this.atlas.getSprite(identifier);
+    }
+
+    private Sprite patternSpriteGetter(RegistryEntry<BannerPattern> pattern) {
         Optional<RegistryKey<BannerPattern>> optional = pattern.getKey();
         if (optional.isEmpty())
             return this.atlas.getSprite(null);
@@ -210,11 +232,5 @@ public class ExtraElytraFeatureRenderer {
                 ? TexturedRenderLayers.getBannerPatternTextureId(optional.get())
                 : TexturedRenderLayers.getShieldPatternTextureId(optional.get());
         return this.atlas.getSprite(shieldSprite.getTextureId());
-    }
-
-    private Sprite getTrimSprite(ArmorTrim trim) {
-        String material = trim.getMaterial().value().assetName();
-        Identifier identifier = trim.getPattern().value().assetId().withPath(path -> "trims/models/elytra/%s_%s".formatted(path, material));
-        return this.atlas.getSprite(identifier);
     }
 }

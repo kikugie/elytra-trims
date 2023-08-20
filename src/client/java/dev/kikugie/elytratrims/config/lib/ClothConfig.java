@@ -41,6 +41,13 @@ public class ClothConfig {
                 .setSaveConsumer(value -> config.texture.cropTrims = value)
                 .requireRestart()
                 .build());
+        texture.addEntry(textureEntryBuilder.startBooleanToggle(
+                        Text.translatable("elytratrims.config.texture.useDarkerTrim"),
+                        config.texture.useDarkerTrim)
+                .setTooltip(Text.translatable("elytratrims.config.texture.useDarkerTrim.tooltip"))
+                .setDefaultValue(false)
+                .setSaveConsumer(value -> config.texture.useDarkerTrim = value)
+                .build());
 
         builder.setSavingRunnable(() -> ConfigLoader.saveConfig(config));
         return builder.build();

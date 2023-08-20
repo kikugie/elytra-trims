@@ -56,7 +56,12 @@ public class CommandConfig {
                                                 MinecraftClient.getInstance().reloadResourcesConcurrently();
                                             config.texture.cropTrims = value;
                                         }))
-                                .helpFunc(() -> Text.translatable("elytratrims.config.texture.cropTrims.tooltip"))))
+                                .helpFunc(() -> Text.translatable("elytratrims.config.texture.cropTrims.tooltip")))
+                        .option(ignored -> SimpleOptions.bool("useDarkerTrim", source)
+                                .valueAccess(Defaults.defaultValueAccess(
+                                        () -> config.texture.useDarkerTrim,
+                                        value -> config.texture.useDarkerTrim = value))
+                                .helpFunc(() -> Text.translatable("elytratrims.config.texture.useDarkerTrim.tooltip"))))
                 .saveFunc(() -> ConfigLoader.saveConfig(config))
                 .build();
     }

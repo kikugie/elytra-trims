@@ -45,6 +45,14 @@ public class YaclConfig {
                                         .controller(TickBoxControllerBuilder::create)
                                         .flag(OptionFlag.ASSET_RELOAD)
                                         .build())
+                                .option(Option.<Boolean>createBuilder()
+                                        .name(Text.translatable("elytratrims.config.texture.useDarkerTrim"))
+                                        .description(OptionDescription.of(Text.translatable("elytratrims.config.texture.useDarkerTrim.tooltip")))
+                                        .binding(false,
+                                                () -> config.texture.useDarkerTrim,
+                                                (value) -> config.texture.useDarkerTrim = value)
+                                        .controller(TickBoxControllerBuilder::create)
+                                        .build())
                                 .build())
                         .build())
                 .save(() -> ConfigLoader.saveConfig(config))
