@@ -10,6 +10,7 @@
     "ItemRendererMixin",
     "LivingEntityMixin",
     "PalettedPermutationsAtlasSourceMixin",
+    "SimpleRegistryMixin",
     "SmithingScreenMixin",
     "compat.elytraslot.ElytraSlotLayerMixin",
     "compat.elytratrinket.ElytraTrinketFeatureRendererMixin"

@@ -1,13 +1,12 @@
 package dev.kikugie.elytratrims.mixin.client;
 
+import dev.kikugie.elytratrims.ElytraTrims;
 import dev.kikugie.elytratrims.access.LivingEntityAccessor;
 import net.minecraft.client.gui.screen.ingame.SmithingScreen;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.item.ElytraItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Quaternionf;
@@ -32,20 +31,16 @@ public abstract class SmithingScreenMixin {
     private @Nullable ArmorStandEntity armorStand;
     @Unique
     private boolean isElytra = false;
-    @Unique
-    private boolean renderElytraOutline = false;
 
     @Inject(method = "setup", at = @At("TAIL"))
     private void markGuiArmorStand(CallbackInfo ci) {
         if (this.armorStand != null)
             ((LivingEntityAccessor) this.armorStand).elytra_trims$markGui();
-        if (Items.ELYTRA.getDefaultStack().isIn(ItemTags.TRIMMABLE_ARMOR))
-            this.renderElytraOutline = true;
     }
 
     @ModifyArg(method = "handledScreenTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/ingame/CyclingSlotIcon;updateTexture(Ljava/util/List;)V", ordinal = 1))
     private List<Identifier> renderElytraOutline(List<Identifier> original) {
-        if (!this.renderElytraOutline || original.isEmpty())
+        if (!ElytraTrims.elytraTrimmingAvailable || original.isEmpty())
             return original;
         ArrayList<Identifier> modified = new ArrayList<>(original);
         modified.add(EMPTY_ARMOR_SLOT_ELYTRA_TEXTURE);
