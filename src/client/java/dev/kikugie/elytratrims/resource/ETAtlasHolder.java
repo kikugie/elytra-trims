@@ -29,12 +29,15 @@ import java.util.concurrent.Executor;
 import java.util.function.Supplier;
 
 public class ETAtlasHolder implements SimpleResourceReloadListener<StitchResult> {
-    private static final LogWrapper LOGGER = LogWrapper.of(ETAtlasHolder.class);
+    public static final Identifier ELYTRA_OUTLINE = ElytraTrims.id("item/elytra_outline");
+    private static final int OUTLINE_COLOR = 0xFF555555;
+    private static final Identifier ELYTRA_ITEM = new Identifier("textures/item/elytra.png");
     private static final Identifier ELYTRA_MODEL = new Identifier("textures/entity/elytra.png");
+    private static final LogWrapper LOGGER = LogWrapper.of(ETAtlasHolder.class);
     public static Identifier TEXTURE = ElytraTrims.id("textures/atlas/elytra_features.png");
     public static Identifier NAME = ElytraTrims.id("elytra_features");
     private static ETAtlasHolder instance;
-    SpriteAtlasTexture atlas;
+    private SpriteAtlasTexture atlas;
 
     public static ETAtlasHolder create() {
         instance = new ETAtlasHolder();
@@ -43,6 +46,10 @@ public class ETAtlasHolder implements SimpleResourceReloadListener<StitchResult>
 
     public static ETAtlasHolder getInstance() {
         return instance;
+    }
+
+    public SpriteAtlasTexture getAtlas() {
+        return this.atlas;
     }
 
     private void init() {
@@ -75,6 +82,7 @@ public class ETAtlasHolder implements SimpleResourceReloadListener<StitchResult>
         List<Supplier<SpriteContents>> sprites = new ArrayList<>(getTrims(manager, elytraModel));
         sprites.addAll(getPatterns(manager, elytraModel));
         sprites.add(getOverlay(elytraModel));
+//        sprites.add(getOutline(manager));
         sprites.add(MissingSprite::createSpriteContents);
 
         ETResourceListener.close();
@@ -112,13 +120,34 @@ public class ETAtlasHolder implements SimpleResourceReloadListener<StitchResult>
             int scale = pattern.getWidth() / 64;
             NativeImage offset = ImageUtils.offsetNotClosing(pattern, 34 * scale, config.useBannerTextures ? 2 * scale : 0, pattern.getWidth(), pattern.getHeight());
 
-            return ImageUtils.mask(ImageUtils.createContents(offset, id.withPath(path -> path.replace("textures/", "").replace(".png", ""))), elytraModel);
+            return ImageUtils.mask(ImageUtils.createContents(offset, ElytraTrims.id(id.getPath().replace("textures/", "").replace(".png", ""))), elytraModel);
         }));
         return patterns;
     }
 
     private Supplier<SpriteContents> getOverlay(Sprite elytraModel) {
         return () -> ImageUtils.createContents(ImageUtils.createSaturationMaskNotClosing(elytraModel), elytraModel.id.withPath(path -> path.replace("textures/", "").replace(".png", "")));
+    }
+
+    private Supplier<SpriteContents> getOutline(ResourceManager manager) {
+        return () -> {
+            Sprite elytra;
+            try {
+                elytra = ImageUtils.loadTexture(ELYTRA_ITEM, manager, 1);
+            } catch (FileNotFoundException e) {
+                LOGGER.error("Failed to load elytra model texture");
+                return null;
+            }
+
+            try {
+                return ImageUtils.createContents(ImageUtils.outlineNotClosing(elytra.read(), OUTLINE_COLOR), ELYTRA_OUTLINE);
+            } catch (IOException e) {
+                LOGGER.error("Failed to create outline texture");
+                return null;
+            } finally {
+                elytra.close();
+            }
+        };
     }
 
     @Override

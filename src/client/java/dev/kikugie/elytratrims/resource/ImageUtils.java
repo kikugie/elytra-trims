@@ -171,10 +171,37 @@ public class ImageUtils {
         return scaled;
     }
 
-    public static NativeImage dims(NativeImage source, int width, int height) {
-        NativeImage dims = new NativeImage(width, height, true);
+    public static NativeImage outlineNotClosing(NativeImage source, int color) {
+        NativeImage outline = new NativeImage(source.getWidth(), source.getHeight(), true);
         for (int y = 0; y < source.getHeight(); y++) {
             for (int x = 0; x < source.getWidth(); x++) {
+                int sourceColor = source.getColor(x, y);
+                if ((sourceColor >> 24 & 0xFF) == 0)
+                    continue;
+                // What the fuck
+                if (getColorSafe(source, x - 1, y) == 0 ||
+                        getColorSafe(source, x + 1, y) == 0 ||
+                        getColorSafe(source, x, y - 1) == 0 ||
+                        getColorSafe(source, x, y + 1) == 0)
+                    outline.setColor(x, y, color);
+            }
+        }
+        return outline;
+    }
+
+    private static int getColorSafe(NativeImage image, int x, int y) {
+        if (x < 0 || y < 0 || x >= image.getWidth() || y >= image.getHeight())
+            return 0;
+        return image.getColor(x, y);
+    }
+
+    public static NativeImage dims(NativeImage source, int width, int height) {
+        NativeImage dims = new NativeImage(width, height, true);
+        int xMax = Math.min(source.getWidth(), width);
+        int yMax = Math.min(source.getHeight(), height);
+
+        for (int y = 0; y < yMax; y++) {
+            for (int x = 0; x < xMax; x++) {
                 dims.setColor(x, y, source.getColor(x, y));
             }
         }

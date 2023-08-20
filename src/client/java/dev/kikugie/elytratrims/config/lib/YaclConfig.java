@@ -39,7 +39,7 @@ public class YaclConfig {
                                 .option(Option.<Boolean>createBuilder()
                                         .name(Text.translatable("elytratrims.config.texture.cropTrims"))
                                         .description(OptionDescription.of(Text.translatable("elytratrims.config.texture.cropTrims.tooltip")))
-                                        .binding(false,
+                                        .binding(true,
                                                 () -> config.texture.cropTrims,
                                                 (value) -> config.texture.cropTrims = value)
                                         .controller(TickBoxControllerBuilder::create)

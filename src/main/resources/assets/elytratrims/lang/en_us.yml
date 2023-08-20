@@ -19,7 +19,7 @@ elytratrims:
         tooltip: Crop armor trims to fit elytra.
       useDarkerTrim:
         .: Use Darker Trim
-        tooltip: Use darker trim color for elytra when available.\nThis uses the same color as when you apply a trim to an armor piece of the same material.
+        tooltip: "Use darker trim color for elytra when available.\nThis uses the same color as when you apply a trim to an armor piece of the same material."
     type:
       color:
         .: Dye
