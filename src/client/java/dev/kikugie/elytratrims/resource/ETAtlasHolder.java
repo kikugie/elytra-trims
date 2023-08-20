@@ -105,9 +105,13 @@ public class ETAtlasHolder implements SimpleResourceReloadListener<StitchResult>
                 LOGGER.error("Failed to load pattern texture: {}", id);
                 return null;
             }
-            // FIXME: Crops to a quarter of the pattern
+
+            pattern = config.useBannerTextures
+                    ? ImageUtils.dims(pattern, pattern.getWidth() * 2, pattern.getHeight())
+                    : ImageUtils.dims(pattern, pattern.getWidth(), pattern.getHeight() / 2);
             int scale = pattern.getWidth() / 64;
-            NativeImage offset = ImageUtils.offsetNotClosing(pattern, 34 * scale, 0, pattern.getWidth(), pattern.getHeight() / 2);
+            NativeImage offset = ImageUtils.offsetNotClosing(pattern, 34 * scale, config.useBannerTextures ? 2 * scale : 0, pattern.getWidth(), pattern.getHeight());
+
             return ImageUtils.mask(ImageUtils.createContents(offset, id.withPath(path -> path.replace("textures/", "").replace(".png", ""))), elytraModel);
         }));
         return patterns;

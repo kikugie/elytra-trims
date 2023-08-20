@@ -29,7 +29,7 @@ public class ImageUtils {
     private static final LogWrapper LOGGER = LogWrapper.of("ET Image Utils");
 
     public static Collection<Supplier<SpriteContents>> transform(Iterable<Supplier<SpriteContents>> contents,
-                                                       UnaryOperator<@Nullable SpriteContents> operator) {
+                                                                 UnaryOperator<@Nullable SpriteContents> operator) {
         List<Supplier<SpriteContents>> result = new ArrayList<>();
         for (Supplier<SpriteContents> supplier : contents)
             result.add(() -> operator.apply(supplier != null ? supplier.get() : null));
@@ -43,7 +43,7 @@ public class ImageUtils {
     @Nullable
     @Contract("!null, _ -> new")
     public static SpriteContents mask(@Nullable SpriteContents image, Sprite mask) {
-        if (image == null)
+        if (image == null || isMissing(image))
             return null;
         if (image.createAnimator() != null) {
             LOGGER.warn("Cannot mask animated texture {}", image.getId());
@@ -146,9 +146,9 @@ public class ImageUtils {
         if (xScale == 1)
             result = new Pair<>(copy(img1), copy(img2));
         else if (xScale > 1)
-            result = new Pair<>(upscale(img1, (int) xScale), copy(img2));
+            result = new Pair<>(copy(img1), upscale(img2, (int) xScale));
         else
-            result = new Pair<>(copy(img1), upscale(img2, (int) (1 / xScale)));
+            result = new Pair<>(upscale(img1, img2.getWidth() / img1.getWidth()), copy(img2));
         img1.close();
         img2.close();
         return result;
@@ -169,6 +169,17 @@ public class ImageUtils {
         }
         image.close();
         return scaled;
+    }
+
+    public static NativeImage dims(NativeImage source, int width, int height) {
+        NativeImage dims = new NativeImage(width, height, true);
+        for (int y = 0; y < source.getHeight(); y++) {
+            for (int x = 0; x < source.getWidth(); x++) {
+                dims.setColor(x, y, source.getColor(x, y));
+            }
+        }
+        source.close();
+        return dims;
     }
 
     @Contract("_ -> new")
