@@ -35,36 +35,68 @@ Let your creativity soar and make your elytra stand out with the Elytra Trims mo
 ### For more trims check out [Elytra Trims Extensions](https://modrinth.com/mod/elytra-trims-extensions)
 
 ## Trims
-Put any trim on your elytra just like any other armor. Mod provides a default resourcepack with all vanilla trims, but it can be expanded further.
+
+Put any trim on your elytra just like any other armor. Mod provides a default resourcepack with all vanilla trims, but
+it can be expanded further.
 
 ![A few trims](https://cdn.modrinth.com/data/XpzGz7KD/images/2966103eb5efb4e408088dbd502da364babf636d.png)
 
 ## Banner patterns
+
 Combine your elytra with a banner to add intricate patterns and designs to your elytra.
 
 ![Elytra with banner patterns](https://cdn.modrinth.com/data/XpzGz7KD/images/0327378aa65018c5f4e761c09c14fa94bb7e1d8d.png)
 
 ## Dyeing
+
 If you fancy something simplistic, dye your elytra however you want in a crafting table.
 
 ![Dyed elytra](https://cdn.modrinth.com/data/XpzGz7KD/images/511e985762a518992f2bc140b34e9f5c104ade74.png)
 
 ## Glowing
+
 Craft your elytra with a glow ink sac to make it glow in the dark.
 
 ![Glowing trim](https://cdn.modrinth.com/data/XpzGz7KD/images/849d54736e4519df78678bf00a2077a528e866ad.png)
 
+## Mod Compatibility
+
+This only lists mods with explicit support. Elytra Trims is likely to work with other mods too, but if it
+doesn't create an issue report for it!
+
+| Mod                                                                        | Requires Extensions |
+|----------------------------------------------------------------------------|---------------------|
+| [All The Trims](https://modrinth.com/mod/allthetrims)                      | No                  |
+| [Stacked Trims](https://modrinth.com/mod/stacked-armor-trims)              | No                  |
+| [Better Trims](https://modrinth.com/mod/bettertrims)                       | No                  |
+| [Elytra Slot](https://modrinth.com/mod/elytra-slot)                        | No                  |
+| [Elytra Trinket](https://modrinth.com/mod/elytra_trinket)                  | No                  |
+| [More Armor Trims](https://modrinth.com/mod/more-armor-trims)              | Yes                 |
+| [Additional Banners](https://modrinth.com/mod/additional-banners)          | Yes                 |
+| [Archeology Banners](https://modrinth.com/mod/archaeology-banners)         | Yes                 |
+| [Geode+](https://www.curseforge.com/minecraft/mc-mods/geode-plus)          | Yes                 |
+| [Flower Adornments](https://modrinth.com/datapack/armor-flower-adornments) | Yes                 |
+
+Datapacks that add new trim materials are supported by default.
+
 ## Config
+
 Supports following config libraries:
-- [Command Config Lib](https://modrinth.com/mod/command-config) - in-game and snapshot config. Uses `/et-config` command.
+
+- [Command Config Lib](https://modrinth.com/mod/command-config) - in-game and snapshot config. Uses `/et-config`
+  command.
 - [YACL](https://modrinth.com/mod/yacl) - requires v3
 - [Cloth Config](https://modrinth.com/mod/cloth-config)
-Multiple config libraries can be installed without conflicts.
+  Multiple config libraries can be installed without conflicts.
 
 ## Client and server side
-When installed on a server this mod enables crafting recipes for all features above. However, you can edit item nbt manually to render elytra features even without server side.
+
+When installed on a server this mod enables crafting recipes for all features above. However, you can edit item nbt
+manually to render elytra features even without server side.
 
 ![Server side explained](https://cdn.modrinth.com/data/XpzGz7KD/images/6586c8890bffd1ba21aee4bfdd33089ff2a77e8a.png)
 
 ## Customization
-With resourcepack support, you can customize all the mod's features to your liking. Change the texture of your armor trims or add a unique design to your elytra pattern with ease.
+
+With resourcepack support, you can customize all the mod's features to your liking. Change the texture of your armor
+trims or add a unique design to your elytra pattern with ease.
