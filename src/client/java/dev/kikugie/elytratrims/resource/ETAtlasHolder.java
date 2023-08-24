@@ -30,10 +30,12 @@ import java.util.function.Supplier;
 
 public class ETAtlasHolder implements SimpleResourceReloadListener<StitchResult> {
     public static final Identifier ELYTRA_OUTLINE = ElytraTrims.id("item/elytra_outline");
-    private static final int OUTLINE_COLOR = 0xFF555555;
+
     private static final Identifier ELYTRA_ITEM = new Identifier("textures/item/elytra.png");
     private static final Identifier ELYTRA_MODEL = new Identifier("textures/entity/elytra.png");
+    private static final Identifier ELYTRA_TRIM = ElytraTrims.id("trims/items/default");
     private static final LogWrapper LOGGER = LogWrapper.of(ETAtlasHolder.class);
+    private static final int OUTLINE_COLOR = 0xFF555555;
     public static Identifier TEXTURE = ElytraTrims.id("textures/atlas/elytra_features.png");
     public static Identifier NAME = ElytraTrims.id("elytra_features");
     private static ETAtlasHolder instance;
@@ -93,8 +95,9 @@ public class ETAtlasHolder implements SimpleResourceReloadListener<StitchResult>
     private Collection<Supplier<SpriteContents>> getTrims(ResourceManager manager, Sprite elytraModel) {
         AtlasLoader trimSources = new AtlasLoader(ETResourceListener.getTrims());
         TextureConfig config = ElytraTrims.getConfig().texture;
-        return ImageUtils.transform(trimSources.loadSources(manager),
-                image -> config.cropTrims ? ImageUtils.mask(image, elytraModel) : image);
+        return config.cropTrims
+                ? ImageUtils.transform(trimSources.loadSources(manager), image -> ImageUtils.mask(image, elytraModel))
+                : trimSources.loadSources(manager);
     }
 
     private Collection<Supplier<SpriteContents>> getPatterns(ResourceManager manager, Sprite elytraModel) {
@@ -120,7 +123,7 @@ public class ETAtlasHolder implements SimpleResourceReloadListener<StitchResult>
             int scale = pattern.getWidth() / 64;
             NativeImage offset = ImageUtils.offsetNotClosing(pattern, 34 * scale, config.useBannerTextures ? 2 * scale : 0, pattern.getWidth(), pattern.getHeight());
 
-            return ImageUtils.mask(ImageUtils.createContents(offset, ElytraTrims.id(id.getPath().replace("textures/", "").replace(".png", ""))), elytraModel);
+            return ImageUtils.mask(ImageUtils.createContents(offset, sprite.getTextureId().withPath(path -> path.replace("textures/", "").replace(".png", ""))), elytraModel);
         }));
         return patterns;
     }

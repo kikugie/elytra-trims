@@ -3,7 +3,7 @@
     {
       "type": "paletted_permutations",
       "textures": [
-        "trims/items/elytra_trim"
+        "trims/items/elytra/default"
       ],
       "palette_key": "trims/color_palettes/trim_palette",
       "permutations": {

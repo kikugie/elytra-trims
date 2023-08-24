@@ -35,6 +35,7 @@ repositories {
     maven { url "https://maven.shedaniel.me/" }
     maven { url "https://plugins.gradle.org/m2/" }
     maven { url "https://maven.kikugie.dev/releases" }
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
     exclusiveContent {
         forRepository {
             maven {
@@ -46,7 +47,6 @@ repositories {
             includeGroup "maven.modrinth"
         }
     }
-    maven {url "https://raw.githubusercontent.com/SolidBlock-cn/mvn-repo/main"}
 }
 
 // https://github.com/FabricMC/fabric-loader/issues/783
