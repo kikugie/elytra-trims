@@ -121,7 +121,9 @@ public class ETAtlasHolder implements SimpleResourceReloadListener<StitchResult>
                     ? ImageUtils.dims(pattern, pattern.getWidth() * 2, pattern.getHeight())
                     : ImageUtils.dims(pattern, pattern.getWidth(), pattern.getHeight() / 2);
             int scale = pattern.getWidth() / 64;
-            NativeImage offset = ImageUtils.offsetNotClosing(pattern, 34 * scale, config.useBannerTextures ? 2 * scale : 0, pattern.getWidth(), pattern.getHeight());
+            int xOffset = (int) ((config.useBannerTextures ? 35.5F : 34F) * scale);
+            int yOffset = config.useBannerTextures ? (int) (scale * 1.5F) : 0;
+            NativeImage offset = ImageUtils.offsetNotClosing(pattern, xOffset, yOffset , pattern.getWidth(), pattern.getHeight());
 
             return ImageUtils.mask(ImageUtils.createContents(offset, sprite.getTextureId().withPath(path -> path.replace("textures/", "").replace(".png", ""))), elytraModel);
         }));
