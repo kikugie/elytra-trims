@@ -11,6 +11,7 @@ import dev.kikugie.elytratrims.config.TextureConfig;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -27,40 +28,10 @@ public class YaclConfig {
                                 .build())
                         .group(OptionGroup.createBuilder()
                                 .name(TextureConfig.GROUP)
-                                .option(Option.<Boolean>createBuilder()
-                                        .name(Text.translatable("elytratrims.config.texture.useBannerTextures"))
-                                        .description(OptionDescription.of(Text.translatable("elytratrims.config.texture.useBannerTextures.tooltip")))
-                                        .binding(false,
-                                                () -> config.texture.useBannerTextures,
-                                                (value) -> config.texture.useBannerTextures = value)
-                                        .controller(TickBoxControllerBuilder::create)
-                                        .flag(OptionFlag.ASSET_RELOAD)
-                                        .build())
-                                .option(Option.<Boolean>createBuilder()
-                                        .name(Text.translatable("elytratrims.config.texture.cropTrims"))
-                                        .description(OptionDescription.of(Text.translatable("elytratrims.config.texture.cropTrims.tooltip")))
-                                        .binding(true,
-                                                () -> config.texture.cropTrims,
-                                                (value) -> config.texture.cropTrims = value)
-                                        .controller(TickBoxControllerBuilder::create)
-                                        .flag(OptionFlag.ASSET_RELOAD)
-                                        .build())
-                                .option(Option.<Boolean>createBuilder()
-                                        .name(Text.translatable("elytratrims.config.texture.useDarkerTrim"))
-                                        .description(OptionDescription.of(Text.translatable("elytratrims.config.texture.useDarkerTrim.tooltip")))
-                                        .binding(false,
-                                                () -> config.texture.useDarkerTrim,
-                                                (value) -> config.texture.useDarkerTrim = value)
-                                        .controller(TickBoxControllerBuilder::create)
-                                        .build())
-                                .option(Option.<Boolean>createBuilder()
-                                        .name(Text.translatable("elytratrims.config.texture.showBannerIcon"))
-                                        .description(OptionDescription.of(Text.translatable("elytratrims.config.texture.showBannerIcon.tooltip")))
-                                        .binding(false,
-                                                () -> config.texture.showBannerIcon,
-                                                (value) -> config.texture.showBannerIcon = value)
-                                        .controller(TickBoxControllerBuilder::create)
-                                        .build())
+                                .option(booleanOption("useBannerTextures", false, true))
+                                .option(booleanOption("cropTrims", true, true))
+                                .option(booleanOption("useDarkerTrim", false, false))
+                                .option(booleanOption("showBannerIcon", true, false))
                                 .build())
                         .build())
                 .save(() -> ConfigLoader.saveConfig(config))
@@ -85,5 +56,18 @@ public class YaclConfig {
                         mode -> config.set(type, mode))
                 .customController(opt -> new EnumController<>(opt, RenderConfig.RenderMode::getName, RenderConfig.RenderMode.values()))
                 .build();
+    }
+
+    private static Option<Boolean> booleanOption(String field, boolean def, boolean reload) {
+        TextureConfig config = ElytraTrims.getConfig().texture;
+        var opt = Option.<Boolean>createBuilder()
+                .name(Text.translatable("elytratrims.config.texture.%s".formatted(field)))
+                .description(OptionDescription.of(Text.translatable("elytratrims.config.texture.%s.tooltip".formatted(field))))
+                .binding(def,
+                        () -> TextureConfig.getField(config, field),
+                        value -> TextureConfig.setField(config, field, value))
+                .controller(TickBoxControllerBuilder::create);
+        if (reload) opt.flag(OptionFlag.ASSET_RELOAD);
+        return opt.build();
     }
 }

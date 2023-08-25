@@ -20,6 +20,9 @@ elytratrims:
       useDarkerTrim:
         .: Use Darker Trim
         tooltip: "Use darker trim color for elytra when available.\nThis uses the same color as when you apply a trim to an armor piece of the same material."
+      showBannerIcon:
+        .: Show Banner Icon
+        tooltip: Show banner icon on elytra item.
     type:
       color:
         .: Dye

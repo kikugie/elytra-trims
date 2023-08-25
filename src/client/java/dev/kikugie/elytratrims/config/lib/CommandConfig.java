@@ -3,6 +3,7 @@ package dev.kikugie.elytratrims.config.lib;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import dev.kikugie.commandconfig.api.builders.CategoryBuilder;
 import dev.kikugie.commandconfig.api.builders.CommandConfigBuilder;
+import dev.kikugie.commandconfig.api.builders.OptionBuilder;
 import dev.kikugie.commandconfig.api.option.ExtendedOptions;
 import dev.kikugie.commandconfig.api.option.SimpleOptions;
 import dev.kikugie.commandconfig.api.util.Defaults;
@@ -10,11 +11,14 @@ import dev.kikugie.elytratrims.ElytraTrims;
 import dev.kikugie.elytratrims.config.ConfigLoader;
 import dev.kikugie.elytratrims.config.ModConfig;
 import dev.kikugie.elytratrims.config.RenderConfig;
+import dev.kikugie.elytratrims.config.TextureConfig;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+
+import java.util.function.Function;
 
 import static com.mojang.brigadier.builder.LiteralArgumentBuilder.literal;
 
@@ -39,34 +43,11 @@ public class CommandConfig {
                     return category;
                 })
                 .category(source -> CategoryBuilder.create("texture", source)
-                        .option(ignored -> SimpleOptions.bool("useBannerTextures", source)
-                                .valueAccess(Defaults.defaultValueAccess(
-                                        () -> config.texture.useBannerTextures,
-                                        value -> {
-                                            if (value != config.texture.useBannerTextures)
-                                                MinecraftClient.getInstance().reloadResourcesConcurrently();
-                                            config.texture.useBannerTextures = value;
-                                        }))
-                                .helpFunc(() -> Text.translatable("elytratrims.config.texture.useBannerTextures.tooltip")))
-                        .option(ignored -> SimpleOptions.bool("cropTrims", source)
-                                .valueAccess(Defaults.defaultValueAccess(
-                                        () -> config.texture.cropTrims,
-                                        value -> {
-                                            if (value != config.texture.cropTrims)
-                                                MinecraftClient.getInstance().reloadResourcesConcurrently();
-                                            config.texture.cropTrims = value;
-                                        }))
-                                .helpFunc(() -> Text.translatable("elytratrims.config.texture.cropTrims.tooltip")))
-                        .option(ignored -> SimpleOptions.bool("useDarkerTrim", source)
-                                .valueAccess(Defaults.defaultValueAccess(
-                                        () -> config.texture.useDarkerTrim,
-                                        value -> config.texture.useDarkerTrim = value))
-                                .helpFunc(() -> Text.translatable("elytratrims.config.texture.useDarkerTrim.tooltip")))
-                        .option(ignored -> SimpleOptions.bool("showBannerIcon", source)
-                                .valueAccess(Defaults.defaultValueAccess(
-                                        () -> config.texture.showBannerIcon,
-                                        value -> config.texture.showBannerIcon = value))
-                                .helpFunc(() -> Text.translatable("elytratrims.config.texture.showBannerIcon.tooltip"))))
+                        .option(i -> booleanOption(source, "useBannerTextures",  true))
+                        .option(i -> booleanOption(source, "cropTrims", true))
+                        .option(i -> booleanOption(source, "useDarkerTrim", false))
+                        .option(i -> booleanOption(source, "showBannerIcon", false))
+                )
                 .saveFunc(() -> ConfigLoader.saveConfig(config))
                 .build();
     }
@@ -87,5 +68,18 @@ public class CommandConfig {
                     .helpFunc(type::getTooltip)
             );
         }
+    }
+
+    private static OptionBuilder<Boolean, FabricClientCommandSource> booleanOption(Class<FabricClientCommandSource> source, String field, boolean reload) {
+        TextureConfig config = ElytraTrims.getConfig().texture;
+        return SimpleOptions.bool(field, source)
+                .valueAccess(Defaults.defaultValueAccess(
+                        () -> TextureConfig.getField(config, field),
+                        value -> {
+                            if (reload && value != TextureConfig.getField(config, field))
+                                MinecraftClient.getInstance().reloadResourcesConcurrently();
+                            TextureConfig.setField(config, field, value);
+                        }))
+                .helpFunc(() -> Text.translatable("elytratrims.config.texture.%s.tooltip".formatted(field)));
     }
 }

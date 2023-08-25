@@ -8,6 +8,7 @@ import dev.kikugie.elytratrims.config.TextureConfig;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
+import me.shedaniel.clothconfig2.gui.entries.BooleanListEntry;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 
@@ -25,36 +26,10 @@ public class ClothConfig {
 
         ConfigCategory texture = builder.getOrCreateCategory(TextureConfig.GROUP);
         ConfigEntryBuilder textureEntryBuilder = builder.entryBuilder();
-        texture.addEntry(textureEntryBuilder.startBooleanToggle(
-                        Text.translatable("elytratrims.config.texture.useBannerTextures"),
-                        config.texture.useBannerTextures)
-                .setTooltip(Text.translatable("elytratrims.config.texture.useBannerTextures.tooltip"))
-                .setDefaultValue(false)
-                .setSaveConsumer(value -> config.texture.useBannerTextures = value)
-                .requireRestart()
-                .build());
-        texture.addEntry(textureEntryBuilder.startBooleanToggle(
-                        Text.translatable("elytratrims.config.texture.cropTrims"),
-                        config.texture.cropTrims)
-                .setTooltip(Text.translatable("elytratrims.config.texture.cropTrims.tooltip"))
-                .setDefaultValue(false)
-                .setSaveConsumer(value -> config.texture.cropTrims = value)
-                .requireRestart()
-                .build());
-        texture.addEntry(textureEntryBuilder.startBooleanToggle(
-                        Text.translatable("elytratrims.config.texture.useDarkerTrim"),
-                        config.texture.useDarkerTrim)
-                .setTooltip(Text.translatable("elytratrims.config.texture.useDarkerTrim.tooltip"))
-                .setDefaultValue(false)
-                .setSaveConsumer(value -> config.texture.useDarkerTrim = value)
-                .build());
-        texture.addEntry(textureEntryBuilder.startBooleanToggle(
-                        Text.translatable("elytratrims.config.texture.showBannerIcon"),
-                        config.texture.showBannerIcon)
-                .setTooltip(Text.translatable("elytratrims.config.texture.showBannerIcon.tooltip"))
-                .setDefaultValue(false)
-                .setSaveConsumer(value -> config.texture.showBannerIcon = value)
-                .build());
+        texture.addEntry(booleanOption(textureEntryBuilder, "useBannerTextures", false, true));
+        texture.addEntry(booleanOption(textureEntryBuilder, "cropTrims", true, true));
+        texture.addEntry(booleanOption(textureEntryBuilder, "useDarkerTrim", false, false));
+        texture.addEntry(booleanOption(textureEntryBuilder, "showBannerIcon", true, false));
 
         builder.setSavingRunnable(() -> ConfigLoader.saveConfig(config));
         return builder.build();
@@ -69,5 +44,17 @@ public class ClothConfig {
                 .setDefaultValue(RenderConfig.RenderMode.ALL)
                 .setSaveConsumer(mode -> config.set(type, mode))
                 .build());
+    }
+
+    private static BooleanListEntry booleanOption(ConfigEntryBuilder builder, String field, boolean def, boolean reload) {
+        TextureConfig config = ElytraTrims.getConfig().texture;
+        var opt = builder.startBooleanToggle(
+                        Text.translatable("elytratrims.config.texture.%s".formatted(field)),
+                        TextureConfig.getField(config, field))
+                .setTooltip(Text.translatable("elytratrims.config.texture.%s.tooltip".formatted(field)))
+                .setDefaultValue(def)
+                .setSaveConsumer(value -> TextureConfig.setField(config, field, value));
+        if (reload) opt.requireRestart();
+        return opt.build();
     }
 }

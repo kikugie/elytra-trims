@@ -8,4 +8,20 @@ public class TextureConfig {
     public boolean cropTrims = true;
     public boolean useDarkerTrim = false;
     public boolean showBannerIcon = true;
+
+    public static Boolean getField(TextureConfig config, String field) {
+        try {
+            return config.getClass().getDeclaredField(field).getBoolean(config);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void setField(TextureConfig config, String field, boolean value) {
+        try {
+            config.getClass().getDeclaredField(field).setBoolean(config, value);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
