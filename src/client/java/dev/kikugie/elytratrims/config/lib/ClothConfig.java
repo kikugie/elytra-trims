@@ -48,6 +48,13 @@ public class ClothConfig {
                 .setDefaultValue(false)
                 .setSaveConsumer(value -> config.texture.useDarkerTrim = value)
                 .build());
+        texture.addEntry(textureEntryBuilder.startBooleanToggle(
+                        Text.translatable("elytratrims.config.texture.showBannerIcon"),
+                        config.texture.showBannerIcon)
+                .setTooltip(Text.translatable("elytratrims.config.texture.showBannerIcon.tooltip"))
+                .setDefaultValue(false)
+                .setSaveConsumer(value -> config.texture.showBannerIcon = value)
+                .build());
 
         builder.setSavingRunnable(() -> ConfigLoader.saveConfig(config));
         return builder.build();

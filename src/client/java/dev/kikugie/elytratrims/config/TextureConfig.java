@@ -7,4 +7,5 @@ public class TextureConfig {
     public boolean useBannerTextures = false;
     public boolean cropTrims = true;
     public boolean useDarkerTrim = false;
+    public boolean showBannerIcon = true;
 }

@@ -1,6 +1,7 @@
 package dev.kikugie.elytratrims.render;
 
 import com.mojang.datafixers.util.Pair;
+import dev.kikugie.elytratrims.ElytraTrims;
 import dev.kikugie.elytratrims.access.ElytraOverlaysAccessor;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BannerBlockEntity;
@@ -28,6 +29,9 @@ public class ElytraItemRenderer {
 
     @SuppressWarnings("DataFlowIssue")
     public static void renderElytraItemFeatures(ItemStack stack, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
+        if (!ElytraTrims.getConfig().texture.showBannerIcon)
+            return;
+
         List<Pair<RegistryEntry<BannerPattern>, DyeColor>> patterns = ((ElytraOverlaysAccessor) (Object) stack).elytra_trims$getPatterns();
         int color = ((ElytraOverlaysAccessor) (Object) stack).elytra_trims$getColor();
 

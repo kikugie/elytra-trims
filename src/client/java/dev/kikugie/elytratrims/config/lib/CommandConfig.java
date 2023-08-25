@@ -61,7 +61,12 @@ public class CommandConfig {
                                 .valueAccess(Defaults.defaultValueAccess(
                                         () -> config.texture.useDarkerTrim,
                                         value -> config.texture.useDarkerTrim = value))
-                                .helpFunc(() -> Text.translatable("elytratrims.config.texture.useDarkerTrim.tooltip"))))
+                                .helpFunc(() -> Text.translatable("elytratrims.config.texture.useDarkerTrim.tooltip")))
+                        .option(ignored -> SimpleOptions.bool("showBannerIcon", source)
+                                .valueAccess(Defaults.defaultValueAccess(
+                                        () -> config.texture.showBannerIcon,
+                                        value -> config.texture.showBannerIcon = value))
+                                .helpFunc(() -> Text.translatable("elytratrims.config.texture.showBannerIcon.tooltip"))))
                 .saveFunc(() -> ConfigLoader.saveConfig(config))
                 .build();
     }

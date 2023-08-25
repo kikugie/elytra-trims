@@ -53,6 +53,14 @@ public class YaclConfig {
                                                 (value) -> config.texture.useDarkerTrim = value)
                                         .controller(TickBoxControllerBuilder::create)
                                         .build())
+                                .option(Option.<Boolean>createBuilder()
+                                        .name(Text.translatable("elytratrims.config.texture.showBannerIcon"))
+                                        .description(OptionDescription.of(Text.translatable("elytratrims.config.texture.showBannerIcon.tooltip")))
+                                        .binding(false,
+                                                () -> config.texture.showBannerIcon,
+                                                (value) -> config.texture.showBannerIcon = value)
+                                        .controller(TickBoxControllerBuilder::create)
+                                        .build())
                                 .build())
                         .build())
                 .save(() -> ConfigLoader.saveConfig(config))
