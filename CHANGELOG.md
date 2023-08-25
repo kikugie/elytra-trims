@@ -13,6 +13,9 @@ You thought 1.2 runtime textures were my final form?
 ![](https://media.discordapp.net/attachments/756612448311705761/1144636592070340688/image.png?width=1188&height=594)
 - `showBannerIcon` - Show the banner icon on the elytra icon. (default: true)
 
+### Patterns
+- Now generates models for all banners, including modded ones.
+
 ## Fixed
 - Trims not showing up on servers without the mod.
 
