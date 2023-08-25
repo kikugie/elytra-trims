@@ -71,9 +71,9 @@ doesn't create an issue report for it!
 | [Better Trims](https://modrinth.com/mod/bettertrims)                       | No                  |
 | [Elytra Slot](https://modrinth.com/mod/elytra-slot)                        | No                  |
 | [Elytra Trinket](https://modrinth.com/mod/elytra_trinket)                  | No                  |
+| [Additional Banners](https://modrinth.com/mod/additional-banners)          | No                  |
+| [Archeology Banners](https://modrinth.com/mod/archaeology-banners)         | No                  |
 | [More Armor Trims](https://modrinth.com/mod/more-armor-trims)              | Yes                 |
-| [Additional Banners](https://modrinth.com/mod/additional-banners)          | Yes                 |
-| [Archeology Banners](https://modrinth.com/mod/archaeology-banners)         | Yes                 |
 | [Geode+](https://www.curseforge.com/minecraft/mc-mods/geode-plus)          | Yes                 |
 | [Flower Adornments](https://modrinth.com/datapack/armor-flower-adornments) | Yes                 |
 
