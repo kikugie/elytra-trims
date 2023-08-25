@@ -21,10 +21,10 @@ plugins {
 preprocess {
     def mc19 = createNode("1.19.4", 1_19_04, "yarn")
     def mc20 = createNode("1.20", 1_20_01, "yarn")
-    def snapshot = createNode("snapshot", 1_20_02, "yarn")
+//    def snapshot = createNode("snapshot", 1_20_02, "yarn")
 
     mc20.link(mc19, file("versions/mapping-1.20-1.19.4.txt"))
-    mc20.link(snapshot, null)
+//    mc20.link(snapshot, null)
 }
 
 tasks.register("buildAndGather") {
