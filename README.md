@@ -100,3 +100,12 @@ manually to render elytra features even without server side.
 
 With resourcepack support, you can customize all the mod's features to your liking. Change the texture of your armor
 trims or add a unique design to your elytra pattern with ease.
+
+## FAQ
+> How do I use this mod on a server without it?
+- Client-side commands are planned, however for now the easiest way is to save trimmed elytra in a creative hotbar and load it on a server.  
+Survival recipes are not possible without the mod installed on the server.
+
+> How can I remove trims/patterns/dye/glow from my elytra?
+- To remove patterns, dye and glow (all together), click with elytra on a cauldrow with water.  
+Trims can't be removed without other mods due to vanilla parity.
