@@ -3,8 +3,10 @@ package dev.kikugie.elytratrims.config;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonSyntaxException;
 import dev.kikugie.elytratrims.util.LogWrapper;
 import net.fabricmc.loader.api.FabricLoader;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -33,6 +35,17 @@ public class ConfigLoader {
     }
 
     public static ModConfig loadConfig() {
+        ModConfig config = loadConfigImpl();
+        if (config == null) {
+            LOGGER.error("Failed to load config file, resetting");
+            config = new ModConfig();
+        }
+        saveConfig(config);
+        return config;
+    }
+
+    @Nullable
+    private static ModConfig loadConfigImpl() {
         FileStatus status = getStatus(CONFIG_FILE);
         if (status == FileStatus.NOT_FOUND) {
             if (!createFile())
@@ -44,7 +57,7 @@ public class ConfigLoader {
         try {
             String json = Files.readString(CONFIG_FILE);
             return GSON.fromJson(json, ModConfig.class);
-        } catch (IOException e) {
+        } catch (IOException | JsonSyntaxException e) {
             LOGGER.error("Failed to load config file", e);
             return new ModConfig();
         }
