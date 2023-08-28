@@ -54,8 +54,8 @@ public class ETResourceListener {
 
     private static void checkActive() {
         if (instance == null) {
-            LOGGER.error("Resource listener not initialized");
-            throw new IllegalStateException();
+            LOGGER.warn("Resource listener not initialized, reinitializing");
+            instance = new ETResourceListener();
         }
     }
 
