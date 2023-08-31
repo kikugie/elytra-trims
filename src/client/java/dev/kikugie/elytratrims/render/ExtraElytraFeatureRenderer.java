@@ -3,9 +3,10 @@ package dev.kikugie.elytratrims.render;
 import com.mojang.datafixers.util.Pair;
 import dev.kikugie.elytratrims.ElytraTrims;
 import dev.kikugie.elytratrims.ElytraTrimsServer;
+import dev.kikugie.elytratrims.ModStatus;
 import dev.kikugie.elytratrims.access.ElytraOverlaysAccessor;
 import dev.kikugie.elytratrims.access.LivingEntityAccessor;
-import dev.kikugie.elytratrims.compat.AllTheTrimsCompat;
+import dev.kikugie.elytratrims.compat.AllTheTrimsRenderer;
 import dev.kikugie.elytratrims.compat.StackableTrimsList;
 import dev.kikugie.elytratrims.config.RenderConfig;
 import dev.kikugie.elytratrims.resource.ETAtlasHolder;
@@ -29,6 +30,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
 import java.util.List;
@@ -39,7 +41,7 @@ import static net.minecraft.client.render.RenderPhase.*;
 
 @SuppressWarnings("DataFlowIssue")
 public class ExtraElytraFeatureRenderer {
-    private static final Function<Identifier, RenderLayer> ELYTRA_LAYER = Util.memoize(
+    public static final Function<Identifier, RenderLayer> ELYTRA_LAYER = Util.memoize(
             texture -> {
                 RenderLayer.MultiPhaseParameters multiPhaseParameters = RenderLayer.MultiPhaseParameters.builder()
                         .program(ENTITY_NO_OUTLINE_PROGRAM)
@@ -57,12 +59,15 @@ public class ExtraElytraFeatureRenderer {
             }
     );
     private final SpriteAtlasTexture atlas;
-
     private final Function<ArmorTrim, Sprite> trimGetter = Util.memoize(this::trimSpriteGetter);
     private final Function<RegistryEntry<BannerPattern>, Sprite> patternGetter = Util.memoize(this::patternSpriteGetter);
+    @Nullable
+    private AllTheTrimsRenderer attRenderer = null;
 
     public ExtraElytraFeatureRenderer(SpriteAtlasTexture atlas) {
         this.atlas = atlas;
+        if (ModStatus.allTheTrimsLoaded)
+            this.attRenderer = new AllTheTrimsRenderer(atlas);
     }
 
     public static boolean cancelRender(RenderConfig.RenderType type, LivingEntity entity) {
@@ -156,7 +161,7 @@ public class ExtraElytraFeatureRenderer {
         World world = entity.getWorld();
 
         List<ArmorTrim> trims;
-        if (ElytraTrims.stackedTrimsLoaded)
+        if (ModStatus.stackedTrimsLoaded)
             trims = StackableTrimsList.getTrims(world.getRegistryManager(), stack);
         else
             trims = ArmorTrim.getTrim(world.getRegistryManager(),
@@ -170,18 +175,17 @@ public class ExtraElytraFeatureRenderer {
             renderTrim(elytra, trim, matrices, provider, entity, stack, light, alpha);
     }
 
-    public void renderTrim(ElytraEntityModel<?> elytra, ArmorTrim trim, MatrixStack matrices, VertexConsumerProvider provider, LivingEntity entity, ItemStack stack, int light, float alpha) {
+    private void renderTrim(ElytraEntityModel<?> elytra, ArmorTrim trim, MatrixStack matrices, VertexConsumerProvider provider, LivingEntity entity, ItemStack stack, int light, float alpha) {
         if (trim == null)
             return;
 
-        if(ElytraTrims.allTheTrimsLoaded) {
-            AllTheTrimsCompat.renderTrim(elytra, trim, stack, matrices, provider, light, atlas, ELYTRA_LAYER.apply(ETAtlasHolder.NAME));
-            return;
-        }
-
         Sprite sprite = getTrimSprite(trim);
-        if (isMissing(sprite) && skipRenderIfMissingTexture(entity))
-            return;
+        if (isMissing(sprite))
+            if (this.attRenderer != null) {
+                this.attRenderer.renderTrim(elytra, trim, stack, matrices, provider, light, alpha);
+                return;
+            } else if (skipRenderIfMissingTexture(entity))
+                return;
 
         VertexConsumer vertexConsumer = sprite.getTextureSpecificVertexConsumer(
                 ItemRenderer.getDirectItemGlintConsumer(

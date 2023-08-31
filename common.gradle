@@ -70,11 +70,11 @@ dependencies {
             exclude(group: "net.fabricmc.fabric-api")
         }
         modApi "dev.isxander.yacl:yet-another-config-lib-fabric:${project.yacl_version}"
-        modCompileOnly "maven.modrinth:stacked-armor-trims:${project.stacked_trims_version}"
     }
-    if (mcVersion >= 12000) {
-        modCompileOnly "maven.modrinth:allthetrims:${project.all_the_trims_version}"
-    }
+    modCompileOnly "maven.modrinth:stacked-armor-trims:${project.stacked_trims_version}"
+    modImplementation "maven.modrinth:allthetrims:${project.all_the_trims_version}"
+    modImplementation "maven.modrinth:architectury-api:9.1.12+fabric"
+
     modApi "dev.kikugie.command-config:${project.cmd_config_version}"
 }
 
@@ -141,7 +141,7 @@ sourcesJar {
     duplicatesStrategy DuplicatesStrategy.INCLUDE
 }
 
-def debug = true
+def debug = false
 
 tasks.register("release") {
     group "publishing"

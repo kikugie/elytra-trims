@@ -1,2 +1,2 @@
-## Fixed
-- Config being naughty
+## Changed
+- I took over the All The Trims compatibility.

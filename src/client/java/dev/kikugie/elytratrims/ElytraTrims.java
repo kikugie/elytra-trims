@@ -17,8 +17,6 @@ public class ElytraTrims implements ClientModInitializer {
     public static final String MOD_ID = "elytratrims";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
     public static ExtraElytraFeatureRenderer ELYTRA_RENDERER;
-    public static boolean stackedTrimsLoaded = false;
-    public static boolean allTheTrimsLoaded = false;
     public static boolean elytraTrimmingAvailable = false;
     private static ModConfig config;
 
@@ -36,8 +34,9 @@ public class ElytraTrims implements ClientModInitializer {
         config = ConfigLoader.loadConfig();
 
         FabricLoader fabric = FabricLoader.getInstance();
-        stackedTrimsLoaded = fabric.isModLoaded("stacked_trims");
-        allTheTrimsLoaded = fabric.isModLoaded("allthetrims");
+        ModStatus.stackedTrimsLoaded = fabric.isModLoaded("stacked_trims");
+        ModStatus.allTheTrimsLoaded = fabric.isModLoaded("allthetrims");
+
         if (fabric.isModLoaded("command-config"))
             CommandConfig.register();
         ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(ETAtlasHolder.create());

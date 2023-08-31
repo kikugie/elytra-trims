@@ -1,5 +1,6 @@
 package dev.kikugie.elytratrims.compat;
 
+import io.github.apfelrauber.stacked_trims.ArmorTrimList;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.trim.ArmorTrim;
 import net.minecraft.registry.DynamicRegistryManager;
@@ -13,10 +14,6 @@ import java.util.List;
  */
 public class StackableTrimsList {
     public static List<ArmorTrim> getTrims(DynamicRegistryManager registryManager, ItemStack stack) {
-        //#if MC < 12002
-        return io.github.apfelrauber.stacked_trims.ArmorTrimList.getTrims(registryManager, stack).orElse(Collections.emptyList());
-        //#else
-        //$$ return Collections.emptyList();
-        //#endif
+        return ArmorTrimList.getTrims(registryManager, stack).orElse(Collections.emptyList());
     }
 }
