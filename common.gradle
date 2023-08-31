@@ -72,6 +72,9 @@ dependencies {
         modApi "dev.isxander.yacl:yet-another-config-lib-fabric:${project.yacl_version}"
         modCompileOnly "maven.modrinth:stacked-armor-trims:${project.stacked_trims_version}"
     }
+    if (mcVersion >= 12000) {
+        modCompileOnly "maven.modrinth:allthetrims:${project.all_the_trims_version}"
+    }
     modApi "dev.kikugie.command-config:${project.cmd_config_version}"
 }
 

@@ -5,6 +5,7 @@ import dev.kikugie.elytratrims.ElytraTrims;
 import dev.kikugie.elytratrims.ElytraTrimsServer;
 import dev.kikugie.elytratrims.access.ElytraOverlaysAccessor;
 import dev.kikugie.elytratrims.access.LivingEntityAccessor;
+import dev.kikugie.elytratrims.compat.AllTheTrimsCompat;
 import dev.kikugie.elytratrims.compat.StackableTrimsList;
 import dev.kikugie.elytratrims.config.RenderConfig;
 import dev.kikugie.elytratrims.resource.ETAtlasHolder;
@@ -80,7 +81,7 @@ public class ExtraElytraFeatureRenderer {
         return !((LivingEntityAccessor) entity).elytra_trims$isGui();
     }
 
-    private static boolean isMissing(Sprite sprite) {
+    public static boolean isMissing(Sprite sprite) {
         return sprite == null || sprite.getContents().getId().equals(MissingSprite.getMissingSpriteId());
     }
 
@@ -172,6 +173,11 @@ public class ExtraElytraFeatureRenderer {
     public void renderTrim(ElytraEntityModel<?> elytra, ArmorTrim trim, MatrixStack matrices, VertexConsumerProvider provider, LivingEntity entity, ItemStack stack, int light, float alpha) {
         if (trim == null)
             return;
+
+        if(ElytraTrims.allTheTrimsLoaded) {
+            AllTheTrimsCompat.renderTrim(elytra, trim, stack, matrices, provider, light, atlas, ELYTRA_LAYER.apply(ETAtlasHolder.NAME));
+            return;
+        }
 
         Sprite sprite = getTrimSprite(trim);
         if (isMissing(sprite) && skipRenderIfMissingTexture(entity))
