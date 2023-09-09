@@ -219,7 +219,7 @@ public class ExtraElytraFeatureRenderer {
     }
 
     private Sprite getOverlaySprite() {
-        return this.atlas.getSprite(ElytraTrims.id("entity/elytra"));
+        return this.atlas.getSprite(new Identifier("entity/elytra"));
     }
 
     private Sprite trimSpriteGetter(ArmorTrim trim) {
