@@ -49,5 +49,8 @@
   },
   "conflicts": {
     "elytra-trims-extensions": "<1.2.0"
+  },
+  "breaks": {
+    "customizableelytra": "*"
   }
 }
