@@ -14,18 +14,21 @@ import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.DyeColor;
-import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
 public class ElytraPatternRecipe extends SpecialCraftingRecipe {
-    public ElytraPatternRecipe(Identifier id, CraftingRecipeCategory category) {
-        super(id, category);
+    //#if MC > 11904
+    public ElytraPatternRecipe(CraftingRecipeCategory category) {
+        super(category);
     }
+    //#else
+    //$$ public ElytraPatternRecipe(net.minecraft.util.Identifier id, CraftingRecipeCategory category) {
+    //$$     super(id, category);
+    //$$ }
+    //#endif
 
     @Override
-    public boolean matches(
-            RecipeInputInventory inventory,
-            World world) {
+    public boolean matches(RecipeInputInventory inventory, World world) {
         int elytra = 0;
         int banner = 0;
 
@@ -47,9 +50,7 @@ public class ElytraPatternRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public ItemStack craft(
-            RecipeInputInventory inventory,
-            DynamicRegistryManager registryManager) {
+    public ItemStack craft(RecipeInputInventory inventory, DynamicRegistryManager registryManager) {
         ItemStack elytra = ItemStack.EMPTY;
         ItemStack banner = ItemStack.EMPTY;
 

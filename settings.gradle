@@ -30,7 +30,7 @@ pluginManagement {
 
 def versions = Arrays.asList(
         "1.19.4",
-        "1.20",
+        "1.20.2",
 //        "snapshot"
 )
 for (String version : versions) {

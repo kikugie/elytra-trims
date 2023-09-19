@@ -2,11 +2,14 @@ package dev.kikugie.elytratrims.resource;
 
 import com.google.common.base.Preconditions;
 import dev.kikugie.elytratrims.util.LogWrapper;
-import net.minecraft.client.texture.*;
+import net.minecraft.client.resource.metadata.AnimationResourceMetadata;
+import net.minecraft.client.texture.MissingSprite;
+import net.minecraft.client.texture.NativeImage;
+import net.minecraft.client.texture.SpriteContents;
+import net.minecraft.client.texture.SpriteDimensions;
 import net.minecraft.client.texture.atlas.Sprite;
 import net.minecraft.resource.Resource;
 import net.minecraft.resource.ResourceManager;
-import net.minecraft.resource.metadata.ResourceMetadata;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 import org.jetbrains.annotations.Contract;
@@ -19,22 +22,22 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
 public class ImageUtils {
     private static final LogWrapper LOGGER = LogWrapper.of("ET Image Utils");
 
-    public static Collection<Function<SpriteOpener, SpriteContents>> transform(Iterable<Function<SpriteOpener, SpriteContents>> contents,
+    public static Collection<Supplier<SpriteContents>> transform(Iterable<Supplier<SpriteContents>> contents,
                                                                  UnaryOperator<@Nullable SpriteContents> operator) {
-        List<Function<SpriteOpener, SpriteContents>> result = new ArrayList<>();
-        for (Function<SpriteOpener, SpriteContents> func : contents)
-            result.add(opener -> operator.apply(func != null ? func.apply(opener) : null));
+        List<Supplier<SpriteContents>> result = new ArrayList<>();
+        for (Supplier<SpriteContents> supplier : contents)
+            result.add(() -> operator.apply(supplier != null ? supplier.get() : null));
         return result;
     }
 
     public static SpriteContents createContents(NativeImage image, Identifier id) {
-        return new SpriteContents(id, new SpriteDimensions(image.getWidth(), image.getHeight()), image, ResourceMetadata.NONE);
+        return new SpriteContents(id, new SpriteDimensions(image.getWidth(), image.getHeight()), image, AnimationResourceMetadata.EMPTY);
     }
 
     @Nullable
@@ -220,7 +223,7 @@ public class ImageUtils {
     public static Sprite loadTexture(Identifier id, ResourceManager resourceManager, int regions) throws FileNotFoundException {
         Optional<Resource> resource = resourceManager.getResource(id);
         if (resource.isPresent())
-            return new net.minecraft.client.texture.atlas.Sprite(id, resource.get(), regions);
+            return new Sprite(id, resource.get(), regions);
         LOGGER.error("Can't find texture: %s".formatted(id));
         throw new FileNotFoundException();
     }

@@ -26,7 +26,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
-import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class ETAtlasHolder implements SimpleResourceReloadListener<StitchResult> {
     public static final Identifier ELYTRA_OUTLINE = ElytraTrims.id("item/elytra_outline");
@@ -62,18 +62,17 @@ public class ETAtlasHolder implements SimpleResourceReloadListener<StitchResult>
 
     @Override
     public CompletableFuture<StitchResult> load(ResourceManager manager, Profiler profiler, Executor executor) {
-        SpriteOpener opener = SpriteOpener.create(SpriteLoader.METADATA_READERS);
         return CompletableFuture
                 .supplyAsync(() -> {
                     init();
                     return getSprites(manager);
                 }, executor)
-                .thenCompose(sprites -> SpriteLoader.loadAll(opener, sprites, executor))
+                .thenCompose(sprites -> SpriteLoader.loadAll(sprites, executor))
                 .thenApply(sprites -> SpriteLoader.fromAtlas(this.atlas).stitch(sprites, 0, executor))
                 .thenCompose(StitchResult::whenComplete);
     }
 
-    private List<Function<SpriteOpener, SpriteContents>> getSprites(ResourceManager manager) {
+    private List<Supplier<SpriteContents>> getSprites(ResourceManager manager) {
         Sprite elytraModel;
         try {
             elytraModel = ImageUtils.loadTexture(ELYTRA_MODEL, manager, 1);
@@ -82,18 +81,18 @@ public class ETAtlasHolder implements SimpleResourceReloadListener<StitchResult>
             return Collections.emptyList();
         }
 
-        List<Function<SpriteOpener, SpriteContents>> sprites = new ArrayList<>(getTrims(manager, elytraModel));
+        List<Supplier<SpriteContents>> sprites = new ArrayList<>(getTrims(manager, elytraModel));
         sprites.addAll(getPatterns(manager, elytraModel));
         sprites.add(getOverlay(elytraModel));
 //        sprites.add(getOutline(manager));
-        sprites.add(opener -> MissingSprite.createSpriteContents());
+        sprites.add(MissingSprite::createSpriteContents);
 
         ETResourceListener.close();
         elytraModel.close();
         return sprites;
     }
 
-    private Collection<Function<SpriteOpener, SpriteContents>> getTrims(ResourceManager manager, Sprite elytraModel) {
+    private Collection<Supplier<SpriteContents>> getTrims(ResourceManager manager, Sprite elytraModel) {
         AtlasLoader trimSources = new AtlasLoader(ETResourceListener.getTrims());
         TextureConfig config = ElytraTrims.getConfig().texture;
         return config.cropTrims
@@ -101,11 +100,11 @@ public class ETAtlasHolder implements SimpleResourceReloadListener<StitchResult>
                 : trimSources.loadSources(manager);
     }
 
-    private Collection<Function<SpriteOpener, SpriteContents>> getPatterns(ResourceManager manager, Sprite elytraModel) {
-        List<Function<SpriteOpener, SpriteContents>> patterns = new ArrayList<>();
+    private Collection<Supplier<SpriteContents>> getPatterns(ResourceManager manager, Sprite elytraModel) {
+        List<Supplier<SpriteContents>> patterns = new ArrayList<>();
         TextureConfig config = ElytraTrims.getConfig().texture;
         ResourceFinder finder = new ResourceFinder("textures", ".png");
-        Registries.BANNER_PATTERN.getKeys().forEach(key -> patterns.add(opener -> {
+        Registries.BANNER_PATTERN.getKeys().forEach(key -> patterns.add(() -> {
             SpriteIdentifier sprite = config.useBannerTextures
                     ? TexturedRenderLayers.getBannerPatternTextureId(key)
                     : TexturedRenderLayers.getShieldPatternTextureId(key);
@@ -131,12 +130,12 @@ public class ETAtlasHolder implements SimpleResourceReloadListener<StitchResult>
         return patterns;
     }
 
-    private Function<SpriteOpener, SpriteContents> getOverlay(Sprite elytraModel) {
-        return opener -> ImageUtils.createContents(ImageUtils.createSaturationMaskNotClosing(elytraModel), elytraModel.id.withPath(path -> path.replace("textures/", "").replace(".png", "")));
+    private Supplier<SpriteContents> getOverlay(Sprite elytraModel) {
+        return () -> ImageUtils.createContents(ImageUtils.createSaturationMaskNotClosing(elytraModel), elytraModel.id.withPath(path -> path.replace("textures/", "").replace(".png", "")));
     }
 
-    private Function<SpriteOpener, SpriteContents> getOutline(ResourceManager manager) {
-        return opener -> {
+    private Supplier<SpriteContents> getOutline(ResourceManager manager) {
+        return () -> {
             Sprite elytra;
             try {
                 elytra = ImageUtils.loadTexture(ELYTRA_ITEM, manager, 1);
