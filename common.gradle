@@ -153,7 +153,7 @@ modrinth {
     token = env.fetchOrNull("MODRINTH_TOKEN")
     projectId = "elytra-trims"
     versionName = "Elytra Trims %s for %s".formatted(project.mod_version, project.title_version)
-    versionNumber = project.mod_version
+    versionNumber = "${project.mod_version}+${project.title_version}"
     versionType = "release"
     uploadFile = remapJar.archiveFile
     additionalFiles = [sourcesJar.archiveFile]
@@ -200,12 +200,9 @@ tasks.register("curseforge", TaskPublishCurseForge) {
     mainFile.addOptional "yacl", "cloth-config"
     mainFile.addModLoader "fabric", "quilt"
     mainFile.addGameVersion "client"
-    if (mcVersion < 12002)
-        for (String version : project.release_versions.split(" ")) {
-            mainFile.addGameVersion version
-        }
-    else
-        mainFile.addGameVersion "1.20.2-Snapshot"
+    for (String version : project.release_versions.split(" ")) {
+        mainFile.addGameVersion version
+    }
     debugMode = debug
 }
 
