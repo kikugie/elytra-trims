@@ -5,13 +5,12 @@ import dev.kikugie.elytratrims.config.TextureConfig;
 import dev.kikugie.elytratrims.render.ExtraElytraFeatureRenderer;
 import dev.kikugie.elytratrims.util.LogWrapper;
 import net.fabricmc.fabric.api.resource.SimpleResourceReloadListener;
+import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.TexturedRenderLayers;
 import net.minecraft.client.texture.*;
 import net.minecraft.client.texture.SpriteLoader.StitchResult;
 import net.minecraft.client.texture.atlas.AtlasLoader;
 import net.minecraft.client.texture.atlas.Sprite;
-import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.registry.Registries;
 import net.minecraft.resource.ResourceFinder;
 import net.minecraft.resource.ResourceManager;
@@ -105,13 +104,11 @@ public class ETAtlasHolder implements SimpleResourceReloadListener<StitchResult>
         TextureConfig config = ElytraTrims.getConfig().texture;
         ResourceFinder finder = new ResourceFinder("textures", ".png");
         Registries.BANNER_PATTERN.getKeys().forEach(key -> patterns.add(() -> {
-            SpriteIdentifier sprite = config.useBannerTextures
-                    ? TexturedRenderLayers.getBannerPatternTextureId(key)
-                    : TexturedRenderLayers.getShieldPatternTextureId(key);
-            Identifier id = finder.toResourcePath(sprite.getTextureId());
+            Identifier id = BannerPattern.getSpriteId(key, config.useBannerTextures);
+            Identifier texture = finder.toResourcePath(id);
             NativeImage pattern;
             try {
-                pattern = ImageUtils.loadTexture(id, manager, 1).read();
+                pattern = ImageUtils.loadTexture(texture, manager, 1).read();
             } catch (IOException e) {
                 LOGGER.error("Failed to load pattern texture: {}", id);
                 return null;
@@ -125,7 +122,7 @@ public class ETAtlasHolder implements SimpleResourceReloadListener<StitchResult>
             int yOffset = config.useBannerTextures ? (int) (scale * 1.5F) : 0;
             NativeImage offset = ImageUtils.offsetNotClosing(pattern, xOffset, yOffset , pattern.getWidth(), pattern.getHeight());
 
-            return ImageUtils.mask(ImageUtils.createContents(offset, sprite.getTextureId().withPath(path -> path.replace("textures/", "").replace(".png", ""))), elytraModel);
+            return ImageUtils.mask(ImageUtils.createContents(offset, id), elytraModel);
         }));
         return patterns;
     }

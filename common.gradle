@@ -152,7 +152,7 @@ tasks.register("release") {
 modrinth {
     token = env.fetchOrNull("MODRINTH_TOKEN")
     projectId = "elytra-trims"
-    versionName = "Elytra Trims %s for %s".formatted(project.mod_version, project.title_version)
+    versionName = "Elytra Trims ${project.mod_version} for ${project.title_version}"
     versionNumber = "${project.mod_version}+${project.title_version}"
     versionType = "release"
     uploadFile = remapJar.archiveFile
