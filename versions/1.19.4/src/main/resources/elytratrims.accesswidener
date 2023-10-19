@@ -7,3 +7,4 @@ accessible method net/minecraft/client/texture/atlas/AtlasLoader <init> (Ljava/u
 accessible field net/minecraft/client/texture/atlas/Sprite id Lnet/minecraft/util/Identifier;
 accessible field net/minecraft/client/texture/SpriteContents image Lnet/minecraft/client/texture/NativeImage;
 accessible field net/minecraft/client/render/block/entity/BannerBlockEntityRenderer banner Lnet/minecraft/client/model/ModelPart;
+accessible field net/minecraft/client/texture/SpriteAtlasTexture sprites Ljava/util/Map;

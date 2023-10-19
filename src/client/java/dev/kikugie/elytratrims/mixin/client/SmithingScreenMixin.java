@@ -60,7 +60,6 @@ public abstract class SmithingScreenMixin {
     }
 
     @ModifyArg(method = "drawBackground", at = @At(value = "INVOKE",
-            // What the fuck is this
             //#if MC > 11904
             target = "Lnet/minecraft/client/gui/screen/ingame/InventoryScreen;drawEntity(Lnet/minecraft/client/gui/DrawContext;FFILorg/joml/Vector3f;Lorg/joml/Quaternionf;Lorg/joml/Quaternionf;Lnet/minecraft/entity/LivingEntity;)V"
             //#else

@@ -19,10 +19,7 @@ import net.minecraft.util.profiler.Profiler;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.function.Function;
@@ -45,8 +42,8 @@ public class ETAtlasHolder implements SimpleResourceReloadListener<StitchResult>
         return instance;
     }
 
-    public static ETAtlasHolder getInstance() {
-        return instance;
+    public static Optional<ETAtlasHolder> getInstance() {
+        return Optional.ofNullable(instance);
     }
 
     public SpriteAtlasTexture getAtlas() {
