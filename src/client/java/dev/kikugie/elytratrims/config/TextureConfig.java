@@ -7,7 +7,7 @@ public class TextureConfig {
     public boolean useBannerTextures = false;
     public boolean cropTrims = true;
     public boolean useDarkerTrim = false;
-    public boolean showBannerIcon = true;
+    public boolean showBannerIcon = false;
 
     public static Boolean getField(TextureConfig config, String field) {
         try {
