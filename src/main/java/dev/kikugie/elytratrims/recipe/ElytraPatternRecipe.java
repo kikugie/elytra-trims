@@ -17,7 +17,7 @@ import net.minecraft.util.DyeColor;
 import net.minecraft.world.World;
 
 public class ElytraPatternRecipe extends SpecialCraftingRecipe {
-    //#if MC > 11904
+    //#if MC > 12001
     public ElytraPatternRecipe(CraftingRecipeCategory category) {
         super(category);
     }

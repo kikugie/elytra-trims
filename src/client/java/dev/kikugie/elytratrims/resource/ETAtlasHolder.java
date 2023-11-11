@@ -50,7 +50,7 @@ public class ETAtlasHolder implements SimpleResourceReloadListener<StitchResult>
         return this.atlas;
     }
 
-    private void init() {
+    public void init() {
         this.atlas = new SpriteAtlasTexture(TEXTURE);
         MinecraftClient.getInstance().getTextureManager().registerTexture(NAME, this.atlas);
         ElytraTrims.ELYTRA_RENDERER = new ExtraElytraFeatureRenderer(this.atlas);
@@ -61,7 +61,7 @@ public class ETAtlasHolder implements SimpleResourceReloadListener<StitchResult>
         SpriteOpener opener = SpriteOpener.create(SpriteLoader.METADATA_READERS);
         return CompletableFuture
                 .supplyAsync(() -> {
-                    init();
+                    this.atlas.clear();
                     return getSprites(manager);
                 }, executor)
                 .thenCompose(sprites -> SpriteLoader.loadAll(opener, sprites, executor))
@@ -118,7 +118,7 @@ public class ETAtlasHolder implements SimpleResourceReloadListener<StitchResult>
             int scale = pattern.getWidth() / 64;
             int xOffset = (int) ((config.useBannerTextures ? 35.5F : 34F) * scale);
             int yOffset = config.useBannerTextures ? (int) (scale * 1.5F) : 0;
-            NativeImage offset = ImageUtils.offsetNotClosing(pattern, xOffset, yOffset , pattern.getWidth(), pattern.getHeight());
+            NativeImage offset = ImageUtils.offsetNotClosing(pattern, xOffset, yOffset, pattern.getWidth(), pattern.getHeight());
 
             return ImageUtils.mask(ImageUtils.createContents(offset, id), elytraModel);
         }));

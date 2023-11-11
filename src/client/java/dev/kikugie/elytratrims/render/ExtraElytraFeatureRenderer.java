@@ -166,7 +166,7 @@ public class ExtraElytraFeatureRenderer {
         else
             trims = ArmorTrim.getTrim(world.getRegistryManager(),
                     stack
-                    //#if MC > 11904
+                    //#if MC > 12001
                     , true
                     //#endif
             ).map(Collections::singletonList).orElse(Collections.emptyList());

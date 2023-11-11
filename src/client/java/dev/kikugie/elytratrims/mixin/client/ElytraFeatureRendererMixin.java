@@ -34,7 +34,7 @@ public class ElytraFeatureRendererMixin {
     private Identifier renderCapeOnGuiArmorStand(Identifier texture, @Local(argsOnly = true) LivingEntity entity) {
         ClientPlayerEntity player = MinecraftClient.getInstance().player;
         assert player != null;
-        //#if MC > 11904
+        //#if MC > 12001
         Identifier cape = player.getSkinTextures().capeTexture();
         //#else
         //$$ Identifier cape = player.getCapeTexture();

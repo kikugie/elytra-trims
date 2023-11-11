@@ -19,10 +19,7 @@ import net.minecraft.util.profiler.Profiler;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.function.Supplier;
@@ -45,15 +42,15 @@ public class ETAtlasHolder implements SimpleResourceReloadListener<StitchResult>
         return instance;
     }
 
-    public static ETAtlasHolder getInstance() {
-        return instance;
+    public static Optional<ETAtlasHolder> getInstance() {
+        return Optional.ofNullable(instance);
     }
 
     public SpriteAtlasTexture getAtlas() {
         return this.atlas;
     }
 
-    private void init() {
+    public void init() {
         this.atlas = new SpriteAtlasTexture(TEXTURE);
         MinecraftClient.getInstance().getTextureManager().registerTexture(NAME, this.atlas);
         ElytraTrims.ELYTRA_RENDERER = new ExtraElytraFeatureRenderer(this.atlas);
@@ -63,7 +60,7 @@ public class ETAtlasHolder implements SimpleResourceReloadListener<StitchResult>
     public CompletableFuture<StitchResult> load(ResourceManager manager, Profiler profiler, Executor executor) {
         return CompletableFuture
                 .supplyAsync(() -> {
-                    init();
+                    this.atlas.clear();
                     return getSprites(manager);
                 }, executor)
                 .thenCompose(sprites -> SpriteLoader.loadAll(sprites, executor))

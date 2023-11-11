@@ -60,13 +60,15 @@ public abstract class SmithingScreenMixin {
     }
 
     @ModifyArg(method = "drawBackground", at = @At(value = "INVOKE",
-            //#if MC > 11904
+            //#if MC >= 12002
             target = "Lnet/minecraft/client/gui/screen/ingame/InventoryScreen;drawEntity(Lnet/minecraft/client/gui/DrawContext;FFILorg/joml/Vector3f;Lorg/joml/Quaternionf;Lorg/joml/Quaternionf;Lnet/minecraft/entity/LivingEntity;)V"
+            //#elseif MC >= 12001
+            //$$ target = "Lnet/minecraft/client/gui/screen/ingame/InventoryScreen;drawEntity(Lnet/minecraft/client/gui/DrawContext;IIILorg/joml/Quaternionf;Lorg/joml/Quaternionf;Lnet/minecraft/entity/LivingEntity;)V"
             //#else
             //$$ target = "Lnet/minecraft/client/gui/screen/ingame/InventoryScreen;drawEntity(Lnet/minecraft/client/util/math/MatrixStack;IIILorg/joml/Quaternionf;Lorg/joml/Quaternionf;Lnet/minecraft/entity/LivingEntity;)V"
             //#endif
     ),
-            //#if MC > 11904
+            //#if MC >= 12002
             index = 5
             //#else
             //$$ index = 4

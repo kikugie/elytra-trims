@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 
 
 public class ElytraGlowRecipe extends SpecialCraftingRecipe {
-    //#if MC > 11904
+    //#if MC > 12001
     public ElytraGlowRecipe(CraftingRecipeCategory category) {
         super(category);
     }

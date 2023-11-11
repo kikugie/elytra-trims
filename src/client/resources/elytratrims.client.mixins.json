@@ -9,6 +9,7 @@
     "ElytraFeatureRendererMixin",
     "ItemRendererMixin",
     "LivingEntityMixin",
+    "MinecraftClientMixin",
     "PalettedPermutationsAtlasSourceMixin",
     "SimpleRegistryMixin",
     "SmithingScreenMixin",
