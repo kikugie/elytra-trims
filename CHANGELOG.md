@@ -1,6 +1,2 @@
-## Changed
-- The banner pattern preview icon is now disabled by default. (bugs out too often and I still don't know why)
-
 ## Fixed
-- Resource reload crash with [Combatify](https://modrinth.com/mod/combatify)
-- (And a nasty atlas texture recreation which could possibly cause a memory leak if you reload resources a thousand times or something)
+- Crash(?) (not as much a crash, more like a car running out of fuel in the middle of nowhere) with FancyMenu and C2ME *together only*
