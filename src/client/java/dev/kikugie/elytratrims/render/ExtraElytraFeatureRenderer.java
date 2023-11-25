@@ -91,6 +91,9 @@ public class ExtraElytraFeatureRenderer {
     }
 
     public void render(ElytraEntityModel<?> elytra, MatrixStack matrices, VertexConsumerProvider provider, LivingEntity entity, ItemStack stack, int light, float alpha) {
+        Optional<ETAtlasHolder> atlasHolder = ETAtlasHolder.getInstance();
+        if (atlasHolder.isEmpty() || !atlasHolder.get().isReady()) return;
+
         light = getLight(entity, stack, light);
         if (!renderJebElytra(elytra, matrices, provider, entity, stack, light, alpha)) {
             renderElytraOverlay(elytra, matrices, provider, entity, stack, light, alpha);
