@@ -36,6 +36,7 @@ public class ETAtlasHolder implements SimpleResourceReloadListener<StitchResult>
     public static Identifier NAME = ElytraTrims.id("elytra_features");
     private static ETAtlasHolder instance;
     private SpriteAtlasTexture atlas;
+    private boolean ready = false;
 
     public static ETAtlasHolder create() {
         instance = new ETAtlasHolder();
@@ -60,6 +61,7 @@ public class ETAtlasHolder implements SimpleResourceReloadListener<StitchResult>
     public CompletableFuture<StitchResult> load(ResourceManager manager, Profiler profiler, Executor executor) {
         return CompletableFuture
                 .supplyAsync(() -> {
+                    this.ready = false;
                     this.atlas.clear();
                     return getSprites(manager);
                 }, executor)
@@ -155,6 +157,7 @@ public class ETAtlasHolder implements SimpleResourceReloadListener<StitchResult>
             profiler.startTick();
             profiler.push("upload");
             this.atlas.upload(data);
+            this.ready = true;
             profiler.pop();
             profiler.endTick();
         }, executor);
@@ -163,5 +166,9 @@ public class ETAtlasHolder implements SimpleResourceReloadListener<StitchResult>
     @Override
     public Identifier getFabricId() {
         return ElytraTrims.id("elytra_features");
+    }
+
+    public boolean isReady() {
+        return ready;
     }
 }
