@@ -2,15 +2,21 @@
   "required": true,
   "minVersion": "0.8",
   "package": "dev.kikugie.elytratrims.mixin",
+  "plugin": "dev.kikugie.elytratrims.common.plugin.ETMixinPlugin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "CauldronBehaviorMixin",
-    "ElytraItemMixin",
-    "ItemMixin",
-    "ItemStackMixin",
-    "SynchronizeRecipesS2CPacketMixin"
+    "common.SimpleRegistryMixin",
+    "common.SynchronizeRecipesS2CPacketMixin"
   ],
   "injectors": {
     "defaultRequire": 1
-  }
+  },
+  "client": [
+    "client.ElytraFeatureRendererMixin",
+    "client.LifecycledResourceManagerImplMixin",
+    "client.LivingEntityMixin",
+    "client.PalettedPermutationsAtlasSourceMixin",
+    "client.SimpleRegistryMixin",
+    "client.SimpleResourceReloadMixin"
+  ]
 }

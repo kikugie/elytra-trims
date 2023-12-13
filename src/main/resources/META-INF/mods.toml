@@ -1,0 +1,21 @@
+modLoader = "javafml"
+loaderVersion = "[45,)"
+license = "LGPLv3"
+
+[[mods]]
+modId = "elytratrims"
+version = "${version}"
+displayName = "Elytra Trims"
+displayURL = "https://modrinth.com/mod/elytra-trims"
+authors = "KikuGie"
+description = '''
+Lightweight and customizable support for elytra trims, patterns and dyes
+'''
+logoFile = "assets/elytratrims/icon.png"
+
+[[dependencies.elytratrims]]
+modId = "minecraft"
+mandatory = true
+versionRange = "${mc}"
+ordering = "NONE"
+side = "BOTH"

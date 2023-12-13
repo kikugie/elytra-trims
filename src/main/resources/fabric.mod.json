@@ -1,56 +1,38 @@
 {
   "schemaVersion": 1,
-  "id": "${id}",
+  "id": "elytratrims",
+  "name": "Elytra Trims",
   "version": "${version}",
-
-  "name": "${name}",
-  "description": "Lightweight and customizable support for trimmable elytras",
+  "description": "Lightweight and customizable support for elytra trims, patterns and dyes",
   "authors": [
     "KikuGie"
   ],
   "contact": {
-    "homepage": "https://modrinth.com/mod/elytra-trims",
-    "sources": "https://github.com/Kikugie/elytra-trims",
-    "issues": "https://github.com/Kikugie/elytra-trims/issues"
   },
-  "license": "LGPL-3.0",
-  "icon": "assets/elytratrims/icon.png",
+  "mixins": [
+    "elytratrims.mixins.json"
+  ],
   "accessWidener": "elytratrims.accesswidener",
+  "icon": "assets/elytratrims/icon.png",
+  "license": "LGPL 3.0",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "dev.kikugie.elytratrims.ElytraTrimsServer"
+      "dev.kikugie.elytratrims.common.ETServerWrapper"
     ],
     "client": [
-      "dev.kikugie.elytratrims.ElytraTrims"
-    ],
-    "modmenu": [
-      "dev.kikugie.elytratrims.compat.ModMenuIntegration"
+      "dev.kikugie.elytratrims.client.ETClientWrapper"
     ]
   },
-  "mixins": [
-    "elytratrims.mixins.json",
-    {
-      "config": "elytratrims.client.mixins.json",
-      "environment": "client"
-    }
-  ],
   "depends": {
-    "fabricloader": ">=0.11.4",
-    "minecraft": "${minecraft_dependency}",
-    "fabric-api": "*"
+    "fabricloader": ">=0.15.0",
+    "minecraft": "${mc}"
   },
-  "recommends": {
-    "command-config": ">=0.1.0-beta.4 <0.2.0"
-  },
-  "suggests": {
-    "yet_another_config_lib_v3": "^3.0.0",
-    "cloth-config": "*"
-  },
-  "conflicts": {
-    "elytra-trims-extensions": "<1.2.0"
-  },
-  "breaks": {
-    "customizableelytra": "*"
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.discord": ""
+      }
+    }
   }
 }
