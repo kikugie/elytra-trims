@@ -1,9 +1,9 @@
 plugins {
-    id("dev.architectury.loom")
-    id("com.replaymod.preprocess")
-    id("me.fallenbreath.yamlang")
-    id("me.modmuss50.mod-publish-plugin")
+    id("dev.architectury.loom") version "1.4-SNAPSHOT"
+    id("me.fallenbreath.yamlang") version "1.3.1"
+    id("me.modmuss50.mod-publish-plugin") version "0.4.+"
 }
+
 val loader = if (loom.isForgeLike) "forge" else "fabric"
 val isFabric = !loom.isForgeLike
 val mcVersion = property("deps.minecraft").toString()
@@ -13,19 +13,9 @@ val modName = property("mod.name").toString()
 val modVersion = property("mod.version").toString()
 val modGroup = property("mod.group").toString()
 
-var mcNum: Int = 0
-
 version = "$modVersion+$mcVersion"
 group = modGroup
 base { archivesName.set(modId) }
-
-preprocess {
-    mcNum = vars.get()["MC"]!!.toInt()
-
-    vars.put("MC", mcNum)
-    vars.put("FABRIC", if (loader == "fabric") 1 else 0)
-    vars.put("FORGE", if (loader == "forge") 1 else 0)
-}
 
 repositories {
     exclusiveContent {
@@ -69,19 +59,29 @@ dependencies {
     modCompileOnly("maven.modrinth:allthetrims:${if (isFabric) "3.3.7" else "Ga7vvJCQ"}")
 }
 
-loom {
-    accessWidenerPath.set(rootProject.file("src/main/resources/elytratrims.accesswidener"))
-
-    runConfigs["client"].apply {
-        // to make sure it generates all "Minecraft Client (:subproject_name)" applications
-        ideConfigGenerated(true)
-        vmArgs("-Dmixin.debug.export=true")
-        runDir = "../../run"
+stonecutter.addExpression {
+    when (it) {
+        "fabric" -> isFabric
+        "forge" -> !isFabric
+        else -> null
     }
+}
 
-    if (!isFabric) {
-        forge {
-            mixinConfigs("$modId.mixins.json")
+if (stonecutter.current().isActiveVersion) {
+    loom {
+        accessWidenerPath.set(rootProject.file("src/main/resources/elytratrims.accesswidener"))
+
+        runConfigs["client"].apply {
+            // to make sure it generates all "Minecraft Client (:subproject_name)" applications
+            ideConfigGenerated(true)
+            vmArgs("-Dmixin.debug.export=true")
+            runDir = "../../run"
+        }
+
+        if (!isFabric) {
+            forge {
+                mixinConfigs("$modId.mixins.json")
+            }
         }
     }
 }

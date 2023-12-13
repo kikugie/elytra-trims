@@ -18,11 +18,10 @@ import java.util.concurrent.Executor;
 @Mixin(value = SimpleResourceReload.class, priority = 1100)
 public class SimpleResourceReloadMixin {
 
-    //FIXME: preprocessor dies when targeting NEW
-//    @WrapOperation(method = "start", at = @At(value = "NEW", target = "(Lnet/minecraft/resource/ResourceManager;Ljava/util/List;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;Ljava/util/concurrent/CompletableFuture;)Lnet/minecraft/resource/ProfiledResourceReload;"))
-//    private static ProfiledResourceReload injectProfiledElytraTrimsReloader(ResourceManager manager, List<ResourceReloader> reloaders, Executor prepareExecutor, Executor applyExecutor, CompletableFuture<Unit> initialStage, Operation<ProfiledResourceReload> original) {
-//        return original.call(manager, addElytraTrimsReloader(manager, reloaders), prepareExecutor, applyExecutor, initialStage);
-//    }
+    @WrapOperation(method = "start", at = @At(value = "NEW", target = "(Lnet/minecraft/resource/ResourceManager;Ljava/util/List;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;Ljava/util/concurrent/CompletableFuture;)Lnet/minecraft/resource/ProfiledResourceReload;"))
+    private static ProfiledResourceReload injectProfiledElytraTrimsReloader(ResourceManager manager, List<ResourceReloader> reloaders, Executor prepareExecutor, Executor applyExecutor, CompletableFuture<Unit> initialStage, Operation<ProfiledResourceReload> original) {
+        return original.call(manager, addElytraTrimsReloader(manager, reloaders), prepareExecutor, applyExecutor, initialStage);
+    }
 
     @WrapOperation(method = "start", at = @At(value = "INVOKE", target = "Lnet/minecraft/resource/SimpleResourceReload;create(Lnet/minecraft/resource/ResourceManager;Ljava/util/List;Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;Ljava/util/concurrent/CompletableFuture;)Lnet/minecraft/resource/SimpleResourceReload;"))
     private static SimpleResourceReload<?> injectSimpleElytraTrimsReloader(ResourceManager manager, List<ResourceReloader> reloaders, Executor prepareExecutor, Executor applyExecutor, CompletableFuture<Unit> initialStage, Operation<ProfiledResourceReload> original) {

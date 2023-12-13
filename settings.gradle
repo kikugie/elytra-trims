@@ -1,0 +1,57 @@
+pluginManagement {
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+        maven {
+            name = "Fabric Maven"
+            url = "https://maven.fabricmc.net/"
+        }
+        maven {
+            name = "Architectury Maven"
+            url = "https://maven.architectury.dev"
+        }
+        maven {
+            name = "Forge Maven"
+            url = "https://maven.minecraftforge.net"
+        }
+        maven {
+            url = "https://maven.kikugie.dev/third-party"
+        }
+    }
+}
+
+plugins {
+    id "io.shcm.shsupercm.fabric.stonecutter" version "1.5-dev.15"
+}
+
+def vers = [
+        "1.19.4-fabric",
+        "1.20.1-fabric",
+        "1.20.2-fabric",
+
+        "1.19.4-forge",
+        "1.20.1-forge",
+        "1.20.2-forge"]
+
+stonecutter {
+    shared {
+        versions "1.19.4-fabric",
+                 "1.20.1-fabric",
+                 "1.20.2-fabric",
+
+                 "1.19.4-forge",
+                 "1.20.1-forge",
+                 "1.20.2-forge"
+        vcsVersion "1.19.4-fabric"
+    }
+
+    create rootProject
+}
+rootProject.name = "Elytra Trims"
+
+for (String it : vers) {
+    include(":${it}")
+    def proj = project(":${it}")
+    proj.projectDir = file("versions/${it}")
+    proj.buildFileName = "../../build.gradle.kts"
+}

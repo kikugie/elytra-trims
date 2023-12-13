@@ -1,6 +1,6 @@
 package dev.kikugie.elytratrims.client;
 
-//#if FABRIC == 1
+/*? fabric {*//*
 import net.fabricmc.api.ClientModInitializer;
 public class ETClientWrapper implements ClientModInitializer {
     @Override
@@ -8,15 +8,15 @@ public class ETClientWrapper implements ClientModInitializer {
         ETClient.init();
     }
 }
-//#else
-//$$ import dev.kikugie.elytratrims.common.ETReference;
-//$$ import net.minecraftforge.api.distmarker.Dist;
-//$$ import net.minecraftforge.fml.common.Mod;
-//$$ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-//$$ @Mod.EventBusSubscriber(modid = ETReference.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-//$$ public class ETClientWrapper {
-//$$    public static void init(FMLClientSetupEvent event) {
-//$$        ETClient.init();
-//$$    }
-//$$ }
-//#endif
+*//*?} else {*/
+import dev.kikugie.elytratrims.common.ETReference;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+@Mod.EventBusSubscriber(modid = ETReference.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+public class ETClientWrapper {
+   public static void init(FMLClientSetupEvent event) {
+       ETClient.init();
+   }
+}
+/*?}*/
