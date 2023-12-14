@@ -1,5 +1,5 @@
 plugins.apply 'io.shcm.shsupercm.fabric.stonecutter'
-stonecutter.active '1.19.4-forge'
+stonecutter.active '1.19.4-fabric'
 //-------- !DO NOT EDIT ABOVE THIS LINE! --------\\
 
 stonecutter.registerChiseled tasks.register("chiseledBuild", stonecutter.chiseled) {

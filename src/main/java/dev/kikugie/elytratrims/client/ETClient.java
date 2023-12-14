@@ -11,9 +11,10 @@ public class ETClient {
     public static boolean isTrimmable = false;
 
     public static void init() {
-        renderer = new ETFeatureRenderer();
+
     }
 
+    // Totally safe mhm mhm
     public static ETClientConfig getConfig() {
         if (config == null) config = ETClientConfig.load();
         return config;
@@ -25,6 +26,7 @@ public class ETClient {
     }
 
     public static ETFeatureRenderer getRenderer() {
+        if (renderer == null) renderer = new ETFeatureRenderer();
         return renderer;
     }
 }

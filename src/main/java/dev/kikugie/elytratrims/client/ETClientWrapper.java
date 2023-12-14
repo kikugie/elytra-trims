@@ -1,6 +1,6 @@
 package dev.kikugie.elytratrims.client;
 
-/*? fabric {*//*
+/*? fabric {*/
 import net.fabricmc.api.ClientModInitializer;
 public class ETClientWrapper implements ClientModInitializer {
     @Override
@@ -8,7 +8,7 @@ public class ETClientWrapper implements ClientModInitializer {
         ETClient.init();
     }
 }
-*//*?} else {*/
+/*?} else {*//*
 import dev.kikugie.elytratrims.common.ETReference;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.common.Mod;
@@ -19,4 +19,4 @@ public class ETClientWrapper {
        ETClient.init();
    }
 }
-/*?}*/
+*//*?}*/
