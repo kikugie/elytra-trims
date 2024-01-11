@@ -1,6 +1,5 @@
 package dev.kikugie.elytratrims.mixin.client;
 
-import com.google.common.collect.ImmutableList;
 import dev.kikugie.elytratrims.client.ETClient;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;

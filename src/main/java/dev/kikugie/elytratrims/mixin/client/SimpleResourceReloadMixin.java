@@ -30,7 +30,7 @@ public class SimpleResourceReloadMixin {
 
     @Unique
     private static List<ResourceReloader> addElytraTrimsReloader(ResourceManager manager, List<ResourceReloader> original) {
-        if (manager instanceof ResourceTypeAccessor rta && rta.getResourceType() == ResourceType.CLIENT_RESOURCES) {
+        if (manager instanceof ResourceTypeAccessor rta && rta.elytraTrims$getResourceType() == ResourceType.CLIENT_RESOURCES) {
             var modified = new ArrayList<>(original);
             modified.add(ETClient.getAtlasHolder());
             return modified;

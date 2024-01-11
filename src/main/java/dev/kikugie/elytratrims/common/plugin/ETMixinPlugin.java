@@ -1,7 +1,6 @@
 package dev.kikugie.elytratrims.common.plugin;
 
 import dev.kikugie.elytratrims.common.ETReference;
-import dev.kikugie.elytratrims.common.ETServer;
 import dev.kikugie.elytratrims.common.plugin.RequirePlatform.Loader;
 import org.jetbrains.annotations.Nullable;
 import org.objectweb.asm.Type;

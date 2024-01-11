@@ -1,15 +1,8 @@
 package dev.kikugie.elytratrims.common;
 
 import dev.kikugie.elytratrims.common.config.ETServerConfig;
-import dev.kikugie.elytratrims.common.recipe.ETRecipeSerializers;
-import dev.kikugie.elytratrims.common.recipe.ElytraGlowRecipe;
-import dev.kikugie.elytratrims.common.recipe.ElytraPatternRecipe;
 import dev.kikugie.elytratrims.common.recipe.GlowingItem;
 import net.minecraft.item.DyeableItem;
-import net.minecraft.recipe.RecipeSerializer;
-import net.minecraft.recipe.SpecialCraftingRecipe;
-import net.minecraft.recipe.SpecialRecipeSerializer;
-import net.minecraft.registry.Registries;
 
 public class ETServer {
     public static final DyeableItem DYEABLE = new DyeableItem() {

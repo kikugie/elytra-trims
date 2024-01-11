@@ -25,7 +25,7 @@ public class LifecycledResourceManagerImplMixin implements ResourceTypeAccessor 
     }
 
     @Override
-    public ResourceType getResourceType() {
+    public ResourceType elytraTrims$getResourceType() {
         return resourceType;
     }
 }

@@ -36,7 +36,6 @@ import net.minecraft.util.Util;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -90,9 +89,8 @@ public class ETFeatureRenderer {
         else {
             Optional<ArmorTrim> optional = ArmorTrim.getTrim(world.getRegistryManager(),
                     stack
-                    //#if MC > 12001
-                    //$$, true
-                    //#endif
+                    /*? if >=1.20 */
+                    /*, true*/
             );
             trims = optional.map(List::of).orElseGet(List::of);
         }
