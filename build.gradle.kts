@@ -41,6 +41,7 @@ dependencies {
     if (isFabric) {
         modImplementation("net.fabricmc:fabric-loader:${property("deps.fabric_loader")}")
         modImplementation("com.terraformersmc:modmenu:${property("deps.modmenu")}")
+        modImplementation(fabricApi.module("fabric-registry-sync-v0", property("deps.fapi").toString()))
     } else {
         "forge"("net.minecraftforge:forge:${mcVersion}-${property("deps.fml")}")
         implementation(mixinExtras.format("common"))
@@ -59,7 +60,7 @@ dependencies {
     modCompileOnly("maven.modrinth:allthetrims:${if (isFabric) "3.3.7" else "Ga7vvJCQ"}")
 }
 
-stonecutter.addExpression {
+stonecutter.expression {
     when (it) {
         "fabric" -> isFabric
         "forge" -> !isFabric
@@ -67,7 +68,7 @@ stonecutter.addExpression {
     }
 }
 
-if (stonecutter.current().isActiveVersion) {
+if (stonecutter.current.isActive) {
     loom {
         accessWidenerPath.set(rootProject.file("src/main/resources/elytratrims.accesswidener"))
 

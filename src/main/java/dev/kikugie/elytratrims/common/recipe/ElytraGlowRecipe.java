@@ -2,7 +2,6 @@ package dev.kikugie.elytratrims.common.recipe;
 
 import dev.kikugie.elytratrims.common.ETServer;
 import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ElytraItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;

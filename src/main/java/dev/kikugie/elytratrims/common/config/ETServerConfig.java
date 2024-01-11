@@ -21,7 +21,7 @@ public class ETServerConfig {
     public final boolean addGlow;
     public final boolean cleanableElytra;
 
-    private ETServerConfig(boolean addTrims, boolean addPatterns, boolean addGlow, boolean cleanableElytra) {
+    public ETServerConfig(boolean addTrims, boolean addPatterns, boolean addGlow, boolean cleanableElytra) {
         this.addTrims = addTrims;
         this.addPatterns = addPatterns;
         this.addGlow = addGlow;

@@ -21,6 +21,8 @@ public class ConfigTesters {
     public static class Glow implements Tester {
         @Override
         public boolean test(String mixinClassName) {
+            var config = ETServer.getConfig();
+
             return ETServer.getConfig().addGlow;
         }
     }

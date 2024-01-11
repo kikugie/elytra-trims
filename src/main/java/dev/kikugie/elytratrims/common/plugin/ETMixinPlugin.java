@@ -31,16 +31,16 @@ public class ETMixinPlugin implements IMixinConfigPlugin {
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
         AnnotationNode modRequirement = getAnnotation(mixinClassName, RequireMod.class);
-        boolean modResult = modRequirement == null || ModStatus.isLoading(Annotations.getValue(modRequirement, "mod"));
+        boolean modResult = modRequirement == null || ModStatus.isLoading(Annotations.getValue(modRequirement));
         if (!modResult) return false;
 
         AnnotationNode testerRequirement = getAnnotation(mixinClassName, RequireTest.class);
-        boolean testerResult = testerRequirement == null || runTester(Annotations.getValue(testerRequirement, "tester"), mixinClassName);
+        boolean testerResult = testerRequirement == null || runTester(Annotations.getValue(testerRequirement), mixinClassName);
         if (!testerResult) return false;
 
         AnnotationNode platformRequirement = getAnnotation(mixinClassName, RequirePlatform.class);
         if (platformRequirement == null) return true;
-        Loader loader = Annotations.getValue(platformRequirement, "loader");
+        Loader loader = Annotations.getValue(platformRequirement);
         return (loader == Loader.FABRIC && ModStatus.isFabric) || (loader == Loader.FORGE && !ModStatus.isFabric);
     }
 

@@ -71,10 +71,10 @@ public class ETFeatureRenderer {
         if (!cancelRender(RenderType.GLOW, entity) && ETServer.GLOWING.hasGlow(stack))
             light = 0xFF00FF;
 
-//        if (!renderJebElytra(elytra, matrices, provider, entity, stack, light, alpha)) {
-//            renderElytraOverlay(elytra, matrices, provider, entity, stack, light, alpha);
-//            renderElytraPatterns(elytra, matrices, provider, entity, stack, light, alpha);
-//        }
+        if (!renderJebElytra(elytra, matrices, provider, entity, stack, light, alpha)) {
+            renderElytraOverlay(elytra, matrices, provider, entity, stack, light, alpha);
+            renderElytraPatterns(elytra, matrices, provider, entity, stack, light, alpha);
+        }
         renderElytraTrims(elytra, matrices, provider, entity, stack, light, alpha);
     }
 

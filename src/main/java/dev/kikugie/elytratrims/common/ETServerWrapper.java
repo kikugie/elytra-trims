@@ -1,19 +1,22 @@
 package dev.kikugie.elytratrims.common;
 
-import dev.kikugie.elytratrims.common.recipe.ETRecipeSerializers;
-import net.minecraft.recipe.RecipeSerializer;
-
 /*? fabric {*/
+import dev.kikugie.elytratrims.common.recipe.ETRecipeSerializers;
 import net.fabricmc.api.ModInitializer;
+import net.minecraft.recipe.RecipeSerializer;
 
 public class ETServerWrapper implements ModInitializer {
     @Override
     public void onInitialize() {
         ETServer.init();
+
+        RecipeSerializer.register("crafting_special_elytrapatterns", ETRecipeSerializers.ELYTRA_PATTERNS);
+        RecipeSerializer.register("crafting_special_elytraglow", ETRecipeSerializers.ELYTRA_GLOW);
     }
 }
 /*?} else {*//*
 import dev.kikugie.elytratrims.client.ETClientWrapper;
+import dev.kikugie.elytratrims.common.recipe.ETRecipeSerializers;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
