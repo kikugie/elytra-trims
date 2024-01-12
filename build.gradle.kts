@@ -50,7 +50,7 @@ dependencies {
         include(mixinExtras.format("forge"))
     }
     // Config
-//    modImplementation("dev.isxander.yacl:yet-another-config-lib-$loader:${property("deps.yacl")}")
+    modImplementation("dev.isxander.yacl:yet-another-config-lib-$loader:${property("deps.yacl")}")
 //    modImplementation("me.shedaniel.cloth:cloth-config-$loader:${property("deps.cloth")}") {
 //        exclude(group = "net.fabricmc.fabric-api")
 //    }
@@ -84,6 +84,18 @@ if (stonecutter.current.isActive) {
                 mixinConfigs("$modId.mixins.json")
             }
         }
+    }
+
+    rootProject.tasks.register("buildActive") {
+        group = "project"
+
+        dependsOn(tasks.named("build"))
+    }
+
+    rootProject.tasks.register("runActive") {
+        group = "project"
+
+        dependsOn(tasks.named("runClient"))
     }
 }
 

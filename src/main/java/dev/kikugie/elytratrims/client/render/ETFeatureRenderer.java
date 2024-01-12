@@ -209,7 +209,7 @@ public class ETFeatureRenderer {
     private Sprite trimSpriteGetter(ArmorTrim trim) {
         String material = trim.getMaterial().value().assetName();
         Identifier identifier = trim.getPattern().value().assetId().withPath(path -> "trims/models/elytra/%s_%s".formatted(path, material));
-        if (config.texture.useDarkerTrim) {
+        if (config.texture.useDarkerTrim.get()) {
             Sprite darker = this.atlas.getSprite(identifier.withSuffixedPath("_darker"));
             if (!ImageUtils.isMissing(darker)) return darker;
         }
@@ -223,7 +223,7 @@ public class ETFeatureRenderer {
         Optional<RegistryKey<BannerPattern>> optional = pattern.getKey();
         if (optional.isEmpty()) return atlas.getSprite(null);
 
-        SpriteIdentifier shieldSprite = config.texture.useBannerTextures
+        SpriteIdentifier shieldSprite = config.texture.useBannerTextures.get()
                 ? TexturedRenderLayers.getBannerPatternTextureId(optional.get())
                 : TexturedRenderLayers.getShieldPatternTextureId(optional.get());
         return atlas.getSprite(shieldSprite.getTextureId());

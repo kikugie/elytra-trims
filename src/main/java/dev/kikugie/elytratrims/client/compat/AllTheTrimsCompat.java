@@ -39,7 +39,7 @@ public class AllTheTrimsCompat {
     private static Sprite getTrimSprite(SpriteAtlasTexture atlas, ArmorTrim trim, int i) {
         String material = trim.getMaterial().value().assetName();
         Identifier identifier = trim.getPattern().value().assetId().withPath(path -> "trims/models/elytra/%s_%s_%s".formatted(path, i, material));
-        if (ETClient.getConfig().texture.useDarkerTrim) {
+        if (ETClient.getConfig().texture.useDarkerTrim.get()) {
             Sprite sprite = atlas.getSprite(identifier.withSuffixedPath("_darker"));
             if (!ImageUtils.isMissing(sprite))
                 return sprite;

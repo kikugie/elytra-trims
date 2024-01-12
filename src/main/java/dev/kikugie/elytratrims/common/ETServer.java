@@ -1,6 +1,7 @@
 package dev.kikugie.elytratrims.common;
 
 import dev.kikugie.elytratrims.common.config.ETServerConfig;
+import dev.kikugie.elytratrims.common.plugin.ModStatus;
 import dev.kikugie.elytratrims.common.recipe.GlowingItem;
 import net.minecraft.item.DyeableItem;
 
@@ -9,10 +10,14 @@ public class ETServer {
     };
     public static final GlowingItem GLOWING = new GlowingItem() {
     };
-    private static ETServerConfig config = new ETServerConfig(true, true, true, true);
+    private static ETServerConfig config;
 
     public static void configInit() {
-        if (config == null) config = ETServerConfig.load();
+        if (config != null) return;
+
+        config = ModStatus.isServer
+                ? ETServerConfig.load()
+                : ETServerConfig.create();
     }
 
     public static void init() {

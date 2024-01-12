@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
  * Hides recipes from clients, because they use custom serializers and would cause registry desync.
  * The recipes are still available, but not present in the recipe book.
  */
-@Mixin(SynchronizeRecipesS2CPacket.class)
+@Mixin(value = SynchronizeRecipesS2CPacket.class, remap = false)
 public abstract class SynchronizeRecipesS2CPacketMixin {
     @ModifyArg(method = "<init>(Ljava/util/Collection;)V", at = @At(value = "INVOKE", target = "Lcom/google/common/collect/Lists;newArrayList(Ljava/lang/Iterable;)Ljava/util/ArrayList;"))
     private Iterable<Recipe<?>> removeElytraPatternRecipe(Iterable<Recipe<?>> elements) {

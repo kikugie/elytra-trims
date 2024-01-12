@@ -1,6 +1,7 @@
 package dev.kikugie.elytratrims.common.plugin;
 
 import dev.kikugie.elytratrims.common.ETReference;
+import dev.kikugie.elytratrims.common.ETServer;
 import dev.kikugie.elytratrims.common.plugin.RequirePlatform.Loader;
 import org.jetbrains.annotations.Nullable;
 import org.objectweb.asm.Type;
@@ -19,7 +20,7 @@ import java.util.Set;
 public class ETMixinPlugin implements IMixinConfigPlugin {
     @Override
     public void onLoad(String mixinPackage) {
-//        ETServer.mixinInit();
+        ETServer.configInit();
     }
 
     @Override

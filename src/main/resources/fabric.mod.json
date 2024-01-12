@@ -22,6 +22,9 @@
     ],
     "client": [
       "dev.kikugie.elytratrims.client.ETClientWrapper"
+    ],
+    "modmenu": [
+      "dev.kikugie.elytratrims.client.compat.ModMenuCompat"
     ]
   },
   "depends": {

@@ -24,7 +24,7 @@ public class ConfigLoader {
         }
         try {
             JsonElement json = JsonParser.parseReader(Files.newBufferedReader(file));
-            return codec.decode(JsonOps.INSTANCE, json).resultOrPartial(e -> ETReference.LOGGER.warn("Failed to read config: " + e)).orElse(new Pair<>(provider.get(), json)).getFirst();
+            return codec.decode(JsonOps.INSTANCE, json).getOrThrow(true, $ -> {}).getFirst();
         } catch (Exception e) {
             ETReference.LOGGER.warn("Failed to read config: " + e);
             T newConfig = provider.get();

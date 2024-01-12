@@ -28,3 +28,4 @@ extensions.configure<StonecutterSettings> {
     }
     create(rootProject)
 }
+rootProject.name = "Elytra Trims"

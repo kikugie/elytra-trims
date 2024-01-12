@@ -64,7 +64,7 @@ public class ETAtlasHolder implements ResourceReloader {
 
     private Collection<Supplier<SpriteContents>> getTrims(ResourceManager manager, Sprite elytra) {
         var trimSources = new AtlasLoader(ETResourceListener.getTrims()).loadSources(manager);
-        return ETClient.getConfig().texture.cropTrims ? ImageUtils.transform(trimSources, it -> ImageUtils.mask(it, elytra)) : trimSources;
+        return ETClient.getConfig().texture.cropTrims.get() ? ImageUtils.transform(trimSources, it -> ImageUtils.mask(it, elytra)) : trimSources;
     }
 
     private @NotNull Collection<Supplier<SpriteContents>> getPatterns(ResourceManager manager, Sprite elytraModel) {
@@ -73,7 +73,7 @@ public class ETAtlasHolder implements ResourceReloader {
         ResourceFinder finder = new ResourceFinder("textures", ".png");
         for (RegistryKey<BannerPattern> key : Registries.BANNER_PATTERN.getKeys()) {
             patterns.add(() -> {
-                Identifier id = BannerPattern.getSpriteId(key, config.useBannerTextures);
+                Identifier id = BannerPattern.getSpriteId(key, config.useBannerTextures.get());
                 Identifier texture = finder.toResourcePath(id);
                 NativeImage pattern;
                 try {
@@ -83,12 +83,12 @@ public class ETAtlasHolder implements ResourceReloader {
                     return null;
                 }
 
-                pattern = config.useBannerTextures
+                pattern = config.useBannerTextures.get()
                         ? ImageUtils.dims(pattern, pattern.getWidth() * 2, pattern.getHeight())
                         : ImageUtils.dims(pattern, pattern.getWidth(), pattern.getHeight() / 2);
                 int scale = pattern.getWidth() / 64;
-                int xOffset = (int) ((config.useBannerTextures ? 35.5F : 34F) * scale);
-                int yOffset = config.useBannerTextures ? (int) (scale * 1.5F) : 0;
+                int xOffset = (int) ((config.useBannerTextures.get() ? 35.5F : 34F) * scale);
+                int yOffset = config.useBannerTextures.get() ? (int) (scale * 1.5F) : 0;
                 NativeImage offset = ImageUtils.offsetNotClosing(pattern, xOffset, yOffset, pattern.getWidth(), pattern.getHeight());
 
                 return ImageUtils.mask(ImageUtils.createContents(offset, id), elytraModel);

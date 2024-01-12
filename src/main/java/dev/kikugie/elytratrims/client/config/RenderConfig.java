@@ -2,41 +2,43 @@ package dev.kikugie.elytratrims.client.config;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import dev.kikugie.elytratrims.client.config.option.Option;
+import dev.kikugie.elytratrims.client.config.option.RenderModeOption;
 import net.minecraft.text.Text;
 import net.minecraft.util.StringIdentifiable;
 
 public class RenderConfig {
+    public static final Text GROUP = Text.translatable("elytratrims.config.category.render");
     public static final Codec<RenderConfig> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
-                    RenderMode.CODEC.optionalFieldOf("color", RenderMode.ALL).forGetter(it -> it.color),
-                    RenderMode.CODEC.optionalFieldOf("patterns", RenderMode.ALL).forGetter(it -> it.patterns),
-                    RenderMode.CODEC.optionalFieldOf("trims", RenderMode.ALL).forGetter(it -> it.trims),
-                    RenderMode.CODEC.optionalFieldOf("cape", RenderMode.ALL).forGetter(it -> it.cape),
-                    RenderMode.CODEC.optionalFieldOf("glow", RenderMode.ALL).forGetter(it -> it.glow),
-                    RenderMode.CODEC.optionalFieldOf("global", RenderMode.ALL).forGetter(it -> it.global)
+                    RenderMode.CODEC.fieldOf("color").forGetter(it -> it.color.get()),
+                    RenderMode.CODEC.fieldOf("patterns").forGetter(it -> it.patterns.get()),
+                    RenderMode.CODEC.fieldOf("trims").forGetter(it -> it.trims.get()),
+                    RenderMode.CODEC.fieldOf("cape").forGetter(it -> it.cape.get()),
+                    RenderMode.CODEC.fieldOf("glow").forGetter(it -> it.glow.get()),
+                    RenderMode.CODEC.fieldOf("global").forGetter(it -> it.global.get())
             ).apply(instance, RenderConfig::new));
-    private RenderMode color;
-    private RenderMode patterns;
-    private RenderMode trims;
-    private RenderMode cape;
-    private RenderMode glow;
-    private RenderMode global;
+    private final RenderModeOption color;
+    private final RenderModeOption patterns;
+    private final RenderModeOption trims;
+    private final RenderModeOption cape;
+    private final RenderModeOption glow;
+    private final RenderModeOption global;
 
     private RenderConfig(RenderMode color, RenderMode patterns, RenderMode trims, RenderMode cape, RenderMode glow, RenderMode global) {
-        this.color = color;
-        this.patterns = patterns;
-        this.trims = trims;
-
-        this.cape = cape;
-        this.glow = glow;
-        this.global = global;
+        this.color = new RenderModeOption("type", "color", color);
+        this.patterns = new RenderModeOption("type", "patterns", patterns);
+        this.trims = new RenderModeOption("type", "trims", trims);
+        this.cape = new RenderModeOption("type", "cape", cape);
+        this.glow = new RenderModeOption("type", "glow", glow);
+        this.global = new RenderModeOption("type", "global", global);
     }
 
     static RenderConfig create() {
         return new RenderConfig(RenderMode.ALL, RenderMode.ALL, RenderMode.ALL, RenderMode.ALL, RenderMode.ALL, RenderMode.ALL);
     }
 
-    public RenderMode get(RenderType type) {
+    public RenderModeOption get(RenderType type) {
         return switch (type) {
             case COLOR -> color;
             case PATTERNS -> patterns;
@@ -48,18 +50,18 @@ public class RenderConfig {
     }
 
     public RenderMode getEffective(RenderType type) {
-        RenderMode mode = get(type);
-        return mode.weight < global.weight ? mode : global;
+        RenderMode mode = get(type).get();
+        return mode.weight < global.get().weight ? mode : global.get();
     }
 
     public void set(RenderType type, RenderMode mode) {
         switch (type) {
-            case COLOR -> color = mode;
-            case PATTERNS -> patterns = mode;
-            case TRIMS -> trims = mode;
-            case CAPE -> cape = mode;
-            case GLOW -> glow = mode;
-            case GLOBAL -> global = mode;
+            case COLOR -> color.set(mode);
+            case PATTERNS -> patterns.set(mode);
+            case TRIMS -> trims.set(mode);
+            case CAPE -> cape.set(mode);
+            case GLOW -> glow.set(mode);
+            case GLOBAL -> global.set(mode);
         }
     }
 
@@ -70,19 +72,6 @@ public class RenderConfig {
         CAPE,
         GLOW,
         GLOBAL;
-        private final String translation;
-
-        RenderType() {
-            this.translation = "elytratrims.config.type." + asString();
-        }
-
-        public Text getName() {
-            return Text.translatable(translation);
-        }
-
-        public Text getTooltip() {
-            return Text.translatable(translation + ".tooltip");
-        }
 
         @Override
         public String asString() {
