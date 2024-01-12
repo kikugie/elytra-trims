@@ -1,6 +1,6 @@
 package dev.kikugie.elytratrims.common;
 
-/*? fabric {*/
+/*? if fabric {*/
 import dev.kikugie.elytratrims.common.recipe.ETRecipeSerializers;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.recipe.RecipeSerializer;

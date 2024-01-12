@@ -39,7 +39,7 @@ public class ElytraFeatureRendererMixin {
         assert player != null;
         /*? if <1.20 {*/
         Identifier cape = player.getCapeTexture();
-        /*} else {*//*
+        /*?} else {*//*
         Identifier cape = player.getSkinTextures().capeTexture();
         *//*?} */
         if (texture.equals(SKIN) || texture.equals(cape)) {

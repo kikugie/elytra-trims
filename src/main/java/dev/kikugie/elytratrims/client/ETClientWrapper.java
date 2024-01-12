@@ -1,6 +1,6 @@
 package dev.kikugie.elytratrims.client;
 
-/*? fabric {*/
+/*? if fabric {*/
 import net.fabricmc.api.ClientModInitializer;
 public class ETClientWrapper implements ClientModInitializer {
     @Override

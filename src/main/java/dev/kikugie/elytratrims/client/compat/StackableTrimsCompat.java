@@ -13,11 +13,11 @@ import java.util.List;
  */
 public class StackableTrimsCompat {
     public static List<ArmorTrim> getTrims(DynamicRegistryManager registryManager, ItemStack stack) {
-        /*? fabric */
+        /*? if fabric */
         return io.github.apfelrauber.stacked_trims.ArmorTrimList.getTrims(registryManager, stack).orElse(Collections.emptyList());
 
         // Stackable Trims is not available on forge anyway
-        /*? forge */
+        /*? if forge */
         /*return Collections.emptyList();*/
     }
 }
