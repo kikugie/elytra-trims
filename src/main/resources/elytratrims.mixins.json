@@ -19,7 +19,9 @@
     "client.MinecraftClientMixin",
     "client.PalettedPermutationsAtlasSourceMixin",
     "client.SimpleRegistryMixin",
-    "client.SimpleResourceReloadMixin"
+    "client.SimpleResourceReloadMixin",
+    "client.compat.ElytraSlotLayerMixin",
+    "client.compat.ElytraTrinketFeatureRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
