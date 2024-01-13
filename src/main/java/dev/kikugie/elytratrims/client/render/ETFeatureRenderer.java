@@ -95,7 +95,7 @@ public class ETFeatureRenderer {
         else {
             Optional<ArmorTrim> optional = ArmorTrim.getTrim(world.getRegistryManager(),
                     stack
-                    /*? if >=1.20 */
+                    /*? if >=1.20.2 */
                     /*, true*/
             );
             trims = optional.map(List::of).orElseGet(List::of);

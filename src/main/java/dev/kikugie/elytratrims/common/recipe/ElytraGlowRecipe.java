@@ -1,7 +1,6 @@
 package dev.kikugie.elytratrims.common.recipe;
 
 import dev.kikugie.elytratrims.common.ETServer;
-import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ElytraItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -19,7 +18,13 @@ public class ElytraGlowRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public boolean matches(CraftingInventory inventory, World world) {
+    public boolean matches(
+            /*? if >=1.20 {*//*
+            net.minecraft.inventory.RecipeInputInventory inventory,
+            *//*?} else {*/
+            net.minecraft.inventory.CraftingInventory inventory,
+            /*?} */
+            World world) {
         int item = 0;
         int sac = 0;
 
@@ -40,7 +45,13 @@ public class ElytraGlowRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public ItemStack craft(CraftingInventory inventory, DynamicRegistryManager registryManager) {
+    public ItemStack craft(
+            /*? if >=1.20 {*//*
+            net.minecraft.inventory.RecipeInputInventory inventory,
+            *//*?} else {*/
+            net.minecraft.inventory.CraftingInventory inventory,
+            /*?} */
+            DynamicRegistryManager registryManager) {
         ItemStack item = ItemStack.EMPTY;
         for (int slot = 0; slot < inventory.size(); slot++) {
             ItemStack stack = inventory.getStack(slot);

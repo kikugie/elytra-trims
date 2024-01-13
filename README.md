@@ -59,53 +59,48 @@ Craft your elytra with a glow ink sac to make it glow in the dark.
 
 ![Glowing trim](https://cdn.modrinth.com/data/XpzGz7KD/images/849d54736e4519df78678bf00a2077a528e866ad.png)
 
-## Mod Compatibility
-
-This only lists mods with explicit support. Elytra Trims is likely to work with other mods too, but if it
-doesn't create an issue report for it!
-
-| Mod                                                                        | Requires Extensions |
-|----------------------------------------------------------------------------|---------------------|
-| [All The Trims](https://modrinth.com/mod/allthetrims)                      | No                  |
-| [Stacked Trims](https://modrinth.com/mod/stacked-armor-trims)              | No                  |
-| [Better Trims](https://modrinth.com/mod/bettertrims)                       | No                  |
-| [Elytra Slot](https://modrinth.com/mod/elytra-slot)                        | No                  |
-| [Elytra Trinket](https://modrinth.com/mod/elytra_trinket)                  | No                  |
-| [Additional Banners](https://modrinth.com/mod/additional-banners)          | No                  |
-| [Archeology Banners](https://modrinth.com/mod/archaeology-banners)         | No                  |
-| [More Armor Trims](https://modrinth.com/mod/more-armor-trims)              | Yes                 |
-| [Geode+](https://www.curseforge.com/minecraft/mc-mods/geode-plus)          | Yes                 |
-| [Flower Adornments](https://modrinth.com/datapack/armor-flower-adornments) | Yes                 |
-
-Datapacks that add new trim materials are supported by default.
-
-## Config
-
-Supports following config libraries:
-
-- [Command Config Lib](https://modrinth.com/mod/command-config) - in-game and snapshot config. Uses `/et-config`
-  command.
-- [YACL](https://modrinth.com/mod/yacl) - requires v3
-- [Cloth Config](https://modrinth.com/mod/cloth-config)
-  Multiple config libraries can be installed without conflicts.
-
-## Client and server side
-
-When installed on a server this mod enables crafting recipes for all features above. However, you can edit item nbt
-manually to render elytra features even without server side.
-
-![Server side explained](https://cdn.modrinth.com/data/XpzGz7KD/images/6586c8890bffd1ba21aee4bfdd33089ff2a77e8a.png)
-
 ## Customization
 
 With resourcepack support, you can customize all the mod's features to your liking. Change the texture of your armor
 trims or add a unique design to your elytra pattern with ease.
 
 ## FAQ
+(Elytra Trims will be referred as ET)
+> I can't put trims/banner/dyes n the elytra!
+- If you're playing on a server, ET has to be installed there. On a paper/purpur/spigot or vanilla server you can use the datapack, but it will only work for trims.
+  If you're playing in singleplayer, it means ET is not loaded. Look up on YouTube how to install mods.
+
+> Are there conflicts with other mods?
+- [OptiFabric](<https://www.curseforge.com/minecraft/mc-mods/optifabric>) causes a crash and won't be supported.
+- [Customizable Elytra](<https://modrinth.com/mod/customizable-elytra>) overrides elytra renderer entirely (and provides less functionality).
+- [DashLoader](<https://modrinth.com/mod/dashloader>) causes trims to not display. The development has been cancelled, no support will be provided.
+
 > How do I use this mod on a server without it?
 - Client-side commands are planned, however for now the easiest way is to save trimmed elytra in a creative hotbar and load it on a server.  
-Survival recipes are not possible without the mod installed on the server.
+  Survival recipes are not possible without the mod installed on the server.
 
 > How can I remove trims/patterns/dye/glow from my elytra?
 - To remove patterns, dye and glow (all together), click with elytra on a cauldrow with water.  
 Trims can't be removed without other mods due to vanilla parity.
+
+> Trims look bad with capes!
+- Install [Mod Menu](<https://modrinth.com/mod/modmenu>) and [YACL](<https://modrinth.com/mod/yacl>). In the mods tab find ET and open it's settings. There you can disable rendering elytra capes. This is preferable to the vanilla cape setting because it will keep the cape while not wearing an elytra.
+
+## Roadmap
+[x] Elytra trims (v1.0)
+[x] Dyes and banners (v1.1.0)
+[x] [YACL](<https://modrinth.com/mod/yacl>) support (v1.1.1)
+[x] Multiversion build (v1.1.2)
+[x] Glowing elytras (v1.1.4)
+[x] Runtime trim generation (v1.1.10)
+[x] Runtime banner generation (v1.3.0)
+[x] HD banner support (v1.3.0)
+[x] 🐸 support (I'll regret this) (v2.0)
+[x] Server-side config (v2.0)
+
+[ ] Elytra cleaning (TODO for 2.0)
+[ ] Smithing table preview (TODO for 2.0)
+[ ] Elytra Slot & Elytra Trinket compatibility (TODO for 2.0)
+[ ] Banner pattern preview (TODO for 2.0)
+[ ] Modernfix dynamic resources support
+[ ] Elytra glow preview
