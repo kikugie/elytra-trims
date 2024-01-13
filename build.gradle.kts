@@ -15,7 +15,15 @@ val modGroup = property("mod.group").toString()
 
 version = "$modVersion+$mcVersion"
 group = modGroup
-base { archivesName.set(modId) }
+base { archivesName.set("$modId-$loader") }
+
+stonecutter.expression {
+    when (it) {
+        "fabric" -> isFabric
+        "forge" -> !isFabric
+        else -> null
+    }
+}
 
 repositories {
     exclusiveContent {
@@ -41,7 +49,6 @@ dependencies {
     val mixinExtras = "io.github.llamalad7:mixinextras-%s:${property("deps.mixin_extras")}"
     if (isFabric) {
         modLocalRuntime("dev.kikugie:crash-pipe:0.1.0") // Very important asset
-
         modImplementation("net.fabricmc:fabric-loader:${property("deps.fabric_loader")}")
         modImplementation("com.terraformersmc:modmenu:${property("deps.modmenu")}")
         modImplementation(fabricApi.module("fabric-registry-sync-v0", property("deps.fapi").toString()))
@@ -63,30 +70,24 @@ dependencies {
     modCompileOnly("maven.modrinth:allthetrims:${if (isFabric) "3.3.7" else "Ga7vvJCQ"}")
 }
 
-stonecutter.expression {
-    when (it) {
-        "fabric" -> isFabric
-        "forge" -> !isFabric
-        else -> null
+loom {
+    accessWidenerPath.set(rootProject.file("src/main/resources/elytratrims.accesswidener"))
+
+    if (!isFabric) {
+        forge {
+            convertAccessWideners.set(true)
+            mixinConfigs("$modId.mixins.json")
+        }
     }
 }
 
 if (stonecutter.current.isActive) {
     loom {
-        accessWidenerPath.set(rootProject.file("src/main/resources/elytratrims.accesswidener"))
-
         runConfigs["client"].apply {
             // to make sure it generates all "Minecraft Client (:subproject_name)" applications
             ideConfigGenerated(true)
             vmArgs("-Dmixin.debug.export=true")
             runDir = "../../run"
-        }
-
-        if (!isFabric) {
-            forge {
-                convertAccessWideners.set(true)
-                mixinConfigs("$modId.mixins.json")
-            }
         }
     }
 
@@ -104,8 +105,6 @@ if (stonecutter.current.isActive) {
 }
 
 tasks.processResources {
-    inputs.property("id", modId)
-    inputs.property("name", modName)
     inputs.property("version", modVersion)
     inputs.property("mc", mcDep)
 
@@ -128,4 +127,16 @@ yamlang {
 
 java {
     withSourcesJar()
+}
+
+val collectJars: TaskProvider<Copy> by tasks.registering(Copy::class) {
+    group = "project"
+    val remapJarTask = tasks.named("remapJar")
+    dependsOn(remapJarTask)
+    from(remapJarTask)
+    into("${rootProject.layout.buildDirectory.asFile.get()}/libs/$modVersion")
+}
+
+tasks.named("assemble").configure {
+    dependsOn(collectJars)
 }

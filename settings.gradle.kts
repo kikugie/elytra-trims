@@ -12,7 +12,7 @@ pluginManagement {
 }
 
 plugins {
-    id("dev.kikugie.stonecutter") version "0.3.1"
+    id("dev.kikugie.stonecutter") version "0.3.2"
 }
 
 extensions.configure<StonecutterSettings> {
@@ -25,6 +25,7 @@ extensions.configure<StonecutterSettings> {
         vers("1.20.1-forge", "1.20.1")
         vers("1.20.2-fabric", "1.20.2")
         vers("1.20.2-forge", "1.20.2")
+        vers("1.20.4-fabric", "1.20.4")
     }
     create(rootProject)
 }
