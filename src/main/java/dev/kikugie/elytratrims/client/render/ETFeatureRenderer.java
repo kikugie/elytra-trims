@@ -57,12 +57,18 @@ public class ETFeatureRenderer {
     private final ETAtlasHolder holder;
     private final SpriteAtlasTexture atlas;
     private final ETClientConfig config = ETClient.getConfig();
-    private final Function<ArmorTrim, Sprite> trimGetter = Util.memoize(this::trimSpriteGetter);
-    private final Function<RegistryEntry<BannerPattern>, Sprite> patternGetter = Util.memoize(this::patternSpriteGetter);
+    private Function<ArmorTrim, Sprite> trimGetter;
+    private Function<RegistryEntry<BannerPattern>, Sprite> patternGetter;
 
     public ETFeatureRenderer() {
         holder = ETClient.getAtlasHolder();
         atlas = holder.getAtlas();
+        resetCache();
+    }
+
+    public void resetCache() {
+        trimGetter = Util.memoize(this::trimSpriteGetter);
+        patternGetter = Util.memoize(this::patternSpriteGetter);
     }
 
     public void render(ElytraEntityModel<?> elytra, MatrixStack matrices, VertexConsumerProvider provider, LivingEntity entity, ItemStack stack, int light, float alpha) {

@@ -32,6 +32,7 @@ repositories {
     maven("https://maven.shedaniel.me/")
     maven("https://maven.quiltmc.org/repository/release/")
     maven("https://oss.sonatype.org/content/repositories/snapshots")
+    maven("https://maven.kikugie.dev/releases")
 }
 
 dependencies {
@@ -39,6 +40,8 @@ dependencies {
     mappings("net.fabricmc:yarn:${mcVersion}+build.${property("deps.yarn_build")}:v2")
     val mixinExtras = "io.github.llamalad7:mixinextras-%s:${property("deps.mixin_extras")}"
     if (isFabric) {
+        modLocalRuntime("dev.kikugie:crash-pipe:0.1.0") // Very important asset
+
         modImplementation("net.fabricmc:fabric-loader:${property("deps.fabric_loader")}")
         modImplementation("com.terraformersmc:modmenu:${property("deps.modmenu")}")
         modImplementation(fabricApi.module("fabric-registry-sync-v0", property("deps.fapi").toString()))

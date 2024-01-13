@@ -37,7 +37,7 @@ public class ConfigLoader {
         try {
             DataResult<JsonElement> result = codec.encodeStart(JsonOps.INSTANCE, instance);
             Files.writeString(file, result.getOrThrow(false, e -> {
-            }).toString(), StandardOpenOption.CREATE);
+            }).toString(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
         } catch (Exception e) {
             ETReference.LOGGER.warn("Failed to save config to %s:\n%s".formatted(file, e));
         }

@@ -12,15 +12,16 @@
     "common.SimpleRegistryMixin",
     "common.SynchronizeRecipesS2CPacketMixin"
   ],
-  "injectors": {
-    "defaultRequire": 1
-  },
   "client": [
     "client.ElytraFeatureRendererMixin",
     "client.LifecycledResourceManagerImplMixin",
     "client.LivingEntityMixin",
+    "client.MinecraftClientMixin",
     "client.PalettedPermutationsAtlasSourceMixin",
     "client.SimpleRegistryMixin",
     "client.SimpleResourceReloadMixin"
-  ]
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
 }

@@ -15,7 +15,7 @@ public class ETServer {
     public static void configInit() {
         if (config != null) return;
 
-        config = ModStatus.isServer
+        config = ModStatus.isServer || ModStatus.isDev
                 ? ETServerConfig.load()
                 : ETServerConfig.create();
     }
