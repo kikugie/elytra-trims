@@ -13,13 +13,18 @@ import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.DyeColor;
-import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
 public class ElytraPatternRecipe extends SpecialCraftingRecipe {
-    public ElytraPatternRecipe(Identifier id, CraftingRecipeCategory category) {
+    /*? if <1.20.2 {*/
+    public ElytraPatternRecipe(net.minecraft.util.Identifier id, CraftingRecipeCategory category) {
         super(id, category);
     }
+    /*?} else {*//*
+    public ElytraPatternRecipe(CraftingRecipeCategory category) {
+        super(category);
+    }
+    *//*?} */
 
     @Override
     public boolean matches(

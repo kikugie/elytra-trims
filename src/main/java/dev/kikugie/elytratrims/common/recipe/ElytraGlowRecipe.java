@@ -8,14 +8,19 @@ import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
 import net.minecraft.registry.DynamicRegistryManager;
-import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
 
 public class ElytraGlowRecipe extends SpecialCraftingRecipe {
-    public ElytraGlowRecipe(Identifier id, CraftingRecipeCategory category) {
+    /*? if <1.20.2 {*/
+    public ElytraGlowRecipe(net.minecraft.util.Identifier id, CraftingRecipeCategory category) {
         super(id, category);
     }
+    /*?} else {*//*
+    public ElytraGlowRecipe(CraftingRecipeCategory category) {
+        super(category);
+    }
+    *//*?} */
 
     @Override
     public boolean matches(

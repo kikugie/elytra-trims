@@ -2,7 +2,6 @@ package dev.kikugie.elytratrims.client.resource;
 
 import com.google.common.base.Preconditions;
 import dev.kikugie.elytratrims.common.ETReference;
-import net.minecraft.client.resource.metadata.AnimationResourceMetadata;
 import net.minecraft.client.texture.MissingSprite;
 import net.minecraft.client.texture.NativeImage;
 import net.minecraft.client.texture.SpriteContents;
@@ -26,7 +25,7 @@ import java.util.function.UnaryOperator;
 
 public class ImageUtils {
     @SuppressWarnings({"unchecked"})
-    public static <T extends Supplier<SpriteContents>> Collection<T> transform (Collection<T> contents, UnaryOperator<SpriteContents> operator) {
+    public static <T extends Supplier<SpriteContents>> Collection<T> transform(Collection<T> contents, UnaryOperator<SpriteContents> operator) {
         List<T> result = new ArrayList<T>(contents.size());
         for (T func : contents)
             if (func != null) result.add((T) (Supplier<SpriteContents>) () -> operator.apply(func.get()));
@@ -34,7 +33,16 @@ public class ImageUtils {
     }
 
     public static SpriteContents createContents(NativeImage image, Identifier id) {
-        return new SpriteContents(id, new SpriteDimensions(image.getWidth(), image.getHeight()), image, AnimationResourceMetadata.EMPTY);
+        return new SpriteContents(
+                id,
+                new SpriteDimensions(image.getWidth(), image.getHeight()),
+                image,
+                /*? if <1.20.2 {*/
+                net.minecraft.client.resource.metadata.AnimationResourceMetadata.EMPTY
+                /*?} else {*//*
+                net.minecraft.resource.metadata.ResourceMetadata.NONE
+                *//*?} */
+        );
     }
 
     @Nullable

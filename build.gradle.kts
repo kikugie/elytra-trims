@@ -84,6 +84,7 @@ if (stonecutter.current.isActive) {
 
         if (!isFabric) {
             forge {
+                convertAccessWideners.set(true)
                 mixinConfigs("$modId.mixins.json")
             }
         }

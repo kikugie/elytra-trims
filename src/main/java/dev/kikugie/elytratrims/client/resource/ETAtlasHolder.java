@@ -24,9 +24,12 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class ETAtlasHolder implements ResourceReloader {
+    /*? if >=1.20.2 */
+    /*private static final SpriteOpener opener = SpriteOpener.create(SpriteLoader.METADATA_READERS);*/
     public static final Identifier TEXTURE = ETReference.id("textures/atlas/elytra_features.png");
     public static final Identifier ID = ETReference.id("elytra_features");
     private final SpriteAtlasTexture atlas;
@@ -63,7 +66,14 @@ public class ETAtlasHolder implements ResourceReloader {
     }
 
     private Collection<Supplier<SpriteContents>> getTrims(ResourceManager manager, Sprite elytra) {
-        var trimSources = new AtlasLoader(ETResourceListener.getTrims()).loadSources(manager);
+        var preSources = new AtlasLoader(ETResourceListener.getTrims()).loadSources(manager);
+        /*? if <1.20.2 {*/
+        var trimSources = preSources;
+        /*?} else {*//*
+        Collection<Supplier<SpriteContents>> trimSources = new ArrayList<>(preSources.size());
+        for (Function<SpriteOpener, SpriteContents> func : preSources)
+            trimSources.add(() -> func.apply(opener));
+        *//*?} */
         return ETClient.getConfig().texture.cropTrims.get() ? ImageUtils.transform(trimSources, it -> ImageUtils.mask(it, elytra)) : trimSources;
     }
 
@@ -101,6 +111,17 @@ public class ETAtlasHolder implements ResourceReloader {
         return () -> ImageUtils.createContents(ImageUtils.createSaturationMaskNotClosing(elytraModel), elytraModel.id.withPath(path -> path.replace("textures/", "").replace(".png", "")));
     }
 
+    private CompletableFuture<List<SpriteContents>> transform(List<Supplier<SpriteContents>> sprites, Executor executor) {
+        /*? if <1.20.2 {*/
+        return SpriteLoader.loadAll(sprites, executor);
+        /*?} else {*//*
+        List<Function<SpriteOpener, SpriteContents>> transformed = new ArrayList<>(sprites.size());
+        for (Supplier<SpriteContents> sup : sprites)
+            transformed.add(o -> sup.get());
+        return SpriteLoader.loadAll(opener, transformed, executor);
+        *//*?} */
+    }
+
     CompletableFuture<SpriteLoader.StitchResult> load(ResourceManager manager, Profiler ignoredProfiler, Executor executor) {
         return CompletableFuture
                 .supplyAsync(() -> {
@@ -108,7 +129,7 @@ public class ETAtlasHolder implements ResourceReloader {
                     atlas.clear();
                     return getSprites(manager);
                 }, executor)
-                .thenCompose(sprites -> SpriteLoader.loadAll(sprites, executor))
+                .thenCompose(sprites -> transform(sprites, executor))
                 .thenApply(sprites -> SpriteLoader.fromAtlas(atlas).stitch(sprites, 0, executor))
                 .thenCompose(SpriteLoader.StitchResult::whenComplete);
     }
