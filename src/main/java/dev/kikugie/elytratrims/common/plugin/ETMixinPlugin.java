@@ -30,15 +30,21 @@ public class ETMixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        AnnotationNode modRequirement = getAnnotation(mixinClassName, RequireMod.class);
+        if (shouldApply(mixinClassName)) return true;
+        ETReference.LOGGER.info("Disabled mixin " + mixinClassName);
+        return false;
+    }
+
+    private boolean shouldApply(String mixin) {
+        AnnotationNode modRequirement = getAnnotation(mixin, RequireMod.class);
         boolean modResult = modRequirement == null || ModStatus.isLoading(Annotations.getValue(modRequirement));
         if (!modResult) return false;
 
-        AnnotationNode testerRequirement = getAnnotation(mixinClassName, RequireTest.class);
-        boolean testerResult = testerRequirement == null || runTester(Annotations.getValue(testerRequirement), mixinClassName);
+        AnnotationNode testerRequirement = getAnnotation(mixin, RequireTest.class);
+        boolean testerResult = testerRequirement == null || runTester(Annotations.getValue(testerRequirement), mixin);
         if (!testerResult) return false;
 
-        AnnotationNode platformRequirement = getAnnotation(mixinClassName, RequirePlatform.class);
+        AnnotationNode platformRequirement = getAnnotation(mixin, RequirePlatform.class);
         if (platformRequirement == null) return true;
         Loader loader = Annotations.getValue(platformRequirement);
         return (loader == Loader.FABRIC && ModStatus.isFabric) || (loader == Loader.FORGE && !ModStatus.isFabric);
