@@ -20,8 +20,8 @@ public class ETResourceListener {
         List<Identifier> elytraPatterns = new ArrayList<>(patterns.size());
         for (Identifier texture : patterns) {
             String path = texture.getPath();
-            if (path.contains("armor") && !path.contains("leggings") && path.matches("trims/models/armor/[\\w_-]+"))
-                elytraPatterns.add(new Identifier(texture.getNamespace(), path.replaceFirst("armor", "elytra")));
+            if (path.contains("armor") && !path.contains("leggings"))
+                elytraPatterns.add(texture.withPath(it -> it.replaceFirst("armor", "elytra")));
         }
         if (!elytraPatterns.isEmpty())
             trims.add(elytraPatterns, palette, materials);
@@ -31,10 +31,9 @@ public class ETResourceListener {
     public static @NotNull List<AtlasSource> getTrims() {
         List<AtlasSource> sources = new ArrayList<>();
         for (Identifier palette : trims) {
-            var source = new PalettedPermutationsAtlasSource(
-                    trims.getPatterns(palette),
-                    palette,
-                    trims.getMaterials(palette));
+            var textures = trims.getPatterns(palette);
+            var materials = trims.getMaterials(palette);
+            var source = new PalettedPermutationsAtlasSource(textures, palette, materials);
             ((ElytraSourceAccessor) source).elytra_trims$ignoreListener();
             sources.add(source);
         }

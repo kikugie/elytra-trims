@@ -1,3 +1,5 @@
+import org.gradle.configurationcache.extensions.capitalized
+
 plugins {
     id("dev.architectury.loom") version "1.4-SNAPSHOT"
     id("me.fallenbreath.yamlang") version "1.3.1"
@@ -79,29 +81,27 @@ loom {
             mixinConfigs("$modId.mixins.json")
         }
     }
+
+    runConfigs["client"].apply {
+        ideConfigGenerated(true)
+        vmArgs("-Dmixin.debug.export=true")
+        runDir = "../../run"
+    }
 }
 
 if (stonecutter.current.isActive) {
-    loom {
-        runConfigs["client"].apply {
-            // to make sure it generates all "Minecraft Client (:subproject_name)" applications
-            ideConfigGenerated(true)
-            vmArgs("-Dmixin.debug.export=true")
-            runDir = "../../run"
-        }
-    }
 
     rootProject.tasks.register("buildActive") {
         group = "project"
 
         dependsOn(tasks.named("build"))
     }
-
-    rootProject.tasks.register("runActive") {
-        group = "project"
-
-        dependsOn(tasks.named("runClient"))
-    }
+//
+//    rootProject.tasks.register("runActive") {
+//        group = "project"
+//
+//        dependsOn(tasks.named("runClient"))
+//    }
 }
 
 tasks.processResources {
@@ -129,14 +129,18 @@ java {
     withSourcesJar()
 }
 
-val collectJars: TaskProvider<Copy> by tasks.registering(Copy::class) {
-    group = "project"
-    val remapJarTask = tasks.named("remapJar")
-    dependsOn(remapJarTask)
-    from(remapJarTask)
-    into("${rootProject.layout.buildDirectory.asFile.get()}/libs/$modVersion")
-}
+publishMods {
+    file = tasks.remapJar.get().archiveFile
+    additionalFiles.from(tasks.remapSourcesJar.get().archiveFile)
+    displayName = "$modName ${loader.capitalized()} $modVersion for $mcVersion"
+    version = modVersion
+    changelog = rootProject.file("CHANGELOG.md").readText()
+    type = STABLE
+    modLoaders.add(loader)
 
-tasks.named("assemble").configure {
-    dependsOn(collectJars)
+    dryRun = providers.environmentVariable("MODRINTH_TOKEN").getOrNull() == null || providers.environmentVariable("GITHUB_TOKEN").getOrNull() == null
+
+    modrinth {
+
+    }
 }
