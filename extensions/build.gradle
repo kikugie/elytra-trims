@@ -8,6 +8,7 @@ architectury {
 
 subprojects {
     apply plugin: "dev.architectury.loom"
+    apply plugin: "me.modmuss50.mod-publish-plugin"
 
     loom {
         silentMojangMappingsLicense()

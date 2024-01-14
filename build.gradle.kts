@@ -2,8 +2,8 @@ import org.gradle.configurationcache.extensions.capitalized
 
 plugins {
     id("dev.architectury.loom")
+    id("me.modmuss50.mod-publish-plugin")
     id("me.fallenbreath.yamlang") version "1.3.1"
-    id("me.modmuss50.mod-publish-plugin") version "0.4.+"
 }
 
 val loader = if (loom.isForgeLike) "forge" else "fabric"

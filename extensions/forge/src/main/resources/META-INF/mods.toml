@@ -26,10 +26,3 @@ mandatory = true
 versionRange = "[1.19.4,)"
 ordering = "NONE"
 side = "CLIENT"
-
-[[dependencies.elytratrims_extensions]]
-modId = "elytratrims"
-mandatory = true
-versionRange = "[2.0.0,)"
-ordering = "NONE"
-side = "CLIENT"

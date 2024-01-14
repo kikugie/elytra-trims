@@ -68,3 +68,37 @@ publishing {
         // Add repositories to publish to here.
     }
 }
+
+publishMods {
+    file = remapJar.archiveFile
+    displayName = "${project.mod_name} Fabric ${project.mod_version}"
+    version = project.mod_version.toString()
+    changelog = project.parent.file("CHANGELOG.md").text
+    type = BETA
+    modLoaders.add("fabric")
+
+    dryRun = providers.environmentVariable("MODRINTH_TOKEN").getOrNull() == null || providers.environmentVariable("CURSEFORGE_TOKEN").getOrNull() == null
+
+    modrinth {
+        projectId = project.publish_modrinth.toString()
+        accessToken = providers.environmentVariable("MODRINTH_TOKEN")
+        minecraftVersionRange {
+            start = project.mod_minver
+            end = project.mod_maxver
+        }
+        requires {
+            slug = "elytra-trims"
+        }
+    }
+    curseforge {
+        projectId = project.publish_curseforge.toString()
+        accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
+        minecraftVersionRange {
+            start = project.mod_minver
+            end = project.mod_maxver
+        }
+        requires {
+            slug = "elytra-trims"
+        }
+    }
+}
