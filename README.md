@@ -66,8 +66,8 @@ It's likely to work with other mods, but you'll have to try it out.
 ### Supports
 - Custom elytras:
   - [Mythic Metals](https://modrinth.com/mod/mythicmetals)
-  - Other mods with custom elytras should work, but trimmed item model will be broken and trims may look bad.
-- Extra trim patterns: 
+  - Any mod with custom elytras should work, but trimmed item model will be broken and trims may look bad.
+- Extra trim patterns (Requires [Extensions](https://modrinth.com/mod/elytra-trims-extensions): 
   - [More Armor Trims](https://modrinth.com/mod/more-armor-trims)
   - [Geode+](https://modrinth.com/mod/geode-plus)
   - [Frostiful](https://modrinth.com/mod/frostiful)

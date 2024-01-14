@@ -30,3 +30,9 @@ extensions.configure<StonecutterSettings> {
     create(rootProject)
 }
 rootProject.name = "Elytra Trims"
+
+include("extensions")
+val ext = project(":extensions")
+listOf("common", "fabric", "forge").forEach {
+    include("extensions:$it")
+}

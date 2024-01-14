@@ -32,7 +32,7 @@ public class YaclConfig {
                                 .option(textureOption(config.texture.cropTrims, true))
                                 .option(textureOption(config.texture.useDarkerTrim, true))
                                 .option(textureOption(config.texture.useBannerTextures, true))
-                                .option(textureOption(config.texture.showBannerIcon, false))
+//                                .option(textureOption(config.texture.showBannerIcon, false))
                                 .build())
                         .build())
                 .save(config::save)

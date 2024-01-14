@@ -1,5 +1,6 @@
 plugins {
     id("dev.kikugie.stonecutter")
+    id("dev.architectury.loom") version "1.4-SNAPSHOT" apply false
 }
 stonecutter active "1.19.4-fabric" /* [SC] DO NOT EDIT */
 

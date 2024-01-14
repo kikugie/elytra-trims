@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "elytra-trims-extensions",
+  "version": "${version}",
+  "name": "Elytra Trims Extensions",
+  "description": "Elytra Trims additions for other packs out there",
+  "authors": [
+    "KikuGie"
+  ],
+  "contact": {
+    "homepage": "https://modrinth.com/mod/elytra-trims-extensions",
+    "sources": "https://github.com/Kikugie/elytra-trims",
+    "issues": "https://github.com/Kikugie/elytra-trims/issues"
+  },
+  "license": "LGPLv3",
+  "environment": "client",
+  "icon": "assets/elytratrims_extensions/icon.png",
+  "depends": {
+    "fabricloader": ">=0.15",
+    "minecraft": ">=1.19.4"
+  }
+}

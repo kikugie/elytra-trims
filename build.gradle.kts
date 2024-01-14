@@ -1,14 +1,14 @@
 import org.gradle.configurationcache.extensions.capitalized
 
 plugins {
-    id("dev.architectury.loom") version "1.4-SNAPSHOT"
+    id("dev.architectury.loom")
     id("me.fallenbreath.yamlang") version "1.3.1"
     id("me.modmuss50.mod-publish-plugin") version "0.4.+"
 }
 
 val loader = if (loom.isForgeLike) "forge" else "fabric"
 val isFabric = !loom.isForgeLike
-val mcVersion = property("deps.minecraft").toString()
+val mcVersion = stonecutter.current.version
 val mcDep = property("mod.mc_dep").toString()
 val modId = property("mod.id").toString()
 val modName = property("mod.name").toString()
@@ -90,18 +90,11 @@ loom {
 }
 
 if (stonecutter.current.isActive) {
-
     rootProject.tasks.register("buildActive") {
         group = "project"
 
         dependsOn(tasks.named("build"))
     }
-//
-//    rootProject.tasks.register("runActive") {
-//        group = "project"
-//
-//        dependsOn(tasks.named("runClient"))
-//    }
 }
 
 tasks.processResources {
@@ -113,11 +106,8 @@ tasks.processResources {
         "mc" to mcDep
     )
 
-    if (isFabric) filesMatching("fabric.mod.json") {
-        expand(map)
-    } else filesMatching("META-INF/mods.toml") {
-        expand(map)
-    }
+    filesMatching("fabric.mod.json") { expand(map) }
+    filesMatching("META-INF/mods.toml") { expand(map) }
 }
 
 yamlang {

@@ -1,0 +1,50 @@
+plugins {
+    id "architectury-plugin" version "3.4-SNAPSHOT"
+}
+
+architectury {
+    minecraft = project.deps_minecraft
+}
+
+subprojects {
+    apply plugin: "dev.architectury.loom"
+
+    loom {
+        silentMojangMappingsLicense()
+    }
+
+    dependencies {
+        minecraft "com.mojang:minecraft:${project.deps_minecraft}"
+        mappings "net.fabricmc:yarn:${project.deps_minecraft}+build.${project.deps_yarn_build}:v2"
+    }
+}
+
+allprojects {
+    apply plugin: "java"
+    apply plugin: "architectury-plugin"
+    apply plugin: "maven-publish"
+
+    base {
+        archivesName = project.mod_id
+    }
+
+    version = project.mod_version
+    group = project.mod_group
+
+    repositories {
+        // Add repositories to retrieve artifacts from in here.
+        // You should only use this when depending on other mods because
+        // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
+        // See https://docs.gradle.org/current/userguide/declaring_repositories.html
+        // for more information about repositories.
+    }
+
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+        options.release = 17
+    }
+
+    java {
+        withSourcesJar()
+    }
+}

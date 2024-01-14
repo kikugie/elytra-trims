@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "elytratrims",
+  "id": "elytra-trims",
   "name": "Elytra Trims",
   "version": "${version}",
   "description": "Lightweight and customizable support for elytra trims, patterns and dyes",
@@ -8,6 +8,9 @@
     "KikuGie"
   ],
   "contact": {
+    "homepage": "https://modrinth.com/mod/elytra-trims",
+    "sources": "https://github.com/Kikugie/elytra-trims",
+    "issues": "https://github.com/Kikugie/elytra-trims/issues"
   },
   "mixins": [
     "elytratrims.mixins.json"
