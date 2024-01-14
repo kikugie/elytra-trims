@@ -13,13 +13,12 @@
     "common.SynchronizeRecipesS2CPacketMixin"
   ],
   "client": [
+    "client.BakedModelManagerMixin",
     "client.ElytraFeatureRendererMixin",
-    "client.LifecycledResourceManagerImplMixin",
     "client.LivingEntityMixin",
     "client.MinecraftClientMixin",
     "client.PalettedPermutationsAtlasSourceMixin",
     "client.SimpleRegistryMixin",
-    "client.SimpleResourceReloadMixin",
     "client.SmithingScreenMixin",
     "client.compat.ElytraSlotLayerMixin",
     "client.compat.ElytraTrinketFeatureRendererMixin"
