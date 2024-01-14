@@ -2,6 +2,8 @@ modLoader = "javafml"
 loaderVersion = "[45,)"
 license = "LGPLv3"
 
+issueTrackerURL = "https://github.com/kikugie/elytra-trims/issues"
+
 [[mods]]
 modId = "elytratrims"
 version = "${version}"

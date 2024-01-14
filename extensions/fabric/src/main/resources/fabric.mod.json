@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "elytra-trims-extensions",
+  "id": "elytratrims_extensions",
   "version": "${version}",
   "name": "Elytra Trims Extensions",
   "description": "Elytra Trims additions for other packs out there",

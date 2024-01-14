@@ -66,7 +66,7 @@ It's likely to work with other mods, but you'll have to try it out.
 ### Supports
 - Custom elytras:
   - [Mythic Metals](https://modrinth.com/mod/mythicmetals)
-  - Any mod with custom elytras should work, but trimmed item model will be broken and trims may look bad.
+  - *Any mod with custom elytras should work*
 - Extra trim patterns (Requires [Extensions](https://modrinth.com/mod/elytra-trims-extensions): 
   - [More Armor Trims](https://modrinth.com/mod/more-armor-trims)
   - [Geode+](https://modrinth.com/mod/geode-plus)
@@ -123,6 +123,6 @@ Trims can't be removed without other mods due to vanilla parity.
 - [x] 🐸 support (I'll regret this) (v2.0)
 - [x] Server-side config (v2.0)
 ### TODO
-- [ ] Banner pattern preview (TODO for 2.0)
+- [ ] Banner pattern preview
 - [ ] Modernfix dynamic resources support
 - [ ] Elytra glow preview

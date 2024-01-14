@@ -4,7 +4,7 @@ issueTrackerURL = "https://github.com/Kikugie/elytra-trims/issues"
 license = "LGPLv3"
 
 [[mods]]
-modId = "elytra-trims-extensions"
+modId = "elytratrims_extensions"
 version = "${version}"
 displayName = "Elytra Trims Extensions"
 authors = "KikuGie"
@@ -13,22 +13,22 @@ Elytra Trims additions for other packs out there
 '''
 logoFile = "assets/elytratrims_extensions/icon.png"
 
-[[dependencies.elytra-trims-extensions]]
+[[dependencies.elytratrims_extensions]]
 modId = "forge"
 mandatory = true
 versionRange = "[45,)"
 ordering = "NONE"
 side = "CLIENT"
 
-[[dependencies.elytra-trims-extensions]]
+[[dependencies.elytratrims_extensions]]
 modId = "minecraft"
 mandatory = true
 versionRange = "[1.19.4,)"
 ordering = "NONE"
 side = "CLIENT"
 
-[[dependencies.elytra-trims-extensions]]
-modId = "elytra-trims"
+[[dependencies.elytratrims_extensions]]
+modId = "elytratrims"
 mandatory = true
 versionRange = "[2.0.0,)"
 ordering = "NONE"
