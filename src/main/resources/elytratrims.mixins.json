@@ -20,6 +20,7 @@
     "client.PalettedPermutationsAtlasSourceMixin",
     "client.SimpleRegistryMixin",
     "client.SimpleResourceReloadMixin",
+    "client.SmithingScreenMixin",
     "client.compat.ElytraSlotLayerMixin",
     "client.compat.ElytraTrinketFeatureRendererMixin"
   ],
