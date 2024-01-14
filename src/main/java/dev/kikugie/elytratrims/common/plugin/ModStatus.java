@@ -1,9 +1,9 @@
 package dev.kikugie.elytratrims.common.plugin;
 
-import net.minecraft.util.Util;
+import it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap;
 
 import java.nio.file.Path;
-import java.util.function.Function;
+import java.util.Map;
 
 /*? if fabric {*/
 import net.fabricmc.loader.api.FabricLoader;
@@ -16,13 +16,13 @@ public class ModStatus {
     public static final boolean isServer = FABRIC.getEnvironmentType() == EnvType.SERVER;
     public static final boolean isDev = FABRIC.isDevelopmentEnvironment();
     public static final Path configDir = FABRIC.getConfigDir();
-    private static final Function<String, Boolean> cache = Util.memoize(ModStatus::isLoadedImpl);
+    private static final Map<String, Boolean> cache = new Object2BooleanOpenHashMap<>();
 
     public static boolean isLoading(String mod) {
         return FABRIC.isModLoaded(mod);
     }
     public static boolean isLoaded(String mod) {
-        return cache.apply(mod);
+        return cache.computeIfAbsent(mod, ModStatus::isLoadedImpl);
     }
 
     private static boolean isLoadedImpl(String mod) {
@@ -42,7 +42,7 @@ public class ModStatus {
     public static final boolean isServer = FMLLoader.getDist() == Dist.DEDICATED_SERVER;
     public static final boolean isDev = !FMLLoader.isProduction();
     public static final Path configDir = FMLLoader.getGamePath().resolve("config");
-    private static final Function<String, Boolean> cache = Util.memoize(ModStatus::isLoadedImpl);
+    private static final Map<String, Boolean> cache = new Object2BooleanOpenHashMap<>();
 
     static {
         if (Files.exists(configDir)) {
@@ -59,7 +59,7 @@ public class ModStatus {
     }
 
     public static boolean isLoaded(String mod) {
-        return cache.apply(mod);
+        return cache.computeIfAbsent(mod, ModStatus::isLoadedImpl);
     }
 
     private static boolean isLoadedImpl(String mod) {
