@@ -59,6 +59,34 @@ Craft your elytra with a glow ink sac to make it glow in the dark.
 
 ![Glowing trim](https://cdn.modrinth.com/data/XpzGz7KD/images/849d54736e4519df78678bf00a2077a528e866ad.png)
 
+## Mod compatibility
+This lists mods Elytra Trims has explicit support for or known to work with. 
+It's likely to work with other mods, but you'll have to try it out.
+
+### Supports
+- Custom elytras:
+  - [Mythic Metals](https://modrinth.com/mod/mythicmetals)
+  - Other mods with custom elytras should work, but trimmed item model will be broken and trims may look bad.
+- Extra trim patterns: 
+  - [More Armor Trims](https://modrinth.com/mod/more-armor-trims)
+  - [Geode+](https://modrinth.com/mod/geode-plus)
+  - [Frostiful](https://modrinth.com/mod/frostiful)
+- Elytra trinkets:
+  - [Elytra Slot](https://modrinth.com/mod/elytra-slot)
+  - [Elytra Trinket](https://modrinth.com/mod/elytra_trinket)
+- Trim utilities:
+  - [All The Trims](https://modrinth.com/mod/allthetrims)
+  - [Better Trims](https://modrinth.com/mod/bettertrims)
+- Extra banners:
+  - [Additional Banners](https://modrinth.com/mod/additional-banners)
+  - [Archeology Banners](https://modrinth.com/mod/archaeology-banners)
+  - *And any other banner mods*
+
+### Conflicts
+- [OptiFabric](<https://www.curseforge.com/minecraft/mc-mods/optifabric>) - causes a crash and won't be supported.
+- [Customizable Elytra](<https://modrinth.com/mod/customizable-elytra>) - overrides elytra renderer entirely, preventing Elytra Trims from working.
+- [DashLoader](<https://modrinth.com/mod/dashloader>) - causes trims to not display. The development has been cancelled, no support will be provided.
+
 ## Customization
 
 With resourcepack support, you can customize all the mod's features to your liking. Change the texture of your armor
@@ -69,11 +97,6 @@ trims or add a unique design to your elytra pattern with ease.
 > I can't put trims/banner/dyes on the elytra!
 - If you're playing on a server, ET has to be installed there. On a paper/purpur/spigot or vanilla server you can use the datapack, but it will only work for trims.
   If you're playing in singleplayer, it means ET is not loaded. Look up on YouTube how to install mods.
-
-> Are there conflicts with other mods?
-- [OptiFabric](<https://www.curseforge.com/minecraft/mc-mods/optifabric>) causes a crash and won't be supported.
-- [Customizable Elytra](<https://modrinth.com/mod/customizable-elytra>) overrides elytra renderer entirely (and provides less functionality).
-- [DashLoader](<https://modrinth.com/mod/dashloader>) causes trims to not display. The development has been cancelled, no support will be provided.
 
 > How do I use this mod on a server without it?
 - Client-side commands are planned, however for now the easiest way is to save trimmed elytra in a creative hotbar and load it on a server.  
@@ -93,13 +116,13 @@ Trims can't be removed without other mods due to vanilla parity.
 - [x] Multiversion build (v1.1.2)
 - [x] Glowing elytras (v1.1.4)
 - [x] Elytra cleaning (v1.1.4)
+- [x] Smithing table preview (v1.1.7)
 - [x] Runtime trim generation (v1.1.10)
 - [x] Runtime banner generation (v1.3.0)
 - [x] HD banner support (v1.3.0)
 - [x] 🐸 support (I'll regret this) (v2.0)
 - [x] Server-side config (v2.0)
 ### TODO
-- [ ] Smithing table preview (TODO for 2.0)
 - [ ] Banner pattern preview (TODO for 2.0)
 - [ ] Modernfix dynamic resources support
 - [ ] Elytra glow preview
