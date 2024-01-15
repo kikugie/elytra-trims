@@ -3,6 +3,7 @@ package dev.kikugie.elytratrims.mixin.common;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import dev.kikugie.elytratrims.common.config.ConfigTesters;
+import dev.kikugie.elytratrims.common.plugin.MixinConfigurable;
 import dev.kikugie.elytratrims.common.plugin.RequireTest;
 import net.minecraft.item.ElytraItem;
 import net.minecraft.item.Item;
@@ -24,6 +25,7 @@ import java.util.Map;
 /**
  * Marks all elytra items as trimmable on the server. It's done with a mixin instead of a json file to account for modded elytras. If an unknown item is present in that file, it's ignored entirely.
  */
+@MixinConfigurable
 @RequireTest(ConfigTesters.Trims.class)
 @Mixin(SimpleRegistry.class)
 public class SimpleRegistryMixin {

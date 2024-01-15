@@ -7,6 +7,7 @@ import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import dev.kikugie.elytratrims.client.ETClient;
+import dev.kikugie.elytratrims.common.plugin.MixinConfigurable;
 import dev.kikugie.elytratrims.common.plugin.RequireMod;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -21,6 +22,7 @@ import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Pseudo
+@MixinConfigurable
 @SuppressWarnings("ALL")
 @RequireMod("elytraslot")
 @Mixin(targets = "com.illusivesoulworks.elytraslot.client.ElytraSlotLayer")

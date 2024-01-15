@@ -1,6 +1,7 @@
 package dev.kikugie.elytratrims.common;
 
 import dev.kikugie.elytratrims.common.access.ElytraOverlaysAccessor;
+import dev.kikugie.elytratrims.common.config.ETMixinConfig;
 import dev.kikugie.elytratrims.common.config.ETServerConfig;
 import dev.kikugie.elytratrims.common.plugin.ModStatus;
 import dev.kikugie.elytratrims.common.recipe.GlowingItem;
@@ -21,13 +22,14 @@ public class ETServer {
     };
     public static CauldronBehavior CLEAN_ELYTRA;
     private static ETServerConfig config;
+    private static ETMixinConfig mixinConfig;
 
     public static void configInit() {
-        if (config != null) return;
-
-        config = ModStatus.isServer || ModStatus.isDev
+        if (config == null) config = ModStatus.isServer || ModStatus.isDev
                 ? ETServerConfig.load()
                 : ETServerConfig.create();
+        if (mixinConfig == null)
+            mixinConfig = ETMixinConfig.load();
     }
 
     public static void init() {
@@ -66,5 +68,8 @@ public class ETServer {
 
     public static ETServerConfig getConfig() {
         return config;
+    }
+    public static ETMixinConfig getMixinConfig() {
+        return mixinConfig;
     }
 }

@@ -14,11 +14,13 @@
   ],
   "client": [
     "client.BakedModelManagerMixin",
+    "client.ElytraEntityModelAccessor",
     "client.ElytraFeatureRendererMixin",
     "client.LivingEntityMixin",
     "client.PalettedPermutationsAtlasSourceMixin",
     "client.SimpleRegistryMixin",
     "client.SmithingScreenMixin",
+    "client.compat.BetterSmithingTableMixin",
     "client.compat.ElytraSlotLayerMixin",
     "client.compat.ElytraTrinketFeatureRendererMixin"
   ],

@@ -49,23 +49,27 @@ dependencies {
     minecraft("com.mojang:minecraft:${mcVersion}")
     mappings("net.fabricmc:yarn:${mcVersion}+build.${property("deps.yarn_build")}:v2")
     val mixinExtras = "io.github.llamalad7:mixinextras-%s:${property("deps.mixin_extras")}"
+    val mixinSquared = "com.github.bawnorton.mixinsquared:mixinsquared-%s:${property("deps.mixin_squared")}"
+    implementation(annotationProcessor(mixinSquared.format("common"))!!)
     if (isFabric) {
         modLocalRuntime("dev.kikugie:crash-pipe:0.1.0") // Very important asset
         modImplementation("net.fabricmc:fabric-loader:${property("deps.fabric_loader")}")
         modImplementation("com.terraformersmc:modmenu:${property("deps.modmenu")}")
         modImplementation(fabricApi.module("fabric-registry-sync-v0", property("deps.fapi").toString()))
+        include(implementation(mixinSquared.format("fabric"))!!)
     } else {
         "forge"("net.minecraftforge:forge:${mcVersion}-${property("deps.fml")}")
         implementation(mixinExtras.format("common"))
         implementation(mixinExtras.format("forge"))
         annotationProcessor(mixinExtras.format("common"))
         include(mixinExtras.format("forge"))
+        include(implementation(mixinSquared.format("forge"))!!)
     }
     // Config
     modImplementation("dev.isxander.yacl:yet-another-config-lib-$loader:${property("deps.yacl")}")
-//    modImplementation("me.shedaniel.cloth:cloth-config-$loader:${property("deps.cloth")}") {
-//        exclude(group = "net.fabricmc.fabric-api")
-//    }
+    modImplementation("me.shedaniel.cloth:cloth-config-$loader:${property("deps.cloth")}") {
+        exclude(group = "net.fabricmc.fabric-api")
+    }
 
     // Compat
     modCompileOnly("maven.modrinth:stacked-armor-trims:1.1.0")

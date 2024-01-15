@@ -36,6 +36,10 @@ public class ETMixinPlugin implements IMixinConfigPlugin {
     }
 
     private boolean shouldApply(String mixin) {
+        AnnotationNode mixinConfigurable = getAnnotation(mixin, MixinConfigurable.class);
+        boolean configResult = mixinConfigurable == null || !ETServer.getMixinConfig().contains(mixin);
+        if (!configResult) return false;
+
         AnnotationNode modRequirement = getAnnotation(mixin, RequireMod.class);
         boolean modResult = modRequirement == null || ModStatus.isLoading(Annotations.getValue(modRequirement));
         if (!modResult) return false;
@@ -69,7 +73,6 @@ public class ETMixinPlugin implements IMixinConfigPlugin {
     public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
 
     }
-
     private boolean runTester(Type type, String mixinClassName) {
         try {
             Class<?> clazz = Class.forName(type.getClassName());
