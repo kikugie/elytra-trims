@@ -1,0 +1,11 @@
+name: Free form
+description: Describe anything if the bug report isn't applicable.
+assignees:
+  - kikugie
+body:
+  - type: textarea
+    id: text
+    attributes:
+      label: Description
+    validations:
+      required: true
