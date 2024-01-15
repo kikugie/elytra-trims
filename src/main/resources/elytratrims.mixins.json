@@ -16,7 +16,6 @@
     "client.BakedModelManagerMixin",
     "client.ElytraFeatureRendererMixin",
     "client.LivingEntityMixin",
-    "client.MinecraftClientMixin",
     "client.PalettedPermutationsAtlasSourceMixin",
     "client.SimpleRegistryMixin",
     "client.SmithingScreenMixin",

@@ -8,7 +8,8 @@ import org.jetbrains.annotations.Nullable;
 public class ModMenuCompat implements ModMenuApi {
     @Override
     public @Nullable ConfigScreenFactory<?> getModConfigScreenFactory() {
-        return (ConfigScreenFactory<?>) ConfigScreenProvider.getScreen();
+        var provider = ConfigScreenProvider.getScreen();
+        return provider != null ? provider::apply : null;
     }
 }
 /*?} */

@@ -139,6 +139,7 @@ public class ETAtlasHolder implements ResourceReloader {
             profiler.startTick();
             profiler.push("upload");
             ETResourceListener.reset();
+            ETClient.getRenderer().resetCache();
             atlas.upload(data);
             ready = true;
             profiler.pop();

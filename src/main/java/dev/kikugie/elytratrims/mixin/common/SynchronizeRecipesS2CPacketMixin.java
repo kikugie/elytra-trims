@@ -16,7 +16,16 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 @Mixin(value = SynchronizeRecipesS2CPacket.class, remap = false)
 public abstract class SynchronizeRecipesS2CPacketMixin {
     @ModifyArg(method = "<init>(Ljava/util/Collection;)V", at = @At(value = "INVOKE", target = "Lcom/google/common/collect/Lists;newArrayList(Ljava/lang/Iterable;)Ljava/util/ArrayList;"))
+    /*? if <1.20.2 {*/
     private Iterable<Recipe<?>> removeElytraPatternRecipe(Iterable<Recipe<?>> elements) {
         return Iterables.filter(elements, recipe -> !(recipe instanceof ElytraPatternRecipe) && !(recipe instanceof ElytraGlowRecipe));
     }
+     /*?} else {*//*
+    private Iterable<net.minecraft.recipe.RecipeEntry<? extends Recipe<?>>> removeElytraPatternRecipe(Iterable<net.minecraft.recipe.RecipeEntry<? extends Recipe<?>>> elements) {
+        return Iterables.filter(elements, entry -> {
+            Recipe<?> recipe = entry.value();
+            return !(recipe instanceof ElytraPatternRecipe) && !(recipe instanceof ElytraGlowRecipe);
+        });
+    }
+    *//*?} */
 }
