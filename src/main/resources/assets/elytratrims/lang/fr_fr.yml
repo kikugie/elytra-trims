@@ -1,0 +1,49 @@
+elytratrims:
+  command:
+    response:
+      get_mode: "Le mode %s actuel est %s"
+      set_mode: "Le mode %s a été défini à %s"
+      reset: Config réinitialisée !
+  config:
+    title: Elytra Trims
+    category:
+      .: Config
+      render: Rendu
+      texture: Texture
+    texture:
+      useBannerTextures:
+        .: Utiliser les textures des bannières
+        tooltip: "Utilise les textures des bannières pour les motifs d'élytres plutôt que celles des boucliers."
+      cropTrims:
+        .: Rogner les ornements
+        tooltip: "Rogne les ornements d'armure pour s'adapter aux élytres."
+      useDarkerTrim:
+        .: Utiliser les ornements assombris
+        tooltip: "Utilise une couleur d'ornement plus sombre pour les élytres si elle existe.\nCela utilise la même couleur que lorsque vous appliquez un ornement à une pièce d'armure du même matériau."
+      showBannerIcon:
+        .: "Afficher l'icône des bannières"
+        tooltip: "Affiche l'icône des bannières sur les élytres dans l'inventaire."
+    type:
+      color:
+        .: Teinte
+        tooltip: Affiche les élytres colorées.
+      cape:
+        .: Cape
+        tooltip: Affiche la texture de la cape sur les élytres.
+      glow:
+        .: Brillance
+        tooltip: Fait briller les décorations des élytres.
+      patterns:
+        .: Motifs
+        tooltip: Affiche les motifs de bannière sur les élytres.
+      trims:
+        .: Ornements
+        tooltip: "Afficher les ornements d'armure sur les élytres."
+      global:
+        .: Global
+        tooltip: Remplace tous les autres types de rendu.
+    mode:
+      none: Aucun
+      self: Lui-même
+      others: Autres
+      all: Tous
