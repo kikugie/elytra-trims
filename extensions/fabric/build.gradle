@@ -16,9 +16,7 @@ configurations {
 }
 
 dependencies {
-    modImplementation "net.fabricmc:fabric-loader:${project.parent.deps_fabric}"
-//    modApi "net.fabricmc.fabric-api:fabric-api:${project.parent.deps_fapi}"
-//    modApi "dev.architectury:architectury-fabric:${project.parent.deps_arch}"
+    modImplementation "net.fabricmc:fabric-loader:${project.deps_fabric}"
 
     common(project(path: ":extensions:common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":extensions:common", configuration: "transformProductionFabric")) { transitive false }

@@ -76,6 +76,7 @@ It's likely to work with other mods, but you'll have to try it out.
 - Trim utilities:
   - [All The Trims](https://modrinth.com/mod/allthetrims)
   - [Better Trims](https://modrinth.com/mod/bettertrims)
+  - [Better Enchanting Table](https://modrinth.com/mod/bettersmithingtable)
 - Extra banners:
   - [Additional Banners](https://modrinth.com/mod/additional-banners)
   - [Archeology Banners](https://modrinth.com/mod/archaeology-banners)
