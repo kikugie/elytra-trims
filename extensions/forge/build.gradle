@@ -81,7 +81,7 @@ publishMods {
     displayName = "${project.mod_name} Forge ${project.mod_version}"
     version = project.mod_version.toString()
     changelog = project.parent.file("CHANGELOG.md").text
-    type = BETA
+    type = STABLE
     modLoaders.add("forge")
 
     dryRun = providers.environmentVariable("MODRINTH_TOKEN").getOrNull() == null || providers.environmentVariable("CURSEFORGE_TOKEN").getOrNull() == null
