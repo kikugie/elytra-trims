@@ -70,6 +70,8 @@ It's likely to work with other mods, but you'll have to try it out.
   - [More Armor Trims](https://modrinth.com/mod/more-armor-trims)
   - [Geode+](https://modrinth.com/mod/geode-plus)
   - [Frostiful](https://modrinth.com/mod/frostiful)
+  - [Ancient Aether](https://modrinth.com/mod/ancient-aether)
+  - [Alex's Caves](https://modrinth.com/mod/alexs-caves)
 - Elytra trinkets:
   - [Elytra Slot](https://modrinth.com/mod/elytra-slot)
   - [Elytra Trinket](https://modrinth.com/mod/elytra_trinket)
