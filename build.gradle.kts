@@ -66,10 +66,10 @@ dependencies {
         include(implementation(mixinSquared.format("forge"))!!)
     }
     // Config
-    modImplementation("dev.isxander.yacl:yet-another-config-lib-$loader:${property("deps.yacl")}")
-    modImplementation("me.shedaniel.cloth:cloth-config-$loader:${property("deps.cloth")}") {
-        exclude(group = "net.fabricmc.fabric-api")
-    }
+    modCompileOnly("dev.isxander.yacl:yet-another-config-lib-$loader:${property("deps.yacl")}")
+//    modImplementation("me.shedaniel.cloth:cloth-config-$loader:${property("deps.cloth")}") {
+//        exclude(group = "net.fabricmc.fabric-api")
+//    }
 
     // Compat
     modCompileOnly("maven.modrinth:stacked-armor-trims:1.1.0")
