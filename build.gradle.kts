@@ -6,8 +6,8 @@ plugins {
     id("me.fallenbreath.yamlang") version "1.3.1"
 }
 
-val loader = if (loom.isForgeLike) "forge" else "fabric"
-val isFabric = !loom.isForgeLike
+val loader = loom.platform.get().name.lowercase()
+val isFabric = loader == "fabric"
 val mcVersion = stonecutter.current.version
 val mcDep = property("mod.mc_dep").toString()
 val modId = property("mod.id").toString()
@@ -21,8 +21,9 @@ base { archivesName.set("$modId-$loader") }
 
 stonecutter.expression {
     when (it) {
-        "fabric" -> isFabric
-        "forge" -> !isFabric
+        "fabric" -> loader == "fabric"
+        "forge" -> loader == "forge"
+        "neoforge" -> loader == "neoforge"
         else -> null
     }
 }
@@ -43,6 +44,7 @@ repositories {
     maven("https://maven.quiltmc.org/repository/release/")
     maven("https://oss.sonatype.org/content/repositories/snapshots")
     maven("https://maven.kikugie.dev/releases")
+    maven("https://maven.neoforged.net/releases/")
 }
 
 dependencies {
@@ -53,16 +55,17 @@ dependencies {
     implementation(annotationProcessor(mixinSquared.format("common"))!!)
     if (isFabric) {
         modLocalRuntime("dev.kikugie:crash-pipe:0.1.0") // Very important asset
+        modLocalRuntime(fabricApi.module("fabric-registry-sync-v0", property("deps.fapi").toString()))
         modImplementation("net.fabricmc:fabric-loader:${property("deps.fabric_loader")}")
         modImplementation("com.terraformersmc:modmenu:${property("deps.modmenu")}")
-        modImplementation(fabricApi.module("fabric-registry-sync-v0", property("deps.fapi").toString()))
         include(implementation(mixinSquared.format("fabric"))!!)
     } else {
-        "forge"("net.minecraftforge:forge:${mcVersion}-${property("deps.fml")}")
-        implementation(mixinExtras.format("common"))
-        implementation(mixinExtras.format("forge"))
-        annotationProcessor(mixinExtras.format("common"))
-        include(mixinExtras.format("forge"))
+        if (loader == "forge") {
+            "forge"("net.minecraftforge:forge:${mcVersion}-${property("deps.fml")}")
+            compileOnly(annotationProcessor(mixinExtras.format("common"))!!)
+            include(implementation(mixinExtras.format("forge"))!!)
+        } else
+            "neoForge"("net.neoforged:neoforge:${property("deps.fml")}")
         include(implementation(mixinSquared.format("forge"))!!)
     }
     // Config
@@ -79,7 +82,7 @@ dependencies {
 loom {
     accessWidenerPath.set(rootProject.file("src/main/resources/elytratrims.accesswidener"))
 
-    if (!isFabric) {
+    if (loader == "forge") {
         forge {
             convertAccessWideners.set(true)
             mixinConfigs("$modId.mixins.json")

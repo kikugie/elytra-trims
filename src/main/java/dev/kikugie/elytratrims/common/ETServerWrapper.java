@@ -16,7 +16,7 @@ public class ETServerWrapper implements ModInitializer {
             RecipeSerializer.register("crafting_special_elytraglow", ETRecipeSerializers.ELYTRA_GLOW);
     }
 }
-/*?} else {*//*
+/*?} elif forge {*//*
 import dev.kikugie.elytratrims.client.ETClientWrapper;
 import dev.kikugie.elytratrims.common.recipe.ETRecipeSerializers;
 import net.minecraft.recipe.RecipeSerializer;
@@ -39,6 +39,30 @@ public class ETServerWrapper {
         if (ETServer.getConfig().addGlow)
             EVENT.register("crafting_special_elytraglow", () -> ETRecipeSerializers.ELYTRA_GLOW);
         EVENT.register(FMLJavaModLoadingContext.get().getModEventBus());
+    }
+
+    public static void init(FMLCommonSetupEvent event) {
+        ETServer.init();
+    }
+}
+*//*?} else {*//*
+import dev.kikugie.elytratrims.client.ETClientWrapper;
+import dev.kikugie.elytratrims.common.recipe.ETRecipeSerializers;
+import net.minecraft.recipe.RecipeSerializer;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+
+@Mod(ETReference.MOD_ID)
+public class ETServerWrapper {
+    public ETServerWrapper(IEventBus bus) {
+        bus.addListener(ETClientWrapper::init);
+        bus.addListener(ETServerWrapper::init);
+
+        if (ETServer.getConfig().addPatterns)
+            RecipeSerializer.register("crafting_special_elytrapatterns", ETRecipeSerializers.ELYTRA_PATTERNS);
+        if (ETServer.getConfig().addGlow)
+            RecipeSerializer.register("crafting_special_elytraglow", ETRecipeSerializers.ELYTRA_GLOW);
     }
 
     public static void init(FMLCommonSetupEvent event) {

@@ -15,6 +15,9 @@ Lightweight and customizable support for elytra trims, patterns and dyes
 '''
 logoFile = "assets/elytratrims/icon.png"
 
+[[mixins]]
+config = "elytratrims.mixins.json"
+
 [[dependencies.elytratrims]]
 modId = "minecraft"
 mandatory = true

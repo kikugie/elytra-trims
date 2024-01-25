@@ -7,6 +7,7 @@ pluginManagement {
         maven("https://maven.fabricmc.net/")
         maven("https://maven.architectury.dev")
         maven("https://maven.minecraftforge.net")
+        maven("https://maven.neoforged.net/releases/")
         maven("https://maven.kikugie.dev/releases")
     }
 }
@@ -26,6 +27,8 @@ extensions.configure<StonecutterSettings> {
         vers("1.20.2-fabric", "1.20.2")
         vers("1.20.2-forge", "1.20.2")
         vers("1.20.4-fabric", "1.20.4")
+//        vers("1.20.4-neoforge", "1.20.4")
+
     }
     create(rootProject)
 }

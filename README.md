@@ -90,7 +90,6 @@ It's likely to work with other mods, but you'll have to try it out.
 - [DashLoader](<https://modrinth.com/mod/dashloader>) - causes trims to not display. The development has been cancelled, no support will be provided.
 
 ## Customization
-
 With resourcepack support, you can customize all the mod's features to your liking. Change the texture of your armor
 trims or add a unique design to your elytra pattern with ease.
 
