@@ -33,6 +33,13 @@ Let your creativity soar and make your elytra stand out with the Elytra Trims mo
 
 ### For more trims check out [Elytra Trims Extensions](https://modrinth.com/mod/elytra-trims-extensions)
 
+## Installation
+
+Elytra Trims has to be installed on the client to be able to see trims and other features.  
+Installing it on a server enables new trimming and crafting recipes. It doesn't require all players to have the mod, but in that case they won't see the trims/dyes/etc.
+
+You can *technically* obtain a trimmed/dyed elytra on a server without the mod. To do it create an elytra you want in creative singleplayer, save it in a hotbar and load on the server.
+
 ## Trims
 
 Put any trim on your elytra just like any other armor. Mod provides a default resourcepack with all vanilla trims, but
