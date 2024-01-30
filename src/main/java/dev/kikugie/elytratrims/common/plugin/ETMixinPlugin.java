@@ -1,7 +1,7 @@
 package dev.kikugie.elytratrims.common.plugin;
 
 import dev.kikugie.elytratrims.common.ETReference;
-import dev.kikugie.elytratrims.common.ETServer;
+import dev.kikugie.elytratrims.common.config.ServerConfigs;
 import dev.kikugie.elytratrims.common.plugin.RequirePlatform.Loader;
 import org.jetbrains.annotations.Nullable;
 import org.objectweb.asm.Type;
@@ -20,7 +20,7 @@ import java.util.Set;
 public class ETMixinPlugin implements IMixinConfigPlugin {
     @Override
     public void onLoad(String mixinPackage) {
-        ETServer.configInit();
+        ServerConfigs.init();
     }
 
     @Override
@@ -37,7 +37,7 @@ public class ETMixinPlugin implements IMixinConfigPlugin {
 
     private boolean shouldApply(String mixin) {
         AnnotationNode mixinConfigurable = getAnnotation(mixin, MixinConfigurable.class);
-        boolean configResult = mixinConfigurable == null || !ETServer.getMixinConfig().contains(mixin);
+        boolean configResult = mixinConfigurable == null || !ServerConfigs.getMixinConfig().contains(mixin);
         if (!configResult) return false;
 
         AnnotationNode modRequirement = getAnnotation(mixin, RequireMod.class);

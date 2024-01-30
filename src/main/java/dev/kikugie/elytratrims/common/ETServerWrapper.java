@@ -1,6 +1,7 @@
 package dev.kikugie.elytratrims.common;
 
 /*? if fabric {*/
+import dev.kikugie.elytratrims.common.config.ServerConfigs;
 import dev.kikugie.elytratrims.common.recipe.ETRecipeSerializers;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.recipe.RecipeSerializer;
@@ -10,13 +11,14 @@ public class ETServerWrapper implements ModInitializer {
     public void onInitialize() {
         ETServer.init();
 
-        if (ETServer.getConfig().addPatterns)
+        if (ServerConfigs.getConfig().addPatterns)
             RecipeSerializer.register("crafting_special_elytrapatterns", ETRecipeSerializers.ELYTRA_PATTERNS);
-        if (ETServer.getConfig().addGlow)
+        if (ServerConfigs.getConfig().addGlow)
             RecipeSerializer.register("crafting_special_elytraglow", ETRecipeSerializers.ELYTRA_GLOW);
     }
 }
 /*?} elif forge {*//*
+import dev.kikugie.elytratrims.common.config.ServerConfigs;
 import dev.kikugie.elytratrims.client.ETClientWrapper;
 import dev.kikugie.elytratrims.common.recipe.ETRecipeSerializers;
 import net.minecraft.recipe.RecipeSerializer;
@@ -34,9 +36,9 @@ public class ETServerWrapper {
 
         DeferredRegister<RecipeSerializer<?>> EVENT = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, "minecraft");
 
-        if (ETServer.getConfig().addPatterns)
+        if (ServerConfigs.getConfig().addPatterns)
             EVENT.register("crafting_special_elytrapatterns", () -> ETRecipeSerializers.ELYTRA_PATTERNS);
-        if (ETServer.getConfig().addGlow)
+        if (ServerConfigs.getConfig().addGlow)
             EVENT.register("crafting_special_elytraglow", () -> ETRecipeSerializers.ELYTRA_GLOW);
         EVENT.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
@@ -46,6 +48,7 @@ public class ETServerWrapper {
     }
 }
 *//*?} else {*//*
+import dev.kikugie.elytratrims.common.config.ServerConfigs;
 import dev.kikugie.elytratrims.client.ETClientWrapper;
 import dev.kikugie.elytratrims.common.recipe.ETRecipeSerializers;
 import net.minecraft.recipe.RecipeSerializer;
@@ -59,9 +62,9 @@ public class ETServerWrapper {
         bus.addListener(ETClientWrapper::init);
         bus.addListener(ETServerWrapper::init);
 
-        if (ETServer.getConfig().addPatterns)
+        if (ServerConfigs.getConfig().addPatterns)
             RecipeSerializer.register("crafting_special_elytrapatterns", ETRecipeSerializers.ELYTRA_PATTERNS);
-        if (ETServer.getConfig().addGlow)
+        if (ServerConfigs.getConfig().addGlow)
             RecipeSerializer.register("crafting_special_elytraglow", ETRecipeSerializers.ELYTRA_GLOW);
     }
 
