@@ -13,14 +13,12 @@ import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.registry.tag.TagKey;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Marks all elytra items as trimmable on the server. It's done with a mixin instead of a json file to account for modded elytras. If an unknown item is present in that file, it's ignored entirely.
@@ -39,9 +37,16 @@ public class SimpleRegistryMixin {
 
         List<RegistryEntry<Item>> newTrimmable = new ArrayList<>(trims);
         for (Item item : Registries.ITEM)
-            if (item instanceof ElytraItem) newTrimmable.add(item.getRegistryEntry());
+            if (shouldBeTrimmable(item)) newTrimmable.add(item.getRegistryEntry());
         var mutable = new HashMap<>(tagEntries);
         mutable.put(ItemTags.TRIMMABLE_ARMOR, newTrimmable);
         tagEntriesRef.set(mutable);
+    }
+
+    @Unique
+    private static boolean shouldBeTrimmable(Item item) {
+        if (item instanceof ElytraItem) return true;
+        // Blame BetterEnd for being "not like the others"
+        return Registries.ITEM.getId(item).getPath().contains("elytra");
     }
 }
