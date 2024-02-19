@@ -66,7 +66,7 @@ dependencies {
             include(implementation(mixinExtras.format("forge"))!!)
         } else
             "neoForge"("net.neoforged:neoforge:${property("deps.fml")}")
-        include(implementation(mixinSquared.format("forge"))!!)
+        include(implementation(mixinSquared.format(loader))!!)
     }
     // Config
     modCompileOnly("dev.isxander.yacl:yet-another-config-lib-$loader:${property("deps.yacl")}")
@@ -110,7 +110,8 @@ tasks.processResources {
 
     val map = mapOf(
         "version" to modVersion,
-        "mc" to mcDep
+        "mc" to mcDep,
+        "fml" to if (loader == "neoforge") "1" else "45"
     )
 
     filesMatching("fabric.mod.json") { expand(map) }

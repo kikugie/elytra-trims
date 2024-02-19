@@ -52,9 +52,11 @@ import dev.kikugie.elytratrims.common.config.ServerConfigs;
 import dev.kikugie.elytratrims.client.ETClientWrapper;
 import dev.kikugie.elytratrims.common.recipe.ETRecipeSerializers;
 import net.minecraft.recipe.RecipeSerializer;
+import net.minecraft.registry.Registries;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 @Mod(ETReference.MOD_ID)
 public class ETServerWrapper {
@@ -62,10 +64,13 @@ public class ETServerWrapper {
         bus.addListener(ETClientWrapper::init);
         bus.addListener(ETServerWrapper::init);
 
+        DeferredRegister<RecipeSerializer<?>> EVENT = DeferredRegister.create(Registries.RECIPE_SERIALIZER, "minecraft");
+
         if (ServerConfigs.getConfig().addPatterns)
-            RecipeSerializer.register("crafting_special_elytrapatterns", ETRecipeSerializers.ELYTRA_PATTERNS);
+            EVENT.register("crafting_special_elytrapatterns", () -> ETRecipeSerializers.ELYTRA_PATTERNS);
         if (ServerConfigs.getConfig().addGlow)
-            RecipeSerializer.register("crafting_special_elytraglow", ETRecipeSerializers.ELYTRA_GLOW);
+            EVENT.register("crafting_special_elytraglow", () -> ETRecipeSerializers.ELYTRA_GLOW);
+        EVENT.register(bus);
     }
 
     public static void init(FMLCommonSetupEvent event) {

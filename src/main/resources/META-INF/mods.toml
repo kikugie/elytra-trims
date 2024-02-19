@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "[45,)"
+loaderVersion = "[${fml},)"
 license = "LGPLv3"
 
 issueTrackerURL = "https://github.com/kikugie/elytra-trims/issues"
@@ -20,7 +20,6 @@ config = "elytratrims.mixins.json"
 
 [[dependencies.elytratrims]]
 modId = "minecraft"
-mandatory = true
 versionRange = "${mc}"
 ordering = "NONE"
 side = "BOTH"

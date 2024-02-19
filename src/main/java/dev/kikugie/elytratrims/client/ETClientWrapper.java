@@ -36,6 +36,7 @@ public class ETClientWrapper {
 import dev.kikugie.elytratrims.client.config.ConfigScreenProvider;
 import dev.kikugie.elytratrims.common.ETReference;
 import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
@@ -43,6 +44,7 @@ import net.neoforged.neoforge.client.ConfigScreenHandler.ConfigScreenFactory;
 
 @Mod.EventBusSubscriber(modid = ETReference.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ETClientWrapper {
+    @SubscribeEvent
     public static void init(FMLClientSetupEvent ignored) {
         ETClient.init();
         var screenProvider = ConfigScreenProvider.getScreen();
