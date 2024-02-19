@@ -133,7 +133,7 @@ publishMods {
     displayName = "$modName ${loader.capitalized()} $modVersion for $mcVersion"
     version = modVersion
     changelog = rootProject.file("CHANGELOG.md").readText()
-    type = BETA
+    type = STABLE
     modLoaders.add(loader)
 
     dryRun = providers.environmentVariable("MODRINTH_TOKEN").getOrNull() == null || providers.environmentVariable("CURSEFORGE_TOKEN").getOrNull() == null
@@ -142,7 +142,7 @@ publishMods {
         projectId = property("publish.modrinth").toString()
         accessToken = providers.environmentVariable("MODRINTH_TOKEN")
         minecraftVersions.add(mcVersion)
-        requires {
+        if (isFabric) requires {
             slug = "fabric-api"
         }
     }
@@ -151,7 +151,7 @@ publishMods {
         projectId = property("publish.curseforge").toString()
         accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
         minecraftVersions.add(mcVersion)
-        requires {
+        if (isFabric) requires {
             slug = "fabric-api"
         }
     }
