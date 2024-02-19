@@ -20,6 +20,7 @@ config = "elytratrims.mixins.json"
 
 [[dependencies.elytratrims]]
 modId = "minecraft"
+mandatory = true
 versionRange = "${mc}"
 ordering = "NONE"
 side = "BOTH"
