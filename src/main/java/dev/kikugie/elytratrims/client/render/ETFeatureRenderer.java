@@ -73,6 +73,7 @@ public class ETFeatureRenderer {
 
     public void render(ElytraEntityModel<?> elytra, MatrixStack matrices, VertexConsumerProvider provider, LivingEntity entity, ItemStack stack, int light, float alpha) {
         if (!holder.isReady()) return;
+        if (stack.isEmpty()) return;
         if (!cancelRender(RenderType.GLOW, entity) && ETServer.GLOWING.hasGlow(stack))
             light = 0xFF00FF;
 

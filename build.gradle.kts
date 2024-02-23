@@ -1,6 +1,7 @@
 import org.gradle.configurationcache.extensions.capitalized
 
 plugins {
+    `maven-publish`
     id("dev.architectury.loom")
     id("me.modmuss50.mod-publish-plugin")
     id("me.fallenbreath.yamlang") version "1.3.1"
@@ -45,6 +46,7 @@ repositories {
     maven("https://oss.sonatype.org/content/repositories/snapshots")
     maven("https://maven.kikugie.dev/releases")
     maven("https://maven.neoforged.net/releases/")
+    maven("https://maven.ladysnake.org/releases")
 }
 
 dependencies {
@@ -75,8 +77,10 @@ dependencies {
 //    }
 
     // Compat
+    modCompileOnly("dev.emi:trinkets:3.8.0")
     modCompileOnly("maven.modrinth:stacked-armor-trims:1.1.0")
     modCompileOnly("maven.modrinth:allthetrims:${if (isFabric) "3.3.7" else "Ga7vvJCQ"}")
+    modCompileOnly("dev.onyxstudios.cardinal-components-api:cardinal-components-base:5.2.2")
 }
 
 loom {
@@ -153,6 +157,28 @@ publishMods {
         minecraftVersions.add(mcVersion)
         if (isFabric) requires {
             slug = "fabric-api"
+        }
+    }
+}
+
+publishing {
+    repositories {
+        maven("https://maven.kikugie.dev/releases") {
+            name = "kikugieMaven"
+            credentials(PasswordCredentials::class)
+            authentication {
+                create("basic", BasicAuthentication::class)
+            }
+        }
+    }
+
+    publications {
+        create<MavenPublication>("mavenJava") {
+            groupId = "${property("mod.group")}.$modId-$loader"
+            artifactId = modVersion
+            version = stonecutter.current.version
+
+            from(components["java"])
         }
     }
 }
