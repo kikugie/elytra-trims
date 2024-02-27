@@ -1,10 +1,12 @@
 package dev.kikugie.elytratrims.mixin.compat;
 
 import com.bawnorton.mixinsquared.TargetHandler;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import dev.kikugie.elytratrims.client.ETClient;
+import dev.kikugie.elytratrims.client.config.RenderConfig;
 import dev.kikugie.elytratrims.common.plugin.MixinConfigurable;
 import dev.kikugie.elytratrims.common.plugin.RequireMod;
 import net.minecraft.client.render.VertexConsumer;
@@ -24,6 +26,18 @@ import org.spongepowered.asm.mixin.injection.At;
 @SuppressWarnings("ALL")
 @Mixin(value = ElytraFeatureRenderer.class, priority = 1500)
 public class MinecraftCapesCompat {
+    @TargetHandler(mixin = "net.minecraftcapes.mixin.MixinElytraLayer", name = "render")
+    @ModifyExpressionValue(method = "@MixinSquared:Handler", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/AbstractClientPlayerEntity;isPartVisible(Lnet/minecraft/client/render/entity/PlayerModelPart;)Z"))
+    private boolean cancelCapeRender(boolean original, @Local(argsOnly = true) LivingEntity entity) {
+        return !ETClient.getRenderer().cancelRender(RenderConfig.RenderType.CAPE, entity) && original;
+    }
+
+    @TargetHandler(mixin = "net.minecraftcapes.mixin.MixinElytraLayer", name = "render")
+    @ModifyExpressionValue(method = "@MixinSquared:Handler", at = @At(value = "INVOKE", target = "Lnet/minecraftcapes/config/MinecraftCapesConfig;isCapeVisible()Z"))
+    private boolean cancelCapeRender2(boolean original, @Local(argsOnly = true) LivingEntity entity) {
+        return !ETClient.getRenderer().cancelRender(RenderConfig.RenderType.CAPE, entity) && original;
+    }
+
     @TargetHandler(mixin = "net.minecraftcapes.mixin.MixinElytraLayer", name = "render")
     @WrapOperation(method = "@MixinSquared:Handler", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/model/ElytraEntityModel;render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;IIFFFF)V"))
     private void elytraPostRender(ElytraEntityModel<?> model,

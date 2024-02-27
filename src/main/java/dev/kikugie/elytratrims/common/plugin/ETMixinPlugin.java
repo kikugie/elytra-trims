@@ -3,6 +3,7 @@ package dev.kikugie.elytratrims.common.plugin;
 import dev.kikugie.elytratrims.common.ETReference;
 import dev.kikugie.elytratrims.common.config.ServerConfigs;
 import dev.kikugie.elytratrims.common.plugin.RequirePlatform.Loader;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nullable;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.AnnotationNode;
@@ -31,7 +32,9 @@ public class ETMixinPlugin implements IMixinConfigPlugin {
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
         if (shouldApply(mixinClassName)) return true;
-        ETReference.LOGGER.info("Disabled mixin " + mixinClassName);
+        String shortName = StringUtils.substringAfter(mixinClassName, "mixin.");
+        if (!shortName.startsWith("compat.")) // Reduce unneeded spam
+            ETReference.LOGGER.info("Disabled mixin %s".formatted(shortName));
         return false;
     }
 

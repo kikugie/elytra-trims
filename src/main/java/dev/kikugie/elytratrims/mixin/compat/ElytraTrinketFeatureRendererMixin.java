@@ -4,9 +4,8 @@ import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
-import com.llamalad7.mixinextras.sugar.Share;
-import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import dev.kikugie.elytratrims.client.ETClient;
+import dev.kikugie.elytratrims.client.config.RenderConfig;
 import dev.kikugie.elytratrims.common.plugin.MixinConfigurable;
 import dev.kikugie.elytratrims.common.plugin.RequireMod;
 import net.minecraft.client.render.VertexConsumer;
@@ -31,12 +30,9 @@ public abstract class ElytraTrinketFeatureRendererMixin extends FeatureRenderer 
         super(context);
     }
 
-    @ModifyExpressionValue(method = "render",
-            at = @At(value = "INVOKE",
-                    target = "Ljava/util/List;get(I)Ljava/lang/Object;"))
-    private Object saveItemStack(Object stack, @Share("stack") LocalRef<ItemStack> stackRef) {
-        stackRef.set((ItemStack) stack);
-        return stack;
+    @ModifyExpressionValue(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/AbstractClientPlayerEntity;isPartVisible(Lnet/minecraft/client/render/entity/PlayerModelPart;)Z"))
+    private boolean cancelCapeRender(boolean original, @Local(argsOnly = true) LivingEntity entity) {
+        return !ETClient.getRenderer().cancelRender(RenderConfig.RenderType.CAPE, entity) && original;
     }
 
     @WrapOperation(method = "render",
@@ -54,8 +50,8 @@ public abstract class ElytraTrinketFeatureRendererMixin extends FeatureRenderer 
                                   Operation<ElytraEntityModel<?>> original,
                                   @Local(argsOnly = true) VertexConsumerProvider provider,
                                   @Local(argsOnly = true) LivingEntity entity,
-                                  @Share("stack") LocalRef<ItemStack> stackRef) {
+                                  @Local ItemStack stack) {
         original.call(model, matrices, vertices, light, overlay, red, green, blue, alpha);
-        ETClient.getRenderer().render(model, matrices, provider, entity, stackRef.get(), light, alpha);
+        ETClient.getRenderer().render(model, matrices, provider, entity, stack, light, alpha);
     }
 }
