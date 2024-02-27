@@ -1,79 +1,31 @@
-name: step.build
-
-on:
-  workflow_call:
-    inputs:
-      release:
-        type: boolean
-        required: false
-        default: false
-      target_subproject:
-        description: The subproject name of the specified Minecraft version to be built. Leave it empty to build all
-        type: string
-        required: false
-        default: ''
+name: build
+on: [pull_request, push]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        java: [17]
+        os: [ubuntu-22.04, windows-2022]
+    runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up JDK 17
+      - name: checkout repository
+        uses: actions/checkout@v3
+      - name: validate gradle wrapper
+        uses: gradle/wrapper-validation-action@v1
+      - name: setup jdk ${{ matrix.java }}
         uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'
-          java-version: 17
-
-      - name: Cache gradle files
-        uses: actions/cache@v3
+          java-version: ${{ matrix.java }}
+          distribution: 'microsoft'
+      - name: make gradle wrapper executable
+        if: ${{ runner.os != 'Windows' }}
+        run: chmod +x ./gradlew
+      - name: build
+        run: ./gradlew chiseledBuild
+      - name: capture build artifacts
+        if: ${{ runner.os == 'Linux' && matrix.java == '17' }} # Only upload artifacts built from latest java on one OS
+        uses: actions/upload-artifact@v3
         with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-            ./.gradle/loom-cache
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle', '**/gradle.properties', '**/*.accesswidener') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
-      - name: Get subproject name to build
-        id: subproject_info
-        run: |
-          if [ "${{ inputs.target_subproject }}" != "" ]
-          then
-              echo "prefix=${{ inputs.target_subproject }}:" >> $GITHUB_OUTPUT
-          else
-              echo "prefix=" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Build with Gradle
-        run: |
-          chmod +x gradlew
-          ./gradlew ${{ steps.subproject_info.outputs.prefix }}build --no-daemon
-        env:
-          BUILD_ID: ${{ github.run_number }}
-          BUILD_RELEASE: ${{ inputs.release }}
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: build-artifacts
-          path: versions/*/build/libs/
-
-#  summary:
-#    runs-on: ubuntu-22.04
-#    needs:
-#      - build
-#
-#    steps:
-#      - uses: actions/checkout@v3
-#
-#      - name: Download build artifacts
-#        uses: actions/download-artifact@v3
-#        with:
-#          name: build-artifacts
-#          path: build-artifacts
-#
-#      - name: Make build summary
-#        run: python3 .github/workflows/scripts/summary.py  # Python 3.10.6
-#        env:
-#          TARGET_SUBPROJECT: ${{ inputs.target_subproject }}
+          name: Artifacts
+          path: build/libs/
