@@ -18,6 +18,7 @@ public class ETServer {
     public static CauldronBehavior CLEAN_ELYTRA;
 
     public static void init() {
+        ETCommentary.run();
         DYEABLE = new DyeableItem() {
         };
         GLOWING = new GlowingItem() {
