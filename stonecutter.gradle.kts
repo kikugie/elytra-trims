@@ -1,5 +1,5 @@
-import de.maxbossing.webhookbuilder.url
-import de.maxbossing.webhookbuilder.webhook
+import club.minnced.discord.webhook.WebhookClient
+import club.minnced.discord.webhook.send.*
 
 plugins {
     id("dev.kikugie.stonecutter")
@@ -17,31 +17,28 @@ stonecutter registerChiseled tasks.register("chiseledBuild", stonecutter.chisele
 stonecutter registerChiseled tasks.register("chiseledPublishMods", stonecutter.chiseled) {
     group = "project"
     ofTask("publishMods")
+}
 
+tasks.register("postUpdate") {
+    group = "project"
     doLast {
         val url = env.WEBHOOK_URL.orNull() ?: return@doLast
-        val hook = webhook {
-            name("Release Bot")
-
-            embed {
-                title("Elytra Trims ${property("mod.version")}")
-                thumbnail {
-                    url("https://cdn.modrinth.com/data/XpzGz7KD/8ff6751948e096f540e320681742d0b3b918931e.png")
-                }
-                field {
-                    name("Changelog")
-                    value("""
-                        ```
-                        ${rootProject.file("CHANGELOG.md").readText()}
-                        ```
-                    """.trimIndent())
-                }
-                field {
-                    name("Links")
-                    value("[Modrinth](https://modrinth.com/mod/elytra-trims) | [Curseforge](https://www.curseforge.com/minecraft/mc-mods/elytra-trims)")
-                }
-            }
-        }
-        hook.send(url(url))
+        val client = WebhookClient.withUrl(url)
+        val message = WebhookMessageBuilder()
+            .addEmbeds(WebhookEmbedBuilder()
+                .setColor(0xadd8e6)
+                .setThumbnailUrl("https://cdn.modrinth.com/data/XpzGz7KD/8ff6751948e096f540e320681742d0b3b918931e.png")
+                .setTitle(WebhookEmbed.EmbedTitle("Elytra Trims ${rootProject.property("mod.version")}", null))
+                .addField(WebhookEmbed.EmbedField(false, "Changelog", """
+                    ```
+                    ${rootProject.file("CHANGELOG.md").readText()}
+                    ```
+                """.trimIndent()))
+                .addField(WebhookEmbed.EmbedField(false, "Links", """
+                    [Modrinth](https://modrinth.com/mod/elytra-trims) | [Curseforge](https://www.curseforge.com/minecraft/mc-mods/elytra-trims)
+                """.trimIndent()))
+                .build())
+            .build()
+        client.send(message)
     }
 }

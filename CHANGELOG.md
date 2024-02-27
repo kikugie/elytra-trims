@@ -3,7 +3,7 @@
 - The mod will now complaint about its hardships.
 
 ## Changes
-- Compatibility mixins are now configured to soft-fail
+- Compatibility mixins are now configured to soft-fail.
 
 ## Fixes
 - Elytras in trinket slots not being affected by the cape visibility setting.

@@ -18,11 +18,11 @@ plugins {
 
 buildscript {
     repositories {
-        maven("https://maven.kikugie.dev/third-party")
+        mavenCentral()
     }
 
     dependencies {
-        classpath("de.maxbossing:kotlin-discord-webhook:1.0.0")
+        classpath("club.minnced:discord-webhooks:0.8.4")
     }
 }
 
