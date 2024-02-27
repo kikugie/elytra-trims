@@ -26,31 +26,30 @@ tasks.register("postUpdate") {
     doLast {
         val url = env.fetchOrNull("WEBHOOK_URL") ?: return@doLast
         val client = WebhookClient.withUrl(url)
-        val message = WebhookMessageBuilder()
-            .addEmbeds(
-                WebhookEmbedBuilder()
-                    .setColor(0xadd8e6)
-                    .setThumbnailUrl("https://cdn.modrinth.com/data/XpzGz7KD/8ff6751948e096f540e320681742d0b3b918931e.png")
-                    .setTitle(WebhookEmbed.EmbedTitle("Elytra Trims ${rootProject.property("mod.version")}", null))
-                    .addField(
-                        WebhookEmbed.EmbedField(
-                            false,
-                            "Changelog",
-                            """
+        val message = WebhookMessageBuilder().addEmbeds(
+            WebhookEmbedBuilder()
+                .setColor(0xadd8e6)
+                .setThumbnailUrl("https://cdn.modrinth.com/data/XpzGz7KD/8ff6751948e096f540e320681742d0b3b918931e.png")
+                .setTitle(WebhookEmbed.EmbedTitle("Elytra Trims ${rootProject.property("mod.version")}", null))
+                .addField(
+                    WebhookEmbed.EmbedField(
+                        false,
+                        "Changelog",
+                        """
                     ```${rootProject.file("CHANGELOG.md").readText().trim()}
                     ```
                 """.trimIndent()
-                        )
-                    ).addField(
-                        WebhookEmbed.EmbedField(
-                            false,
-                            "Links",
-                            """
+                    )
+                ).addField(
+                    WebhookEmbed.EmbedField(
+                        false,
+                        "Links",
+                        """
                     [Modrinth](https://modrinth.com/mod/elytra-trims) | [Curseforge](https://www.curseforge.com/minecraft/mc-mods/elytra-trims)
                 """.trimIndent()
-                        )
-                    ).build()
-            ).build()
+                    )
+                ).build()
+        ).build()
         client.send(message)
     }
 }
