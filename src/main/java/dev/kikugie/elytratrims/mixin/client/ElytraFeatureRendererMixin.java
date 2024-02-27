@@ -4,10 +4,8 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import dev.kikugie.elytratrims.client.ETClient;
-import dev.kikugie.elytratrims.client.compat.TrinketsCompat;
 import dev.kikugie.elytratrims.client.config.RenderConfig.RenderType;
 import dev.kikugie.elytratrims.client.render.ETFeatureRenderer;
-import dev.kikugie.elytratrims.common.plugin.ModStatus;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumer;
@@ -19,7 +17,6 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -72,10 +69,5 @@ public class ElytraFeatureRendererMixin {
                                   @Local(argsOnly = true) LivingEntity entity) {
         original.call(model, matrices, vertices, light, overlay, red, green, blue, alpha);
         ETClient.getRenderer().render(model, matrices, provider, entity, entity.getEquippedStack(EquipmentSlot.CHEST), light, alpha);
-
-        if (!ModStatus.isLoaded("trinkets")) return;
-        ItemStack trinket = TrinketsCompat.getTrinketElytra(entity);
-        if (trinket == null) return;
-        ETClient.getRenderer().render(model, matrices, provider, entity, trinket, light, alpha);
     }
 }

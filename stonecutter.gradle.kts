@@ -14,8 +14,3 @@ stonecutter registerChiseled tasks.register("chiseledPublishMods", stonecutter.c
     group = "project"
     ofTask("publishMods")
 }
-
-stonecutter registerChiseled tasks.register("chiseledPublishMaven", stonecutter.chiseled) {
-    group = "project"
-    ofTask("publish")
-}

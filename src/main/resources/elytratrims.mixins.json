@@ -19,7 +19,9 @@
     "client.PalettedPermutationsAtlasSourceMixin",
     "client.SimpleRegistryMixin",
     "client.SmithingScreenMixin",
-    "client.compat.BetterSmithingTableMixin"
+    "client.compat.BetterSmithingTableMixin",
+    "client.compat.ElytraSlotLayerMixin",
+    "client.compat.ElytraTrinketFeatureRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
