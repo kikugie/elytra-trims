@@ -13,7 +13,8 @@
     "issues": "https://github.com/Kikugie/elytra-trims/issues"
   },
   "mixins": [
-    "elytratrims.mixins.json"
+    "elytratrims.mixins.json",
+    "elytratrims-compat.mixins.json"
   ],
   "accessWidener": "elytratrims.accesswidener",
   "icon": "assets/elytratrims/icon.png",

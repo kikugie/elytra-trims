@@ -75,6 +75,7 @@ dependencies {
 //    }
 
     // Compat
+//    modLocalRuntime("net.fabricmc.fabric-api:fabric-api:${property("deps.fapi")}") // Uncomment when a compat mod complaints about no fapi
     modCompileOnly("maven.modrinth:stacked-armor-trims:1.1.0")
     modCompileOnly("maven.modrinth:allthetrims:${if (isFabric) "3.3.7" else "Ga7vvJCQ"}")
 }
@@ -86,12 +87,14 @@ loom {
         forge {
             convertAccessWideners.set(true)
             mixinConfigs("$modId.mixins.json")
+            mixinConfigs("$modId-compat.mixins.json")
         }
     }
 
     runConfigs["client"].apply {
         ideConfigGenerated(true)
         vmArgs("-Dmixin.debug.export=true")
+        programArgs("--username=KikuGie") // Mom look I'm in the codebase!
         runDir = "../../run"
     }
 }
@@ -125,6 +128,10 @@ yamlang {
 
 java {
     withSourcesJar()
+}
+
+tasks.named("publishMods") {
+    mustRunAfter("publish")
 }
 
 publishMods {

@@ -1,4 +1,4 @@
-package dev.kikugie.elytratrims.mixin.client.compat;
+package dev.kikugie.elytratrims.mixin.compat;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;

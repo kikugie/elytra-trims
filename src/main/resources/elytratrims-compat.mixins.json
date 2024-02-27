@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "dev.kikugie.elytratrims.mixin.compat",
+  "plugin": "dev.kikugie.elytratrims.common.plugin.ETMixinPlugin",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+    "BetterSmithingTableMixin",
+    "ElytraSlotLayerMixin",
+    "ElytraTrinketFeatureRendererMixin",
+    "MinecraftCapesCompat"
+  ]
+}

@@ -1,4 +1,4 @@
-package dev.kikugie.elytratrims.mixin.client.compat;
+package dev.kikugie.elytratrims.mixin.compat;
 
 import com.bawnorton.mixinsquared.TargetHandler;
 import dev.kikugie.elytratrims.client.access.ElytraRotationAccessor;
