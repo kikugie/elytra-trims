@@ -1,6 +1,6 @@
 ## Features
 - [MinecraftCapes](https://modrinth.com/mod/minecraftcapes) support.
-- The mod will now complaint about its hardships.
+- The mod will now complain about its hardships.
 
 ## Changes
 - Compatibility mixins are now configured to soft-fail.
