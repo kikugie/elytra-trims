@@ -37,6 +37,14 @@ public abstract class ElytraSlotLayerMixin extends FeatureRenderer {
         return !ETClient.getRenderer().cancelRender(RenderConfig.RenderType.CAPE, entity) && original;
     }
 
+    @ModifyExpressionValue(method = "lambda$render$0",
+            at = @At(value = "INVOKE",
+                    target = "Lcom/illusivesoulworks/elytraslot/client/ElytraRenderResult;stack()Lnet/minecraft/item/ItemStack;"))
+    private ItemStack saveItemStack(ItemStack stack, @Share("stack") LocalRef<ItemStack> stackRef) {
+        stackRef.set(stack);
+        return stack;
+    }
+
     @WrapOperation(method = "lambda$render$0",
             at = @At(value = "INVOKE",
                     target = "Lnet/minecraft/client/render/entity/model/ElytraEntityModel;render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;IIFFFF)V"))
@@ -52,8 +60,8 @@ public abstract class ElytraSlotLayerMixin extends FeatureRenderer {
                                   Operation<ElytraEntityModel<?>> original,
                                   @Local(argsOnly = true) VertexConsumerProvider provider,
                                   @Local(argsOnly = true) LivingEntity entity,
-                                  @Local ItemStack stack) {
+                                  @Share("stack") LocalRef<ItemStack> stack) {
         original.call(model, matrices, vertices, light, overlay, red, green, blue, alpha);
-        ETClient.getRenderer().render(model, matrices, provider, entity, stack, light, alpha);
+        ETClient.getRenderer().render(model, matrices, provider, entity, stack.get(), light, alpha);
     }
 }
