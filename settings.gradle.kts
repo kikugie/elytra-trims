@@ -16,6 +16,16 @@ plugins {
     id("dev.kikugie.stonecutter") version "0.3.2"
 }
 
+buildscript {
+    repositories {
+        maven("https://maven.kikugie.dev/third-party")
+    }
+
+    dependencies {
+        classpath("de.maxbossing:kotlin-discord-webhook:1.0.0")
+    }
+}
+
 extensions.configure<StonecutterSettings> {
     kotlinController(true)
     centralScript("build.gradle.kts")

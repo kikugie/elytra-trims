@@ -1,7 +1,9 @@
 ## Features
-- NeoForge 1.20.4 port
-- French translation (YanisBft)
+- [MinecraftCapes](https://modrinth.com/mod/minecraftcapes) support.
+- The mod will now complaint about its hardships.
+
+## Changes
+- Compatibility mixins are now configured to soft-fail
 
 ## Fixes
-- Minecraft class loading in prelaunch state
-- BetterEnd elytras support
+- Elytras in trinket slots not being affected by the cape visibility setting.

@@ -1,6 +1,5 @@
-import org.gradle.configurationcache.extensions.capitalized
-
 plugins {
+    `maven-publish`
     id("dev.architectury.loom")
     id("me.modmuss50.mod-publish-plugin")
     id("me.fallenbreath.yamlang") version "1.3.1"
@@ -137,7 +136,7 @@ tasks.named("publishMods") {
 publishMods {
     file = tasks.remapJar.get().archiveFile
     additionalFiles.from(tasks.remapSourcesJar.get().archiveFile)
-    displayName = "$modName ${loader.capitalized()} $modVersion for $mcVersion"
+    displayName = "$modName ${loader.replaceFirstChar { it.uppercase() }} $modVersion for $mcVersion"
     version = modVersion
     changelog = rootProject.file("CHANGELOG.md").readText()
     type = STABLE
@@ -160,6 +159,28 @@ publishMods {
         minecraftVersions.add(mcVersion)
         if (isFabric) requires {
             slug = "fabric-api"
+        }
+    }
+}
+
+publishing {
+    repositories {
+        maven("https://maven.kikugie.dev/releases") {
+            name = "kikugieMaven"
+            credentials(PasswordCredentials::class.java)
+            authentication {
+                create<BasicAuthentication>("basic")
+            }
+        }
+    }
+
+    publications {
+        create<MavenPublication>("mavenJava") {
+            groupId = "${property("mod.group")}.$modId"
+            artifactId = modVersion
+            version = mcVersion
+
+            from(components["java"])
         }
     }
 }
