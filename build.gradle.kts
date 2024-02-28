@@ -5,18 +5,22 @@ plugins {
     id("me.fallenbreath.yamlang") version "1.3.1"
 }
 
+class ModData {
+    val id = property("mod.id").toString()
+    val name = property("mod.name").toString()
+    val version = property("mod.version").toString()
+    val group = property("mod.group").toString()
+}
+val mod = ModData()
+
 val loader = loom.platform.get().name.lowercase()
 val isFabric = loader == "fabric"
 val mcVersion = stonecutter.current.version
 val mcDep = property("mod.mc_dep").toString()
-val modId = property("mod.id").toString()
-val modName = property("mod.name").toString()
-val modVersion = property("mod.version").toString()
-val modGroup = property("mod.group").toString()
 
-version = "$modVersion+$mcVersion"
-group = modGroup
-base { archivesName.set("$modId-$loader") }
+version = "${mod.id}.v+$mcVersion"
+group = mod.group
+base { archivesName.set("${mod.id}-$loader") }
 
 stonecutter.expression {
     when (it) {
@@ -40,26 +44,21 @@ repositories {
     maven("https://maven.terraformersmc.com/releases/") { name = "TerraformersMC" }
     maven("https://maven.kikugie.dev/releases")
     maven("https://maven.neoforged.net/releases/")
-
-    // Yacl stuff
-    /*
-    maven("https://maven.isxander.dev/releases")
-    maven("https://maven.quiltmc.org/repository/release/")
-    maven("https://oss.sonatype.org/content/repositories/snapshots")
-    */
-
-    // Cloth stuff
-    // maven("https://maven.shedaniel.me/")
 }
 
 dependencies {
+    fun ifStable(dep: String, action: (String) -> Any?) {
+        if (stonecutter.current.version.startsWith("snapshot")) modCompileOnly(dep)
+        else action(dep)
+    }
+
     minecraft("com.mojang:minecraft:${mcVersion}")
     mappings("net.fabricmc:yarn:${mcVersion}+build.${property("deps.yarn_build")}:v2")
     val mixinExtras = "io.github.llamalad7:mixinextras-%s:${property("deps.mixin_extras")}"
     val mixinSquared = "com.github.bawnorton.mixinsquared:mixinsquared-%s:${property("deps.mixin_squared")}"
     implementation(annotationProcessor(mixinSquared.format("common"))!!)
     if (isFabric) {
-        modLocalRuntime("dev.kikugie:crash-pipe:0.1.0") // Very important asset
+        ifStable("dev.kikugie:crash-pipe:0.1.0", ::modLocalRuntime) // Very important asset
         modLocalRuntime(fabricApi.module("fabric-registry-sync-v0", property("deps.fapi").toString()))
         modImplementation("net.fabricmc:fabric-loader:${property("deps.fabric_loader")}")
         modImplementation("com.terraformersmc:modmenu:${property("deps.modmenu")}")
@@ -74,12 +73,10 @@ dependencies {
         include(implementation(mixinSquared.format(loader))!!)
     }
     // Config
-    modCompileOnly("maven.modrinth:yacl:${property("deps.yacl")}")
-    modLocalRuntime("maven.modrinth:yacl:${property("deps.yacl")}")
-//    modCompileOnly("dev.isxander.yacl:yet-another-config-lib-$loader:${property("deps.yacl")}")
-//    modImplementation("me.shedaniel.cloth:cloth-config-$loader:${property("deps.cloth")}") {
-//        exclude(group = "net.fabricmc.fabric-api")
-//    }
+    ifStable("maven.modrinth:yacl:${property("deps.yacl")}") {
+        modCompileOnly(it)
+        modLocalRuntime(it)
+    }
 
     // Compat
 //    if (stonecutter.current.isActive) modLocalRuntime("net.fabricmc.fabric-api:fabric-api:${property("deps.fapi")}") // Uncomment when a compat mod complaints about no fapi
@@ -93,8 +90,8 @@ loom {
     if (loader == "forge") {
         forge {
             convertAccessWideners.set(true)
-            mixinConfigs("$modId.mixins.json")
-            mixinConfigs("$modId-compat.mixins.json")
+            mixinConfigs("${mod.id}.mixins.json")
+            mixinConfigs("${mod.id}-compat.mixins.json")
         }
     }
 
@@ -115,22 +112,26 @@ if (stonecutter.current.isActive) {
 }
 
 tasks.processResources {
-    inputs.property("version", modVersion)
+    inputs.property("version", mod.version)
     inputs.property("mc", mcDep)
 
+    val files = mapOf(
+        "fabric" to "fabric.mod.json",
+        "forge" to "META-INF/mods.toml",
+        "neoforge" to "META-INF/mods.toml"
+    )
+
     val map = mapOf(
-        "version" to modVersion,
+        "version" to mod.version,
         "mc" to mcDep,
         "fml" to if (loader == "neoforge") "1" else "45"
     )
-
-    filesMatching("fabric.mod.json") { expand(map) }
-    filesMatching("META-INF/mods.toml") { expand(map) }
+    files.forEach { (k, v) -> if (k == loader) filesMatching(v) { expand(map) } else exclude(v) }
 }
 
 yamlang {
     targetSourceSets.set(mutableListOf(sourceSets["main"]))
-    inputDir.set("assets/$modId/lang")
+    inputDir.set("assets/${mod.id}/lang")
 }
 
 java {
@@ -144,13 +145,14 @@ tasks.named("publishMods") {
 publishMods {
     file = tasks.remapJar.get().archiveFile
     additionalFiles.from(tasks.remapSourcesJar.get().archiveFile)
-    displayName = "$modName ${loader.replaceFirstChar { it.uppercase() }} $modVersion for $mcVersion"
-    version = modVersion
+    displayName = "${mod.name} ${loader.replaceFirstChar { it.uppercase() }} ${mod.version} for $mcVersion"
+    version = mod.version
     changelog = rootProject.file("CHANGELOG.md").readText()
     type = STABLE
     modLoaders.add(loader)
 
-    dryRun = providers.environmentVariable("MODRINTH_TOKEN").getOrNull() == null || providers.environmentVariable("CURSEFORGE_TOKEN").getOrNull() == null
+    dryRun = providers.environmentVariable("MODRINTH_TOKEN")
+        .getOrNull() == null || providers.environmentVariable("CURSEFORGE_TOKEN").getOrNull() == null
 
     modrinth {
         projectId = property("publish.modrinth").toString()
@@ -184,8 +186,8 @@ publishing {
 
     publications {
         create<MavenPublication>("mavenJava") {
-            groupId = "${property("mod.group")}.$modId"
-            artifactId = modVersion
+            groupId = "${property("mod.group")}.${mod.id}"
+            artifactId = mod.version
             version = mcVersion
 
             from(components["java"])
