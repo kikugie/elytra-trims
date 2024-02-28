@@ -38,12 +38,18 @@ repositories {
     }
     maven("https://jitpack.io") { name = "Jitpack" }
     maven("https://maven.terraformersmc.com/releases/") { name = "TerraformersMC" }
-    maven("https://maven.isxander.dev/releases")
-    maven("https://maven.shedaniel.me/")
-    maven("https://maven.quiltmc.org/repository/release/")
-    maven("https://oss.sonatype.org/content/repositories/snapshots")
     maven("https://maven.kikugie.dev/releases")
     maven("https://maven.neoforged.net/releases/")
+
+    // Yacl stuff
+    /*
+    maven("https://maven.isxander.dev/releases")
+    maven("https://maven.quiltmc.org/repository/release/")
+    maven("https://oss.sonatype.org/content/repositories/snapshots")
+    */
+
+    // Cloth stuff
+    // maven("https://maven.shedaniel.me/")
 }
 
 dependencies {
@@ -68,7 +74,9 @@ dependencies {
         include(implementation(mixinSquared.format(loader))!!)
     }
     // Config
-    modCompileOnly("dev.isxander.yacl:yet-another-config-lib-$loader:${property("deps.yacl")}")
+    modCompileOnly("maven.modrinth:yacl:${property("deps.yacl")}")
+    modLocalRuntime("maven.modrinth:yacl:${property("deps.yacl")}")
+//    modCompileOnly("dev.isxander.yacl:yet-another-config-lib-$loader:${property("deps.yacl")}")
 //    modImplementation("me.shedaniel.cloth:cloth-config-$loader:${property("deps.cloth")}") {
 //        exclude(group = "net.fabricmc.fabric-api")
 //    }
