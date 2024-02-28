@@ -1,0 +1,49 @@
+elytratrims:
+  command:
+    response:
+      get_mode: "현재 %s 모드는 %s입니다."
+      set_mode: "%s 모드가 %s로 설정되었습니다."
+      reset: 설정 초기화!
+  config:
+    title: Elytra Trims
+    category:
+      .: 설정
+      render: 렌더링
+      texture: 텍스처
+    texture:
+      useBannerTextures:
+        .: 배너 텍스처 사용
+        tooltip: 겉날개에 방패 무늬 대신 현수막 무늬를 사용합니다.
+      cropTrims:
+        .: 장식 다듬기
+        tooltip: 겉날개에 맞게 갑옷 장식을 자릅니다.
+      useDarkerTrim:
+        .: 어두운 장식 사용
+        tooltip: "가능한 경우 겉날개에 더 어두운 장식 색상을 사용합니다.\n같은 재질의 갑옷에 장식할 때 같은 색상을 사용합니다."
+      showBannerIcon:
+        .: 겉날개 아이콘 표시
+        tooltip: 인벤토리의 겉날개에 현수막 아이콘을 표시합니다.
+    type:
+      color:
+        .: 염색
+        tooltip: 염색된 겉날개를 표시합니다.
+      cape:
+        .: 망토
+        tooltip: 겉날개에 망토 무늬를 표시합니다.
+      glow:
+        .: 발광
+        tooltip: 겉날개의 장식을 빛나게 합니다.
+      patterns:
+        .: 무늬
+        tooltip: 겉날개에 현수막 무늬를 표시합니다.
+      trims:
+        .: 장식
+        tooltip: 겉날개에 갑옷 장식을 표시합니다.
+      global:
+        .: 글로벌
+        tooltip: 다른 모든 렌더링 유형을 재정의합니다.
+    mode:
+      none: 없음
+      self: 자신
+      others: 다른
+      all: 모두
