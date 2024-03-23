@@ -72,6 +72,7 @@ It's likely to work with other mods, but you'll have to try it out.
 ### Supports
 - Custom elytras:
   - [Mythic Metals](https://modrinth.com/mod/mythicmetals)
+  - [Better End](https://modrinth.com/mod/betterend)
   - *Any mod with custom elytras should work*
 - Extra trim patterns (Requires [Extensions](https://modrinth.com/mod/elytra-trims-extensions): 
   - [More Armor Trims](https://modrinth.com/mod/more-armor-trims)
@@ -92,7 +93,6 @@ It's likely to work with other mods, but you'll have to try it out.
   - *And any other banner mods*
 
 ### Conflicts
-- [OptiFabric](<https://www.curseforge.com/minecraft/mc-mods/optifabric>) - causes a crash and won't be supported.
 - [Customizable Elytra](<https://modrinth.com/mod/customizable-elytra>) - overrides elytra renderer entirely, preventing Elytra Trims from working.
 - [DashLoader](<https://modrinth.com/mod/dashloader>) - causes trims to not display. The development has been cancelled, no support will be provided.
 

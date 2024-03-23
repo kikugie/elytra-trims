@@ -39,9 +39,6 @@
     "dashloader": "*",
     "customizableelytra": "*"
   },
-  "breaks": {
-    "optifabric": "*"
-  },
   "custom": {
     "modmenu": {
       "links": {

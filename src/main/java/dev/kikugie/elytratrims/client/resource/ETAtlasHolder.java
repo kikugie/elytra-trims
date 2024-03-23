@@ -1,5 +1,6 @@
 package dev.kikugie.elytratrims.client.resource;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import dev.kikugie.elytratrims.client.ETClient;
 import dev.kikugie.elytratrims.client.config.TextureConfig;
 import dev.kikugie.elytratrims.common.ETReference;
@@ -37,7 +38,7 @@ public class ETAtlasHolder implements ResourceReloader {
 
     public ETAtlasHolder() {
         atlas = new SpriteAtlasTexture(TEXTURE);
-        MinecraftClient.getInstance().getTextureManager().registerTexture(ID, atlas);
+        RenderSystem.recordRenderCall(() -> MinecraftClient.getInstance().getTextureManager().registerTexture(ID, atlas));
     }
 
     public boolean isReady() {
