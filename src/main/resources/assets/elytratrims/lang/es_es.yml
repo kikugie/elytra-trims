@@ -1,0 +1,49 @@
+elytratrims:
+  command:
+    response:
+      get_mode: "Modo %s actual es %s"
+      set_mode: "Modo %s se ha cambiado al %s"
+      reset: Configuración reseteada!
+  config:
+    title: Elytra Trims
+    category:
+      .: Configuración
+      render: Renderizado
+      texture: Textura
+    texture:
+      useBannerTextures:
+        .: Usa texturas de estandartes
+        tooltip: Usa texturas de estandarte para los diseños de los élitros en vez de para los del escudo.
+      cropTrims:
+        .: Recortar diseños de armadura
+        tooltip: Recorta diseños de armadura para que quepan en los élitros.
+      useDarkerTrim:
+        .: Usar diseño de armadura oscuro
+        tooltip: "Usa un diseño de armadura para los élitros más oscuro si es posible.\nEsto usa el mismo color que cuando aplicas un diseño de armadura a una pieza de armadura del mismo material."
+      showBannerIcon:
+        .: Mostrar icono de estandarte
+        tooltip: Muestra el icono del estandarte en el objeto de élitros.
+    type:
+      color:
+        .: Tinte
+        tooltip: Muestra élitros tintados.
+      cape:
+        .: Capa
+        tooltip: Muestra las texturas de capas en los élitros.
+      glow:
+        .: Luminoso
+        tooltip: Haz brillar las características de los élitros.
+      patterns:
+        .: Patrones
+        tooltip: Muestra los patrones de estandarte en los élitros.
+      trims:
+        .: Diseños de armadura
+        tooltip: Muestra los diseños de armadura en los élitros.
+      global:
+        .: Global
+        tooltip: Sobreescribe todos los otros tipos de renderizado.
+    mode:
+      none: Ninguno
+      self: Mismo
+      others: Otros
+      all: Todos
