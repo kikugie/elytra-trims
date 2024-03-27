@@ -115,18 +115,14 @@ tasks.processResources {
     inputs.property("version", mod.version)
     inputs.property("mc", mcDep)
 
-    val files = mapOf(
-        "fabric" to "fabric.mod.json",
-        "forge" to "META-INF/mods.toml",
-        "neoforge" to "META-INF/mods.toml"
-    )
-
     val map = mapOf(
         "version" to mod.version,
         "mc" to mcDep,
         "fml" to if (loader == "neoforge") "1" else "45"
     )
-    files.forEach { (k, v) -> if (k == loader) filesMatching(v) { expand(map) } else exclude(v) }
+
+    filesMatching("fabric.mod.json") { expand(map) }
+    filesMatching("META-INF/mods.toml") { expand(map) }
 }
 
 yamlang {
