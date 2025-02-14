@@ -24,6 +24,9 @@ config = "elytratrims-common.mixins.json"
 [[mixins]]
 config = "elytratrims-compat.mixins.json"
 
+[[accessTransformers]]
+file = "accesstransformer.cfg"
+
 [[dependencies.elytratrims]]
 modId = "minecraft"
 ${mnd}
