@@ -50,9 +50,9 @@ import thedarkcolour.kotlinforforge.neoforge.forge.runWhenOn
 import java.util.function.Supplier
 
 //? if <1.20.6 {
-/^typealias CSF = net.neoforged.neoforge.client.ConfigScreenHandler.ConfigScreenFactory^/
+typealias CSF = net.neoforged.neoforge.client.ConfigScreenHandler.ConfigScreenFactory
 //?} else
-typealias CSF = net.neoforged.neoforge.client.gui.IConfigScreenFactory
+/^typealias CSF = net.neoforged.neoforge.client.gui.IConfigScreenFactory^/
 
 @Mod(ETReference.MOD_ID)
 object ETCommonWrapper {

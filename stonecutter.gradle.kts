@@ -18,6 +18,12 @@ stonecutter registerChiseled tasks.register("chiseledPublishMods", stonecutter.c
     ofTask("publishMods")
 }
 
+stonecutter registerChiseled tasks.register("chiseledPublishForge", stonecutter.chiseled) {
+    versions { _, it -> it.project.endsWith("forge") }
+    group = "project"
+    ofTask("publishMods")
+}
+
 stonecutter configureEach {
     val data = current.project.split('-')
     val platforms = listOf("fabric", "forge", "neoforge")
