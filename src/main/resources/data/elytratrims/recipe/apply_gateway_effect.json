@@ -1,0 +1,5 @@
+{
+  "base": "#elytratrims:decoratable",
+  "addition": "minecraft:nether_star",
+  "type": "minecraft:smithing_trim"
+}

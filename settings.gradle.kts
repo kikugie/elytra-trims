@@ -1,35 +1,24 @@
 pluginManagement {
     repositories {
+        mavenLocal()
         mavenCentral()
         gradlePluginPortal()
-        maven("https://maven.fabricmc.net/")
-        maven("https://maven.architectury.dev")
-        maven("https://maven.minecraftforge.net")
-        maven("https://maven.neoforged.net/releases/")
-        maven("https://maven.kikugie.dev/snapshots")
+        maven("https://maven.fabricmc.net/") { name = "Fabric" }
+        maven("https://maven.neoforged.net/releases/") { name = "NeoForged" }
+        maven("https://maven.architectury.dev") { name = "Architectury" }
+        maven("https://maven.kikugie.dev/snapshots") { name = "KikuGie" }
     }
 }
 
 plugins {
-    id("dev.kikugie.stonecutter") version "0.5.2"
+    // For some reason, this plugin is crucial - do not remove
+    id("org.gradle.toolchains.foojay-resolver-convention") version "0.8.0"
+    id("dev.kikugie.stonecutter") version "0.6-dev.9"
 }
 
 stonecutter {
     kotlinController = true
     centralScript = "build.gradle.kts"
-    shared {
-        fun mc(version: String, vararg loaders: String) {
-            for (it in loaders) vers("$version-$it", version)
-        }
-        mc("1.20.1", "fabric", "forge")
-        mc("1.21", "fabric", "neoforge")
-    }
-    create(rootProject)
-}
-rootProject.name = "Elytra Trims"
 
-include("extensions")
-val ext = project(":extensions")
-listOf("common", "fabric", "forge", "neoforge").forEach {
-    include("extensions:$it")
+    create(rootProject, file("versions/versions.json5"))
 }

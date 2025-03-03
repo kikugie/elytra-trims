@@ -1,12 +1,8 @@
 {
   "schemaVersion": 1,
-  "id": "elytratrims",
-  "provides": [
-    "elytra-trims"
-  ],
-  "name": "Elytra Trims",
+  "id": "${id}",
+  "name": "${name}",
   "version": "${version}",
-  "description": "Lightweight and customizable support for elytra trims, patterns and dyes",
   "authors": [
     "KikuGie"
   ],
@@ -15,45 +11,23 @@
     "sources": "https://github.com/Kikugie/elytra-trims",
     "issues": "https://github.com/Kikugie/elytra-trims/issues"
   },
-  "mixins": [
-    {
-      "environment": "client",
-      "config": "elytratrims-client.mixins.json"
-    },
-    "elytratrims-common.mixins.json",
-    "elytratrims-compat.mixins.json"
-  ],
-  "accessWidener": "elytratrims.accesswidener",
+  "description": "Lightweight and customizable support for elytra trims and other decorations",
   "icon": "assets/elytratrims/icon.png",
   "license": "LGPL 3.0",
   "environment": "*",
   "entrypoints": {
     "main": [
-      {
-        "adapter": "kotlin",
-        "value": "dev.kikugie.elytratrims.platform.ETCommonWrapper"
-      }
-    ],
-    "client": [
-      {
-        "adapter": "kotlin",
-        "value": "dev.kikugie.elytratrims.platform.ETClientWrapper"
-      }
-    ],
-    "modmenu": [
-      {
-        "adapter": "kotlin",
-        "value": "dev.kikugie.elytratrims.client.config.lib.ModMenuImpl"
-      }
+      "dev.kikugie.elytratrims.FabricCommonEntrypoint"
     ]
   },
+  "mixins": [
+    "elytratrims.mixins.json"
+  ],
+  "accessWidener": "elytratrims.accesswidener",
   "depends": {
     "fabricloader": ">=0.15.0",
-    "minecraft": "${mc}",
+    "minecraft": "${minecraft}",
     "fabric-language-kotlin": ">=0.13"
-  },
-  "conflicts": {
-    "customizableelytra": "*"
   },
   "custom": {
     "modmenu": {

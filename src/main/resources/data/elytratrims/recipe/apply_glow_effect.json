@@ -1,0 +1,5 @@
+{
+  "base": "#elytratrims:decoratable",
+  "addition": "minecraft:glow_ink_sac",
+  "type": "minecraft:smithing_trim"
+}

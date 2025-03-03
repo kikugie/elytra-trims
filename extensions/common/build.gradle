@@ -1,6 +1,0 @@
-architectury {
-    common(project.mod_platforms.split(","))
-}
-
-dependencies {
-}

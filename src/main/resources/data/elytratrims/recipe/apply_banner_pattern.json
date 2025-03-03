@@ -1,0 +1,6 @@
+{
+  "template": "#minecraft:banners",
+  "base": "#elytratrims:decoratable",
+  "addition": "minecraft:paper",
+  "type": "minecraft:smithing_trim"
+}

@@ -1,0 +1,7 @@
+{
+  $schema: "https://raw.githubusercontent.com/stonecutter-versioning/stonecutter/refs/heads/0.6/tools/settings-schema.json",
+  vcs: "1.21.4-fabric",
+  versions: [
+    "1.21.4-fabric:1.21.4"
+  ]
+}

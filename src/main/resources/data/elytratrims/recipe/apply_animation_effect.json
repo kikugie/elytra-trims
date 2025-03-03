@@ -1,0 +1,5 @@
+{
+  "base": "#elytratrims:decoratable",
+  "addition": "minecraft:enchanted_golden_apple",
+  "type": "minecraft:smithing_trim"
+}
