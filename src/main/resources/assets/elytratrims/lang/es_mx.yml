@@ -1,51 +1,72 @@
 elytratrims:
   command:
     response:
-      get_mode: "Modo %s actual es %s"
-      set_mode: "Modo %s se ha cambiado al %s"
-      reset: ¡Configuración reseteada!
-  config:
+      get_mode: "El modo actual de %s es %s"
+      set_mode: "El modo de %s ha sido configurado a %s"
+      reset: ¡Configuración reiniciada!
+    item:
+    glow: §7Brillante
+    model1: §7§oEl modelo 3D de Elytra se puede configurar
+    model2: §7§oen la configuración de Elytra Trims
+    config:
     title: Elytra Trims
     category:
       .: Configuración
       render: Renderizado
       texture: Textura
+      compat: Compatibilidad
     texture:
       useBannerTextures:
-        .: Usa texturas de estandartes
-        tooltip: Usa las texturas del estandarte para los diseños de las Elytras en vez de para los escudos.
+      .: Usar Texturas de Banderas
+      tooltip: Usar texturas de banderas para patrones de elytra en lugar de escudos.
       cropTrims:
-        .: Recortar diseños de armadura
-        tooltip: Recorta los diseños de armadura para que quepan en las Elytras.
+      .: Recortar Adornos
+      tooltip: Recortar adornos de armadura para que se ajusten a la elytra.
       useDarkerTrim:
-        .: Usar diseño de armadura oscuro
-        tooltip: |
-          Usa un diseño de armadura para las Elytras, más oscuro si es posible.
-          Esto usa el mismo color que cuando aplicas un diseño de armadura a una pieza del mismo material.
+      .: Usar Adorno Más Oscuro
+      tooltip: |
+        Usar color de adorno más oscuro para la elytra cuando esté disponible.
+        Esto usa el mismo color que cuando aplicas un adorno a una pieza de armadura del mismo material.
       showBannerIcon:
-        .: Mostrar icono de estandarte
-        tooltip: Muestra el icono del estandarte en la Elytra.
+      .: Mostrar Icono de Bandera
+      tooltip: Mostrar icono de bandera en el objeto elytra.
+      useElytraModel:
+      .: Usar Modelo de Elytra
+      tooltip: Renderizar un modelo 3D del objeto elytra, similar a escudos y banderas.
+      animationEasterEgg:
+      .: Huevo de Pascua de Animación
+      tooltip: |
+        Habilita un huevo de pascua divertido que tienes que descubrir.
+        Deshabilitarlo podría aumentar tu tiempo de carga un poco, así que decide por ti mismo.
     type:
       color:
-        .: Tinte
-        tooltip: Muestra Elytras tintadas.
+      .: Tinte
+      tooltip: Mostrar elytras teñidas.
       cape:
-        .: Capa
-        tooltip: Muestra las texturas de capas en las Elytras.
+      .: Capa
+      tooltip: Mostrar textura de capa en elytras.
       glow:
-        .: Luminoso
-        tooltip: Haz brillar las características de las Elytras.
+      .: Brillo
+      tooltip: Características de brillo en elytra.
       patterns:
-        .: Patrones
-        tooltip: Muestra los patrones de estandarte en las Elytras.
+      .: Patrones
+      tooltip: Mostrar patrones de banderas en elytras.
       trims:
-        .: Diseños de armadura
-        tooltip: Muestra los diseños de armadura en las Elytras.
+      .: Adornos
+      tooltip: Mostrar adornos de armadura en elytras.
       global:
-        .: Global
-        tooltip: Sobreescribe todos los otros tipos de renderizado.
+      .: Global
+      tooltip: Sobrescribir todos los demás tipos de renderizado.
     mode:
       none: Ninguno
-      self: Mismo
+      self: Propio
       others: Otros
       all: Todos
+    compat:
+      smysKeepTrims:
+      .: Show Me Your Skin - Mantener Adornos
+      tooltip: Hace que los adornos de elytra ignoren la configuración de transparencia de elytra de Show Me Your Skin.
+    noyacl:
+      .: Yet Another Config Lib no está instalado
+      message: Se requiere YACL 3 para editar la configuración en el juego, ¿te gustaría instalar YACL 3?
+    legacy_rp: Texturas heredadas de Elytra Trims
