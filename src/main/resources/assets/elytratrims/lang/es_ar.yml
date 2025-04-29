@@ -1,0 +1,72 @@
+elytratrims:
+  command:
+    response:
+      get_mode: "El modo actual de %s es %s"
+      set_mode: "El modo de %s ha sido cambiado a %s"
+      reset: ¡Configuración reiniciada!
+  item:
+    glow: §7Brillante
+    model1: §7§oEl modelo 3D de la élytra se puede configurar
+    model2: §7§oen la configuración de Elytra Trims
+  config:
+    title: Elytra Trims
+    category:
+      .: Configuración
+      render: Renderizado
+      texture: Textura
+      compat: Compatibilidad
+    texture:
+      useBannerTextures:
+        .: Usar Texturas de Estandartes
+        tooltip: Usa texturas de estandartes para los patrones de élytras en lugar de las de escudos.
+      cropTrims:
+        .: Recortar Adornos
+        tooltip: Recorta los adornos de armadura para que se ajusten a la élytra.
+      useDarkerTrim:
+        .: Usar Adornos Oscuros
+        tooltip: |
+          Usa un color de adorno más oscuro en la élytra cuando esté disponible.
+          Se usa el mismo color que si aplicaras un adorno a una pieza de armadura del mismo material.
+      showBannerIcon:
+        .: Mostrar Icono de Estandarte
+        tooltip: Muestra un icono de estandarte en el objeto élytra.
+      useElytraModel:
+        .: Usar Modelo de Élytra
+        tooltip: Renderiza la élytra como un modelo 3D, similar a escudos y estandartes.
+      animationEasterEgg:
+        .: Animación de Huevo de Pascua
+        tooltip: |
+          Activa un huevo de pascua divertido que tendrás que descubrir.
+          Desactivarlo puede reducir un poco tu tiempo de carga, así que decidilo vos.
+    type:
+      color:
+        .: Tinte
+        tooltip: Mostrar élytras teñidas.
+      cape:
+        .: Capa
+        tooltip: Mostrar la textura de la capa en la élytra.
+      glow:
+        .: Brillo
+        tooltip: Mostrar funciones de brillo en la élytra.
+      patterns:
+        .: Patrones
+        tooltip: Mostrar patrones de estandartes en las élytras.
+      trims:
+        .: Adornos
+        tooltip: Mostrar adornos de armadura en las élytras.
+      global:
+        .: Global
+        tooltip: Sobrescribir todos los otros tipos de renderizado.
+    mode:
+      none: Ninguno
+      self: Propio
+      others: Otros
+      all: Todos
+    compat:
+      smysKeepTrims:
+        .: Show Me Your Skin - Conservar Adornos
+        tooltip: Hace que los adornos de la élytra ignoren la configuración de transparencia de élytras de Show Me Your Skin.
+    noyacl:
+      .: Yet Another Config Lib no está instalado
+      message: Se necesita YACL 3 para editar la configuración en el juego. ¿Querés instalar YACL 3?
+  legacy_rp: Texturas legadas de Elytra Trims
