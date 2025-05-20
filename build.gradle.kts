@@ -134,18 +134,6 @@ val buildAndCollect = tasks.register<Copy>("buildAndCollect") {
     dependsOn("build")
 }
 
-if (stonecutter.current.isActive) {
-    rootProject.tasks.register("buildActive") {
-        group = "project"
-        dependsOn(buildAndCollect)
-    }
-
-    rootProject.tasks.register("runActive") {
-        group = "project"
-        dependsOn(tasks.named("runClient"))
-    }
-}
-
 // Resources
 tasks.processResources {
     inputs.property("version", mod.version)
@@ -163,6 +151,12 @@ tasks.processResources {
     filesMatching("fabric.mod.json") { expandOrExclude(loader == "fabric", map) }
     filesMatching("META-INF/mods.toml") { expandOrExclude(loader == "forge", map) }
     filesMatching("META-INF/neoforge.mods.toml") { expandOrExclude(loader == "neoforge", map) }
+
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
+
+tasks.withType<org.gradle.jvm.tasks.Jar> {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
 
 yamlang {

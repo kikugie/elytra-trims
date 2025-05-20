@@ -95,10 +95,13 @@ object ETAtlasHolder : ResourceReloader {
                 .filter { "armor" in it.path && "leggings" !in it.path }
                 .map { it.withPath { path -> path.replaceFirst("armor", "elytra") } }
         }
-        return AtlasLoader(sources).loadSources(manager).map { {
+        return AtlasLoader(sources).loadSources(manager).mapNotNull {
+            if (it == null) return@mapNotNull null
+            {
             /*? if <1.20.2*/if (crop) it.get().transform { it.mask(model) } else it.get()
             /*? if >=1.20.2*//*if (crop) it.apply(opener).transform { it.mask(model) } else it.apply(opener)*/
-        } }
+            }
+        }
     }
 
     private fun color(id: Identifier, model: NativeImage): ContentSupplier = { saturationMask(model).toContents(id) }

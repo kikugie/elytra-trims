@@ -11,7 +11,7 @@ pluginManagement {
 }
 
 plugins {
-    id("dev.kikugie.stonecutter") version "0.5.2"
+    id("dev.kikugie.stonecutter") version "0.7-alpha.16"
 }
 
 stonecutter {
@@ -28,8 +28,8 @@ stonecutter {
 }
 rootProject.name = "Elytra Trims"
 
-include("extensions")
-val ext = project(":extensions")
-listOf("common", "fabric", "forge", "neoforge").forEach {
-    include("extensions:$it")
-}
+//include("extensions")
+//val ext = project(":extensions")
+//listOf("common", "fabric", "forge", "neoforge").forEach {
+//    include("extensions:$it")
+//}
