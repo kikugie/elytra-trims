@@ -3,7 +3,6 @@ package dev.kikugie.elytratrims.resource.provider
 import com.google.gson.JsonElement
 import com.mojang.serialization.JsonOps
 import dev.kikugie.elytratrims.Identifier
-import dev.kikugie.elytratrims.mixin.resource.PalettedPermutationsAccessor
 import dev.kikugie.elytratrims.resource.pack.InputSupplier
 import dev.kikugie.elytratrims.resource.pack.PackIdentifier
 import net.minecraft.client.color.item.Dye
@@ -32,7 +31,7 @@ class ETItemModelGenerator(val lookup: ResourceManager) : ETResourceProvider<Jso
     override fun generate(): Map<PackIdentifier, JsonElement> = buildMap {
         val generators = ModelProxy(this).let { ItemModelGenerators(it, it) }
         val materials = ETAtlasGenerator(lookup).collectPalettedPermutations()
-            .flatMap { (it as PalettedPermutationsAccessor).permutations.keys }
+            .flatMap { it.permutations.keys }
             .toSet()
 
         generators.generateElytraModel(Items.ELYTRA, materials)

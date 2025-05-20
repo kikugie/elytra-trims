@@ -1,6 +1,8 @@
 {
+
+  "type": "minecraft:smithing_transform",
   "template": "#minecraft:banners",
   "base": "#elytratrims:decoratable",
   "addition": "minecraft:paper",
-  "type": "minecraft:smithing_trim"
+  "result": {"id": "minecraft:elytra"}
 }

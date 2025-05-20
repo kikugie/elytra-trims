@@ -13,12 +13,9 @@ pluginManagement {
 plugins {
     // For some reason, this plugin is crucial - do not remove
     id("org.gradle.toolchains.foojay-resolver-convention") version "0.8.0"
-    id("dev.kikugie.stonecutter") version "0.6-dev.9"
+    id("dev.kikugie.stonecutter") version "0.7-alpha.22"
 }
 
 stonecutter {
-    kotlinController = true
-    centralScript = "build.gradle.kts"
-
     create(rootProject, file("versions/versions.json5"))
 }

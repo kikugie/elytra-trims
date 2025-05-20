@@ -45,7 +45,7 @@ value class ColorAccessImpl(private val stack: ItemStack) : ColorAccess {
     override var value: Color4i
         get() = Color4i(DyedItemColor.getOrDefault(stack, 0))
         set(value) {
-            stack.set(DataComponents.DYED_COLOR, DyedItemColor(value.value, true))
+            stack.set(DataComponents.DYED_COLOR, DyedItemColor(value.value))
         }
 
     override fun clear() {

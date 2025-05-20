@@ -1,10 +1,9 @@
-import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
+@file:Suppress("UnstableApiUsage")
 
 plugins {
     idea
-    `kotlin-dsl`
-    kotlin("jvm") version "2.1.10"
-    id("dev.architectury.loom")
+    kotlin("jvm")
+    id("fabric-loom")
     id("me.modmuss50.mod-publish-plugin")
 }
 
@@ -19,7 +18,6 @@ idea {
 }
 
 loom {
-    silentMojangMappingsLicense()
     accessWidenerPath = rootProject.file("src/main/resources/elytratrims.accesswidener")
     runs.configureEach {
         ideConfigGenerated(true)
@@ -34,12 +32,12 @@ repositories {
         forRepository { maven(url) }
         filter { groups.forEach(::includeGroup) }
     }
-    strictMaven("https://thedarkcolour.github.io/KotlinForForge/", "thedarkcolour")
     strictMaven("https://maven.parchmentmc.org", "org.parchmentmc.data")
 }
 
 dependencies {
     val modules = listOf(
+        "transitive-access-wideners-v1",
         "registry-sync-v0",
         "resource-loader-v0",
         "gametest-api-v1",
@@ -49,7 +47,8 @@ dependencies {
     minecraft("com.mojang:minecraft:${stonecutter.current.version}")
     mappings(loom.layered {
         officialMojangMappings()
-        parchment("org.parchmentmc.data:parchment-${stonecutter.current.version}:${property("deps.parchment")}@zip")
+        if (hasProperty("deps.parchment"))
+            parchment("org.parchmentmc.data:parchment-${stonecutter.current.version}:${property("deps.parchment")}@zip")
     })
 
     modImplementation("net.fabricmc:fabric-loader:${property("deps.fabric-loader")}")

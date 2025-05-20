@@ -2,12 +2,9 @@
 
 #moj_import <minecraft:matrix.glsl>
 
-uniform sampler2D Sampler0;
-uniform sampler2D Sampler1;
-uniform sampler2D Sampler2;
-
-uniform float GameTime;
-uniform int EndPortalLayers;
+uniform sampler2D Sampler0; // Sky 1
+uniform sampler2D Sampler1; // Sky 2
+uniform sampler2D Sampler2; // Mask
 
 in vec4 texProj0;
 in vec2 texCoord0;
@@ -62,7 +59,7 @@ void main() {
     }
 
     vec3 color = textureProj(Sampler0, texProj0).rgb * COLORS[0];
-    for (int i = 0; i < EndPortalLayers; i++) {
+    for (int i = 0; i < PORTAL_LAYERS; i++) {
         color += textureProj(Sampler1, texProj0 * end_portal_layer(float(i + 1))).rgb * COLORS[i];
     }
     fragColor = vec4(color, mask.a);

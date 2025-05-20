@@ -1,18 +1,28 @@
 package dev.kikugie.elytratrims.recipe
 
+import dev.kikugie.elytratrims.Identifier
 import dev.kikugie.elytratrims.item.ETFlag
 import dev.kikugie.elytratrims.item.banner
 import dev.kikugie.elytratrims.item.flags
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.component.DataComponentPatch
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.SmithingRecipe
 import net.minecraft.world.item.crafting.SmithingRecipeInput
+import net.minecraft.world.item.crafting.SmithingTransformRecipe
 import net.minecraft.world.item.crafting.SmithingTrimRecipe
+import net.minecraft.world.item.crafting.TransmuteResult
 
-abstract class ETSmithingRecipe(delegate: SmithingRecipe) :
-    SmithingTrimRecipe(delegate.templateIngredient(), delegate.baseIngredient(), delegate.additionIngredient()) {
+abstract class ETSmithingRecipe(delegate: SmithingRecipe) : SmithingTransformRecipe(
+    delegate.templateIngredient(),
+    delegate.baseIngredient(),
+    delegate.additionIngredient(),
+    TransmuteResult(BuiltInRegistries.ITEM.get(Identifier.withDefaultNamespace("elytra")).get(), 1, DataComponentPatch.EMPTY)
+) {
     companion object {
         private infix fun RecipeHolder<*>.replace(recipe: Recipe<*>) = RecipeHolder(id, recipe)
 

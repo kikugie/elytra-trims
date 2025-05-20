@@ -7,17 +7,17 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 //? if >=1.21.4 {
-@Mixin(net.minecraft.client.renderer.CoreShaders.class)
-public class CoreShadersMixin {
-    @org.spongepowered.asm.mixin.Shadow
-    @org.spongepowered.asm.mixin.Final
-    private static java.util.List<net.minecraft.client.renderer.ShaderProgram> PROGRAMS;
-
-    @Inject(method = "<clinit>", at = @At("TAIL"))
-    private static void appendETShaders(CallbackInfo ci) {
-        PROGRAMS.add(ElytraRenderLayers.GATEWAY_MASKED);
-    }
-}
+//@Mixin(net.minecraft.client.renderer.CoreShaders.class)
+//public class CoreShadersMixin {
+//    @org.spongepowered.asm.mixin.Shadow
+//    @org.spongepowered.asm.mixin.Final
+//    private static java.util.List<net.minecraft.client.renderer.ShaderProgram> PROGRAMS;
+//
+//    @Inject(method = "<clinit>", at = @At("TAIL"))
+//    private static void appendETShaders(CallbackInfo ci) {
+//        PROGRAMS.add(ElytraRenderLayers.GATEWAY_MASKED);
+//    }
+//}
 //?} else {
 /*@Mixin(net.minecraft.client.renderer.GameRenderer.class)
 public class CoreShadersMixin {

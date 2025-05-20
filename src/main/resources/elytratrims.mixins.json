@@ -8,13 +8,10 @@
   },
   "mixins": [
     "recipe.RecipeManagerMixin",
-    "resource.MultiPackResourceManagerMixin",
-    "resource.MultiRecipeBuilderMixin"
+    "resource.MultiPackResourceManagerMixin"
   ],
   "client": [
     "render.ItemStackMixin",
-    "render.CoreShadersMixin",
-    "render.ElytraRendererMixin",
-    "resource.PalettedPermutationsAccessor"
+    "render.ElytraRendererMixin"
   ]
 }

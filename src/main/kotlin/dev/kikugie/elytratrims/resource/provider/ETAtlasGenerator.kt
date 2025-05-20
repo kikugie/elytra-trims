@@ -4,7 +4,6 @@ import com.google.gson.JsonParser
 import com.mojang.serialization.Dynamic
 import com.mojang.serialization.JsonOps
 import dev.kikugie.elytratrims.Identifier
-import dev.kikugie.elytratrims.mixin.resource.PalettedPermutationsAccessor
 import dev.kikugie.elytratrims.resource.pack.InputSupplier
 import dev.kikugie.elytratrims.resource.pack.PackIdentifier
 import dev.kikugie.elytratrims.vanilla
@@ -28,7 +27,6 @@ class ETAtlasGenerator(val lookup: ResourceManager) : ETResourceProvider<List<Sp
 
         atlas(vanilla("armor_trims")) {
             this += sources.map {
-                it as PalettedPermutationsAccessor
                 val textures = it.textures.distinct().mapNotNull {
                     if ("humanoid" !in it.path || "leggings" in it.path) null
                     else it.withPath { it.replace("humanoid", "wings") }
@@ -39,7 +37,6 @@ class ETAtlasGenerator(val lookup: ResourceManager) : ETResourceProvider<List<Sp
         atlas(vanilla("blocks")) {
             val textures = listOf("trims/items/wings_trim", "trims/items/wings_broken_trim").map(::vanilla)
             this += sources.map {
-                it as PalettedPermutationsAccessor
                 PalettedPermutations(textures, it.paletteKey, it.permutations)
             }
         }
@@ -83,10 +80,8 @@ class ETAtlasGenerator(val lookup: ResourceManager) : ETResourceProvider<List<Sp
             }
         }
         val grouped: Map<Identifier, PalettedPermutations> = sources
-            .groupingBy { (it as PalettedPermutationsAccessor).paletteKey }
+            .groupingBy { it.paletteKey }
             .fold(::newSource) { _, accum, src ->
-                accum as PalettedPermutationsAccessor
-                src as PalettedPermutationsAccessor
                 accum.apply {
                     textures.addAll(src.textures)
                     permutations.putAll(src.permutations)
@@ -96,7 +91,6 @@ class ETAtlasGenerator(val lookup: ResourceManager) : ETResourceProvider<List<Sp
     }
 
     private fun newSource(key: Identifier, source: PalettedPermutations): PalettedPermutations {
-        source as PalettedPermutationsAccessor
         return PalettedPermutations(source.textures.toMutableList(), key, source.permutations.toMutableMap())
     }
 

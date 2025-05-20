@@ -8,9 +8,9 @@ import net.minecraft.world.item.ItemStack
 import java.util.function.Consumer
 
 fun appendTooltip(stack: ItemStack, consumer: Consumer<Text>) {
-    mutableListOf<Text>()
-        .apply { BannerItem.appendHoverTextFromBannerBlockEntityTag(stack, this) }
-        .forEach(consumer)
+//    mutableListOf<Text>()
+//        .apply { BannerItem.appendHoverTextFromBannerBlockEntityTag(stack, this) }
+//        .forEach(consumer)
     val glow = stack.flags[ETFlag.GLOW]
     val gateway = stack.flags[ETFlag.GATEWAY]
     if (!glow && !gateway) return

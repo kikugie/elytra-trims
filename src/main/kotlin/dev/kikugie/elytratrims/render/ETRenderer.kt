@@ -7,6 +7,8 @@ import dev.kikugie.elytratrims.resource.image.Color4i
 import net.minecraft.client.Minecraft
 import net.minecraft.client.model.Model
 import net.minecraft.client.renderer.MultiBufferSource
+import net.minecraft.client.renderer.RenderType
+import net.minecraft.client.renderer.Sheets
 import net.minecraft.client.renderer.entity.ItemRenderer
 import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite
 import net.minecraft.client.renderer.texture.OverlayTexture
@@ -51,7 +53,7 @@ interface ETRenderer {
             color: Color4i,
             atlas: Identifier,
         ) {
-            val consumer = ItemRenderer.getArmorFoilBuffer(provider, ElytraRenderLayers.TRANSLUESCENT(atlas), stack.hasFoil())
+            val consumer = ItemRenderer.getArmorFoilBuffer(provider, RenderType.armorTranslucent(atlas), stack.hasFoil())
                 .let { sprite.wrap(it) }
             model.renderToBuffer(matrices, consumer, light, OverlayTexture.NO_OVERLAY, color.value)
         }
