@@ -58,7 +58,7 @@ dependencies {
         mappings("net.fabricmc:yarn:${mcVersion}+build.${property("deps.yarn_build")}:v2")
         if (stonecutter.eval(mcVersion, "1.20.6"))
             mappings("dev.architectury:yarn-mappings-patch-neoforge:1.20.5+build.3")
-        else if (stonecutter.eval(mcVersion, "1.21"))
+        else if (stonecutter.eval(mcVersion, "1.21.1"))
             mappings(rootProject.file("mappings/fix.tiny"))
     })
     val mixinExtras = "io.github.llamalad7:mixinextras-%s:${property("deps.mixin_extras")}"
