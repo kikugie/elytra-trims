@@ -95,11 +95,13 @@ object ETAtlasHolder : ResourceReloader {
                 .filter { "armor" in it.path && "leggings" !in it.path }
                 .map { it.withPath { path -> path.replaceFirst("armor", "elytra") } }
         }
-        return AtlasLoader(sources).loadSources(manager).mapNotNull {
-            if (it == null) return@mapNotNull null
+
+        fun SpriteContents.cropIfNeeded() = if (crop) transform { it.mask(model) } else this
+
+        return AtlasLoader(sources).loadSources(manager).map {
             {
-            /*? if <1.20.2*/if (crop) it.get().transform { it.mask(model) } else it.get()
-            /*? if >=1.20.2*//*if (crop) it.apply(opener).transform { it.mask(model) } else it.apply(opener)*/
+                val sprite = /*? if <1.20.2 {*/it.get()/*?} else*//*it.apply(opener)*/
+                sprite?.cropIfNeeded()
             }
         }
     }
@@ -119,9 +121,9 @@ object ETAtlasHolder : ResourceReloader {
     private fun animation(manager: ResourceManager): Collection<ContentSupplier> = buildList {
         val resource = manager.getResource(ETReference.id("textures/animation/animation.png")).getOrNull()
             ?: return emptyList()
-        /*? if <1.20.2*/
+        /*? if <1.20.2 {*/
         val sprite = SpriteLoader.load(ETReference.id("animation/animation"), resource) ?: return emptyList()
-        /*? if >=1.20.2*/
+        /*?} else*/
         /*val sprite = opener.loadSprite(ETReference.id("animation/animation"), resource) ?: return emptyList()*/
         add { sprite }
     }
@@ -130,8 +132,8 @@ object ETAtlasHolder : ResourceReloader {
         sprites: List<ContentSupplier>,
         executor: Executor,
     ): CompletableFuture<List<SpriteContents>> =
-        /*? if <1.20.2*/SpriteLoader.loadAll(sprites.map(::asSupplier), executor);
-        /*? if >=1.20.2*//*SpriteLoader.loadAll(opener, sprites.map(::asFunction), executor)*/
+        /*? if <1.20.2 {*/SpriteLoader.loadAll(sprites.mapNotNull(::asSupplier), executor);
+        /*?} else*//*SpriteLoader.loadAll(opener, sprites.mapNotNull(::asFunction), executor)*/
 
     private fun load(manager: ResourceManager, executor: Executor): CompletableFuture<StitchResult> {
         var model: NativeImage? = null
@@ -179,6 +181,6 @@ object ETAtlasHolder : ResourceReloader {
             apply(it, applyProfiler, applyExecutor)
         }
 
-    internal fun <T> asSupplier(it: () -> T) = Supplier { it() }
-    private fun <P, T> asFunction(it: () -> T) = Function<P, T> { it() }
+    internal fun <T> asSupplier(it: (() -> T)?) = if (it != null) Supplier { it() } else null
+    private fun <P, T> asFunction(it: (() -> T)?) = if (it != null) Function<P, T> { it() } else null
 }

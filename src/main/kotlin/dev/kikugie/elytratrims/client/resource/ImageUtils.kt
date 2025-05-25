@@ -13,7 +13,7 @@ import kotlin.math.max
 import kotlin.math.min
 
 internal typealias AtlasSprite = /*? if <=1.20.4 {*/net.minecraft.client.texture.atlas.Sprite/*?} else {*//*net.minecraft.client.texture.atlas.AtlasSprite  *//*?}*/
-internal typealias ContentSupplier = () -> SpriteContents
+internal typealias ContentSupplier = () -> SpriteContents?
 
 fun loadTexture(id: Identifier, manager: ResourceManager, regions: Int = 1) =
     manager.getResource(id).orElse(null)?.let { AtlasSprite(id, it, regions) }

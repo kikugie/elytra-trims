@@ -18,21 +18,21 @@ stonecutter parameters {
     val is21 = eval(metadata.version, ">=1.21")
     val oldRender = """
         operation.call(model, matrices, vertices, light, overlay, red, green, blue, alpha);
-        ElytraTrimsAPI.renderFeatures(model, matrices, provider, entity, stack, light, red, green, blue, alpha);
-        """.trimIndent().prependIndent("        ")
+                ElytraTrimsAPI.renderFeatures(model, matrices, provider, entity, stack, light, red, green, blue, alpha);
+        """.trimIndent()
 
     swap("render_call") {
         if (is21) """
         operation.call(model, matrices, vertices, light, overlay);
-        ElytraTrimsAPI.renderFeatures(model, matrices, provider, entity, stack, light, -1);
-        """.trimIndent().prependIndent("        ")
+                ElytraTrimsAPI.renderFeatures(model, matrices, provider, entity, stack, light, -1);
+        """.trimIndent()
         else oldRender
     }
     swap("render_call_color") {
         if (is21) """
         operation.call(model, matrices, vertices, light, overlay, color);
-        ElytraTrimsAPI.renderFeatures(model, matrices, provider, entity, stack, light, color);
-        """.trimIndent().prependIndent("        ")
+                ElytraTrimsAPI.renderFeatures(model, matrices, provider, entity, stack, light, color);
+        """.trimIndent()
         else oldRender
     }
 }
