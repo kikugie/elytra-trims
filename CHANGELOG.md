@@ -1,2 +1,7 @@
+## Language
+- Added Mexican Spanish translation - @TheLegendofSaram.
+- Added Argentine Spanish translation - @Texaliuz.
+
 ## Fixes
-- Guess what crashes on Forge
+- Fixed a crash on (Neo)Forge with some mods during startup.
+- Fixed the crash when opening the config screen on NeoForge.
