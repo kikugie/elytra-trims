@@ -22,6 +22,4 @@ fun ETRuntimePack.dump(dir: Path) {
     }
 }
 
-fun List<ResourcePack>.hasElytraTrimsPack(): Boolean = any {
-    it.packId() == "elytratrims"
-}
+fun List<ResourcePack>.hasElytraTrimsPack(): Boolean = any { "elytratrims" in it.packId() }

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "id": "${id}",
-  "name": "${name}",
+  "id": "elytratrims",
+  "name": "Elytra Trims",
   "version": "${version}",
   "authors": [
     "KikuGie"
@@ -11,13 +11,16 @@
     "sources": "https://github.com/Kikugie/elytra-trims",
     "issues": "https://github.com/Kikugie/elytra-trims/issues"
   },
-  "description": "Lightweight and customizable support for elytra trims and other decorations",
+  "description": "Lightweight and customizable support for elytra trims and other decorations.",
   "icon": "assets/elytratrims/icon.png",
   "license": "LGPL 3.0",
   "environment": "*",
   "entrypoints": {
     "main": [
       "dev.kikugie.elytratrims.FabricCommonEntrypoint"
+    ],
+    "client": [
+      "dev.kikugie.elytratrims.FabricClientEntrypoint"
     ]
   },
   "mixins": [

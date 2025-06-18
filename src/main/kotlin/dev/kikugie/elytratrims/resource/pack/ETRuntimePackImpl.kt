@@ -1,11 +1,11 @@
 package dev.kikugie.elytratrims.resource.pack
 
+import dev.kikugie.elytratrims.ModData
 import dev.kikugie.elytratrims.resource.provider.ETAtlasGenerator
 import dev.kikugie.elytratrims.resource.provider.ETItemModelGenerator
 import dev.kikugie.elytratrims.resource.provider.ETTagGenerator
 import dev.kikugie.elytratrims.resource.provider.ETTextureGenerator
 import dev.kikugie.elytratrims.text
-import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.server.packs.PackLocationInfo
 import net.minecraft.server.packs.PackType
 import net.minecraft.server.packs.repository.PackSource
@@ -35,7 +35,7 @@ class ETRuntimePackImpl(
         )
     }
 
-    val base = requireNotNull(manager.listPacks().asSequence().find { it.packId() == "elytratrims" }) {
+    val base = requireNotNull(manager.listPacks().asSequence().find { "elytratrims" in it.packId() }) {
         "Missing 'elytratrims' pack, present packs:\n" + manager.listPacks().asSequence().joinToString("\n") { "  - ${it.packId()}" }
     }
     override val metadata: PackLocationInfo = PackLocationInfo(
@@ -45,14 +45,13 @@ class ETRuntimePackImpl(
         Optional.empty()
     )
     override val namespaces: Map<PackType, Set<String>> = buildMap<PackType, MutableSet<String>> {
-        for (pack in manager.listPacks()) for (type in PackType.values())
+        for (pack in manager.listPacks()) for (type in PackType.entries)
             getOrPut(type) { mutableSetOf() } += pack.getNamespaces(type)
     }
     override val resources: Map<PackIdentifier, InputSupplier> = collectResources()
 
     init {
-        if (FabricLoader.getInstance().isDevelopmentEnvironment)
-            dump(FabricLoader.getInstance().gameDir.resolve(".et-debug"))
+        if (ModData.isDevEnv) dump(ModData.gameDir.resolve(".et-debug"))
     }
 
     override fun open(file: String): InputSupplier? {

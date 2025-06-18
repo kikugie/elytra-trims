@@ -1,0 +1,27 @@
+license = "LGPL 3.0"
+
+[[mods]]
+modId = "elytratrims"
+displayName = "Elytra Trims"
+version = "${version}"
+displayURL = "https://modrinth.com/mod/elytra-trims"
+logoFile = "assets/elytratrims/icon.png"
+authors = "KikuGie"
+description = '''Lightweight and customizable support for elytra trims and other decorations.'''
+
+[[mixins]]
+config = "elytratrims.mixins.json"
+
+[[dependencies.elytratrims]]
+modId = "neoforge"
+type = "required"
+versionRange = "[1,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.elytratrims]]
+modId = "minecraft"
+type = "required"
+versionRange = "[${minecraft}]"
+ordering = "NONE"
+side = "BOTH"

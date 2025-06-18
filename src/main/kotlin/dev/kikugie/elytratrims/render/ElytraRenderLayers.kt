@@ -14,21 +14,22 @@ import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.blockentity.TheEndPortalRenderer
 
 object ElytraRenderLayers {
-    val GATEWAY_MASKED_SNIPPET: RenderPipeline.Snippet = RenderPipeline.builder(MATRICES_PROJECTION_SNIPPET, FOG_SNIPPET, GLOBALS_SNIPPET)
+    @JvmField val GATEWAY_MASKED_SNIPPET: RenderPipeline.Snippet = RenderPipeline.builder(MATRICES_PROJECTION_SNIPPET, ENTITY_SNIPPET, FOG_SNIPPET, GLOBALS_SNIPPET)
         .withVertexShader(elytratrims("core/elytratrims_gateway"))
         .withFragmentShader(elytratrims("core/elytratrims_gateway"))
         .withSampler("Sampler0")
         .withSampler("Sampler1")
         .withSampler("Sampler2")
         .withVertexFormat(DefaultVertexFormat.POSITION, VertexFormat.Mode.QUADS)
-        .buildSnippet();
+        .withCull(false)
+        .buildSnippet()
 
-    val GATEWAY_MASKED: RenderPipeline = RenderPipeline.builder(GATEWAY_MASKED_SNIPPET)
+    @JvmField val GATEWAY_MASKED: RenderPipeline = RenderPipeline.builder(GATEWAY_MASKED_SNIPPET)
         .withLocation(elytratrims("pipeline/elytratrims_gateway"))
         .withShaderDefine("PORTAL_LAYERS", 16)
         .build().let(RenderPipelines::register)
 
-    val GATEWAY: Memoizer<Identifier, RenderType> = memoize {
+    @JvmField val GATEWAY: Memoizer<Identifier, RenderType> = memoize {
         val state = RenderType.CompositeState.builder()
             .setTextureState(
                 RenderStateShard.MultiTextureStateShard.builder()

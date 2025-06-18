@@ -1,11 +1,16 @@
 plugins {
-    kotlin("jvm") version "2.1.10" apply false
+    kotlin("jvm") version "2.1.21" apply false
     id("dev.kikugie.stonecutter")
     id("co.uzzu.dotenv.gradle") version "4.0.0"
     id("fabric-loom") version "1.10-SNAPSHOT" apply false
+    id("net.neoforged.moddev") version "2.0.95" apply false
     id("me.modmuss50.mod-publish-plugin") version "0.8.+" apply false
 }
 stonecutter active "1.21.6-fabric"
+
+stonecutter parameters {
+    constants.match(node.metadata.project.substringAfterLast('-'), "fabric", "neoforge")
+}
 
 tasks.register<PublishDiscordTask>("publishDiscord") {
     stonecutter.tree.nodes.map { "${it.project.path}:buildAndCollect" }
