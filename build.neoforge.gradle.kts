@@ -2,6 +2,7 @@ plugins {
     kotlin("jvm")
     id("elytratrims.common")
     id("net.neoforged.moddev")
+    id("me.modmuss50.mod-publish-plugin")
 }
 
 version = "${property("mod.version")}+${property("deps.minecraft")}"
@@ -49,5 +50,41 @@ tasks {
         from(jar.map { it.archiveFile })
         into(rootProject.layout.buildDirectory.file("libs/${project.property("mod.version")}"))
         dependsOn("build")
+    }
+}
+
+java {
+    withSourcesJar()
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+
+publishMods {
+    val mr = findProperty("publish.modrinth.key") as? String
+    val cf = findProperty("publish.curseforge.key") as? String
+    dryRun = mr == null || cf == null
+
+    type = BETA
+    file = tasks.jar.map { it.archiveFile.get() }
+    additionalFiles.from(tasks.named<org.gradle.jvm.tasks.Jar>("sourcesJar").map { it.archiveFile.get() })
+
+    displayName = "Elytra Trims Fabric ${property("mod.version")} for ${stonecutter.current.version}"
+    version = property("mod.version") as String
+    changelog = provider { rootProject.file("CHANGELOG.md").readText() }
+    modLoaders.add("neoforge")
+
+    modrinth {
+        projectId = property("publish.modrinth") as String
+        accessToken = mr
+        minecraftVersions.add(stonecutter.current.version)
+        optional("kotlin-for-forge", "kotlin-lang-forge")
+    }
+
+    curseforge {
+        projectId = property("publish.curseforge") as String
+        accessToken = cf
+        minecraftVersions.add(stonecutter.current.version)
+        optional("kotlin-for-forge", "kotlinlangforge")
     }
 }

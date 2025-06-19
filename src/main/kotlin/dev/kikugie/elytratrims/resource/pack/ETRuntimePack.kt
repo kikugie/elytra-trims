@@ -39,8 +39,7 @@ interface ETRuntimePack : ResourcePack {
         locate(PackIdentifier.Companion.of(type, namespace, path)).forEach { (id, supplier) -> visitor.accept(id.toIdentifier(), supplier) }
 
     override fun <T : Any?> getMetadataSection(reader: MetadataAccessor<T?>): T? =
-        requireNotNull(open("pack.mcmeta")?.get()) { "Missing 'pack.mcmeta' resource" }
-            .use { AbstractPackResources.getMetadataFromStream(reader, it) }
+        open("pack.mcmeta")?.get()?.use { AbstractPackResources.getMetadataFromStream(reader, it) }
 
     override fun close() {
     }

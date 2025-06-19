@@ -28,8 +28,10 @@
   ],
   "accessWidener": "elytratrims.accesswidener",
   "depends": {
-    "fabricloader": ">=0.15.0",
-    "fabric-language-kotlin": ">=0.13"
+    "fabricloader": ">=0.16.0",
+    "fabric-api": "*",
+    "fabric-language-kotlin": ">=0.13",
+    "minecraft": "${minecraft}"
   },
   "custom": {
     "modmenu": {

@@ -6,6 +6,7 @@ plugins {
     id("net.neoforged.moddev") version "2.0.95" apply false
     id("me.modmuss50.mod-publish-plugin") version "0.8.+" apply false
 }
+
 stonecutter active "1.21.6-fabric"
 
 stonecutter parameters {
@@ -27,3 +28,6 @@ tasks.register<PublishDiscordTask>("publishDiscord") {
     channel = env.fetch("DISCORD_CHANNEL", "0").toLong()
     role = env.fetch("DISCORD_ROLE", "0").toLong()
 }
+
+// TODO: fix cauldron interaction??
+// TODO: fix broken elytra item texture??

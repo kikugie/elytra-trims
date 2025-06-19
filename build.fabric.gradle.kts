@@ -35,6 +35,12 @@ dependencies {
     for (it in modules) modImplementation(fabricApi.module("fabric-$it", property("deps.fabric-api") as String))
 }
 
+java {
+    withSourcesJar()
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
 tasks {
     processResources {
         exclude("**/neoforge.mods.toml")
@@ -45,5 +51,34 @@ tasks {
         from(remapJar.map { it.archiveFile })
         into(rootProject.layout.buildDirectory.file("libs/${project.property("mod.version")}"))
         dependsOn("build")
+    }
+}
+
+publishMods {
+    val mr = findProperty("publish.modrinth.key") as? String
+    val cf = findProperty("publish.curseforge.key") as? String
+    dryRun = mr == null || cf == null
+
+    type = BETA
+    file = tasks.remapJar.map { it.archiveFile.get() }
+    additionalFiles.from(tasks.remapSourcesJar.map { it.archiveFile.get() })
+
+    displayName = "Elytra Trims Fabric ${property("mod.version")} for ${stonecutter.current.version}"
+    version = property("mod.version") as String
+    changelog = provider { rootProject.file("CHANGELOG.md").readText() }
+    modLoaders.add("fabric")
+
+    modrinth {
+        projectId = property("publish.modrinth") as String
+        accessToken = mr
+        minecraftVersions.add(stonecutter.current.version)
+        requires("fabric-api", "fabric-language-kotlin")
+    }
+
+    curseforge {
+        projectId = property("publish.curseforge") as String
+        accessToken = cf
+        minecraftVersions.add(stonecutter.current.version)
+        requires("fabric-api", "fabric-language-kotlin")
     }
 }

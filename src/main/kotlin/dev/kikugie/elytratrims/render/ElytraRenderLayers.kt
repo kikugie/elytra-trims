@@ -20,7 +20,7 @@ object ElytraRenderLayers {
         .withSampler("Sampler0")
         .withSampler("Sampler1")
         .withSampler("Sampler2")
-        .withVertexFormat(DefaultVertexFormat.POSITION, VertexFormat.Mode.QUADS)
+        .withVertexFormat(DefaultVertexFormat.POSITION_TEX, VertexFormat.Mode.QUADS)
         .withCull(false)
         .buildSnippet()
 
