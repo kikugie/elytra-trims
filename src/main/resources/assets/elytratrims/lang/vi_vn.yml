@@ -24,7 +24,9 @@ elytratrims:
         tooltip: Cắt viền giáp để phù hợp với Cánh Cứng.
       useDarkerTrim: 
         .: Sử dụng viền tối hơn
-        tooltip: Sử dụng màu viền tối hơn cho Cánh Cứng khi có thể.\nSử dụng màu giống như khi bạn thêm viền cho một mảnh giáp cùng chất liệu.\n
+        tooltip: |
+          Sử dụng màu viền tối hơn cho Cánh Cứng khi có thể.
+          Sử dụng màu giống như khi bạn thêm viền cho một mảnh giáp cùng chất liệu.
       showBannerIcon: 
         .: Hiển thị biểu tượng biểu ngữ
         tooltip: Hiển thị biểu tượng biểu ngữ trên vật phẩm Cánh Cứng.
@@ -33,7 +35,9 @@ elytratrims:
         tooltip: Hiển thị mô hình 3D của vật phẩm Cánh Cứng, giống như khiên và biểu ngữ.
       animationEasterEgg: 
         .: Hoạt hình Trứng Phục Sinh
-        tooltip: Kích hoạt một Trứng Phục Sinh vui nhộn mà bạn phải tự tìm hiểu.\nTắt tính năng này có thể tăng thời gian tải lên một chút, hãy tự quyết định.\n
+        tooltip: |
+          Kích hoạt một Trứng Phục Sinh vui nhộn mà bạn phải tự tìm hiểu.
+          Tắt tính năng này có thể tăng thời gian tải lên một chút, hãy tự quyết định.
     type:
       color:
         .: Thuốc nhuộm
