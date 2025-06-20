@@ -11,6 +11,7 @@ stonecutter active "1.21.6-fabric"
 
 stonecutter parameters {
     constants.match(node.metadata.project.substringAfterLast('-'), "fabric", "neoforge")
+    filters.include("**/*.fsh", "**/*.vsh")
 }
 
 tasks.register<PublishDiscordTask>("publishDiscord") {

@@ -14,7 +14,11 @@ import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.blockentity.TheEndPortalRenderer
 
 object ElytraRenderLayers {
-    @JvmField val GATEWAY_MASKED_SNIPPET: RenderPipeline.Snippet = RenderPipeline.builder(MATRICES_PROJECTION_SNIPPET, ENTITY_SNIPPET, FOG_SNIPPET, GLOBALS_SNIPPET)
+    private val SNIPPET_ARGS =
+        /*? if >=1.21.6 {*/arrayOf(MATRICES_PROJECTION_SNIPPET, ENTITY_SNIPPET, FOG_SNIPPET, GLOBALS_SNIPPET)
+        /*?} else*//*arrayOf(MATRICES_SNIPPET, ENTITY_SNIPPET, FOG_SNIPPET)*/
+
+    @JvmField val GATEWAY_MASKED_SNIPPET: RenderPipeline.Snippet = RenderPipeline.builder(*SNIPPET_ARGS)
         .withVertexShader(elytratrims("core/elytratrims_gateway"))
         .withFragmentShader(elytratrims("core/elytratrims_gateway"))
         .withSampler("Sampler0")
@@ -33,9 +37,9 @@ object ElytraRenderLayers {
         val state = RenderType.CompositeState.builder()
             .setTextureState(
                 RenderStateShard.MultiTextureStateShard.builder()
-                    .add(TheEndPortalRenderer.END_SKY_LOCATION, false)
-                    .add(TheEndPortalRenderer.END_PORTAL_LOCATION, false)
-                    .add(it, false)
+                    .add(TheEndPortalRenderer.END_SKY_LOCATION)
+                    .add(TheEndPortalRenderer.END_PORTAL_LOCATION)
+                    .add(it)
                     .build()
             )
             .createCompositeState(false)
@@ -52,4 +56,8 @@ object ElytraRenderLayers {
         RenderType.create("elytra_translucent", 1536, true, true, RenderPipelines.ARMOR_CUTOUT_NO_CULL, state)
     }
      */
+
+    private fun RenderStateShard.MultiTextureStateShard.Builder.add(tex: Identifier) =
+        /*? if >=1.21.6 {*/add(tex, false)
+        /*?} else*//*add(tex, false, false)*/
 }

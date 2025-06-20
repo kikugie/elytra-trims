@@ -29,7 +29,6 @@
   "accessWidener": "elytratrims.accesswidener",
   "depends": {
     "fabricloader": ">=0.16.0",
-    "fabric-api": "*",
     "fabric-language-kotlin": ">=0.13",
     "minecraft": "${minecraft}"
   },

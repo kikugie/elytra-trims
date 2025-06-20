@@ -69,7 +69,7 @@ publishMods {
     file = tasks.jar.map { it.archiveFile.get() }
     additionalFiles.from(tasks.named<org.gradle.jvm.tasks.Jar>("sourcesJar").map { it.archiveFile.get() })
 
-    displayName = "Elytra Trims Fabric ${property("mod.version")} for ${stonecutter.current.version}"
+    displayName = "Elytra Trims Neoforge ${property("mod.version")} for ${stonecutter.current.version}"
     version = property("mod.version") as String
     changelog = provider { rootProject.file("CHANGELOG.md").readText() }
     modLoaders.add("neoforge")
