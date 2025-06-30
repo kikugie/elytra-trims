@@ -2,6 +2,7 @@ package dev.kikugie.elytratrims.mixin.render;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import dev.kikugie.elytratrims.item.TooltipKt;
+import dev.kikugie.fletching_table.annotation.MixinEnvironment;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -16,6 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.List;
 import java.util.function.Consumer;
 
+@MixinEnvironment(type = MixinEnvironment.Env.CLIENT)
 @Mixin(ItemStack.class)
 public class ItemStackMixin {
 //    @Inject(method = "getTooltipLines", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/Item;appendHoverText(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/Item$TooltipContext;Ljava/util/List;Lnet/minecraft/world/item/TooltipFlag;)V"))

@@ -5,10 +5,12 @@ plugins {
     id("elytratrims.common")
     id("fabric-loom")
     id("me.modmuss50.mod-publish-plugin")
+    id("com.google.devtools.ksp") version "2.1.21-2.0.2"
+    id("dev.kikugie.fletching-table.fabric") version "0.1.0-alpha.6"
 }
 
 version = "${property("mod.version")}+${property("deps.minecraft")}"
-base.archivesName = property("mod.id") as String
+base.archivesName = "${property("mod.id")}-fabric"
 
 loom {
     accessWidenerPath = rootProject.file("src/main/resources/elytratrims.accesswidener")
@@ -18,6 +20,10 @@ loom {
         if (environment == "client")
             programArgs("--username=KikuGie")
     }
+}
+
+repositories {
+    mavenLocal()
 }
 
 dependencies {
@@ -51,6 +57,12 @@ tasks {
         from(remapJar.map { it.archiveFile })
         into(rootProject.layout.buildDirectory.file("libs/${project.property("mod.version")}"))
         dependsOn("build")
+    }
+}
+
+fletchingTable {
+    mixins.create("main") {
+        default = "elytratrims.mixins.json"
     }
 }
 

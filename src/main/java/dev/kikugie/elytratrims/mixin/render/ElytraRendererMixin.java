@@ -7,6 +7,7 @@ import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.kikugie.elytratrims.render.*;
 import dev.kikugie.elytratrims.resource.image.Color4i;
+import dev.kikugie.fletching_table.annotation.MixinEnvironment;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.resources.ResourceKey;
@@ -18,6 +19,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+@MixinEnvironment(type = MixinEnvironment.Env.CLIENT)
 @Mixin(net.minecraft.client.renderer.entity.layers.EquipmentLayerRenderer.class)
 public class ElytraRendererMixin {
     @Unique

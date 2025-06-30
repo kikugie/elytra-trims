@@ -9,9 +9,6 @@ logoFile = "assets/elytratrims/icon.png"
 authors = "KikuGie"
 description = '''Lightweight and customizable support for elytra trims and other decorations.'''
 
-[[mixins]]
-config = "elytratrims.mixins.json"
-
 [[dependencies.elytratrims]]
 modId = "neoforge"
 type = "required"

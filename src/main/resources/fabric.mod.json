@@ -15,17 +15,6 @@
   "icon": "assets/elytratrims/icon.png",
   "license": "LGPL 3.0",
   "environment": "*",
-  "entrypoints": {
-    "main": [
-      "dev.kikugie.elytratrims.FabricCommonEntrypoint"
-    ],
-    "client": [
-      "dev.kikugie.elytratrims.FabricClientEntrypoint"
-    ]
-  },
-  "mixins": [
-    "elytratrims.mixins.json"
-  ],
   "accessWidener": "elytratrims.accesswidener",
   "depends": {
     "fabricloader": ">=0.16.0",

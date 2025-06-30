@@ -3,10 +3,16 @@ plugins {
     id("elytratrims.common")
     id("net.neoforged.moddev")
     id("me.modmuss50.mod-publish-plugin")
+    id("com.google.devtools.ksp") version "2.1.21-2.0.2"
+    id("dev.kikugie.fletching-table.neoforge") version "0.1.0-alpha.6"
 }
 
 version = "${property("mod.version")}+${property("deps.minecraft")}"
-base.archivesName = property("mod.id") as String
+base.archivesName = "${property("mod.id")}-neoforge"
+
+repositories {
+    mavenLocal()
+}
 
 neoForge {
     version = property("deps.neoforge") as String
@@ -59,6 +65,11 @@ java {
     targetCompatibility = JavaVersion.VERSION_21
 }
 
+fletchingTable {
+    mixins.create("main") {
+        default = "elytratrims.mixins.json"
+    }
+}
 
 publishMods {
     val mr = findProperty("publish.modrinth.key") as? String

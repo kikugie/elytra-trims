@@ -5,13 +5,5 @@
   "compatibilityLevel": "JAVA_21",
   "injectors": {
     "defaultRequire": 1
-  },
-  "mixins": [
-    "recipe.RecipeManagerMixin",
-    "resource.MultiPackResourceManagerMixin"
-  ],
-  "client": [
-    "render.ItemStackMixin",
-    "render.ElytraRendererMixin"
-  ]
+  }
 }
