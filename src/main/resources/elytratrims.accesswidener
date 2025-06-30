@@ -10,5 +10,6 @@ accessible method net/minecraft/client/data/models/ItemModelGenerators generateL
 accessible method net/minecraft/client/renderer/texture/atlas/sources/PalettedPermutations <init> (Ljava/util/List;Lnet/minecraft/resources/ResourceLocation;Ljava/util/Map;)V
 accessible method com/mojang/blaze3d/platform/NativeImage writeToChannel (Ljava/nio/channels/WritableByteChannel;)Z
 accessible method net/minecraft/client/renderer/RenderType create (Ljava/lang/String;IZZLcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/client/renderer/RenderType$CompositeState;)Lnet/minecraft/client/renderer/RenderType$CompositeRenderType;
+accessible method net/minecraft/client/renderer/RenderPipelines register (Lcom/mojang/blaze3d/pipeline/RenderPipeline;)Lcom/mojang/blaze3d/pipeline/RenderPipeline;
 
 accessible field net/minecraft/client/data/models/ItemModelGenerators modelOutput Ljava/util/function/BiConsumer;

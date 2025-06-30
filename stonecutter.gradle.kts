@@ -7,11 +7,21 @@ plugins {
     id("me.modmuss50.mod-publish-plugin") version "0.8.+" apply false
 }
 
-stonecutter active "1.21.6-fabric"
+stonecutter active "1.21.7-fabric"
 
 stonecutter parameters {
     constants.match(node.metadata.project.substringAfterLast('-'), "fabric", "neoforge")
     filters.include("**/*.fsh", "**/*.vsh")
+}
+
+stonecutter tasks {
+    order("publishModrinth")
+    order("publishCurseforge")
+}
+
+for (version in stonecutter.versions.map { it.version }.distinct()) tasks.register("publish$version") {
+    group = "publishing"
+    dependsOn(stonecutter.tasks.named("publishMods") { metadata.version == version })
 }
 
 tasks.register<PublishDiscordTask>("publishDiscord") {
