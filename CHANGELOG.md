@@ -1,2 +1,2 @@
-## Changes:
-- Updated to 1.21.7
+## Fixes
+- Fix Gradle thinking it was still 1.21.6
