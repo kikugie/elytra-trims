@@ -1,3 +1,5 @@
+import dev.kikugie.stonecutter.data.tree.struct.ProjectNode
+
 plugins {
     kotlin("jvm") version "2.1.21" apply false
     id("dev.kikugie.stonecutter")
@@ -15,8 +17,12 @@ stonecutter parameters {
 }
 
 stonecutter tasks {
-    order("publishModrinth")
-    order("publishCurseforge")
+    val ordering = Comparator
+        .comparing<ProjectNode, _> { stonecutter.parse(it.metadata.version) }
+        .thenComparingInt { if (it.metadata.project.endsWith("fabric")) 1 else 0 }
+
+    order("publishModrinth", ordering)
+    order("publishCurseforge", ordering)
 }
 
 for (version in stonecutter.versions.map { it.version }.distinct()) tasks.register("publish$version") {
