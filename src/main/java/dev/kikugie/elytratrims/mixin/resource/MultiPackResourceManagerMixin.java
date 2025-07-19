@@ -3,7 +3,6 @@ package dev.kikugie.elytratrims.mixin.resource;
 import com.llamalad7.mixinextras.sugar.Local;
 import dev.kikugie.elytratrims.resource.ETListWrapperKt;
 import dev.kikugie.elytratrims.resource.pack.ETRuntimePack;
-import dev.kikugie.elytratrims.resource.pack.ETRuntimePackImpl;
 import dev.kikugie.elytratrims.resource.pack.ETRuntimePackUtilsKt;
 import net.minecraft.server.packs.PackResources;
 import net.minecraft.server.packs.PackType;
@@ -23,7 +22,9 @@ public class MultiPackResourceManagerMixin {
         if (packs.isEmpty() || ETListWrapperKt.isWrapped(packs) || !ETRuntimePackUtilsKt.hasElytraTrimsPack(packs))
             return ETListWrapperKt.unwrap(packs);
         ResourceManager delegate = new MultiPackResourceManager(type, ETListWrapperKt.wrap(packs));
-        ETRuntimePack injected = new ETRuntimePackImpl(type, delegate);
+        ETRuntimePack injected = ETRuntimePack.of(type, delegate);
+        if (injected == null) return packs;
+
         List<PackResources> copy = new ArrayList<>(packs);
         copy.add(injected);
         return copy;

@@ -1,6 +1,7 @@
 package dev.kikugie.elytratrims.resource.pack
 
 import dev.kikugie.elytratrims.Identifier
+import dev.kikugie.elytratrims.ModData
 import dev.kikugie.elytratrims.ResourcePack
 import dev.kikugie.elytratrims.resource.pack.PackIdentifier
 import dev.kikugie.elytratrims.then
@@ -10,6 +11,7 @@ import net.minecraft.server.packs.PackLocationInfo
 import net.minecraft.server.packs.PackResources
 import net.minecraft.server.packs.PackType
 import net.minecraft.server.packs.resources.IoSupplier
+import net.minecraft.server.packs.resources.ResourceManager
 import java.io.InputStream
 
 typealias InputSupplier = IoSupplier<InputStream>
@@ -20,6 +22,18 @@ private typealias MetadataAccessor<T> =
     /*?} else*/ /*net.minecraft.server.packs.metadata.MetadataSectionSerializer<T>*/
 
 interface ETRuntimePack : ResourcePack {
+    companion object {
+        @JvmStatic fun of(unchecked: PackType, manager: ResourceManager): ETRuntimePack? {
+            // Stupid neoforge loading client side stuff on the server
+            //? if fabric {
+            return ETRuntimePackImpl(unchecked, manager)
+            //?} else {
+            /*return if (unchecked == PackType.CLIENT_RESOURCES && ModData.isServer) null
+            else ETRuntimePackImpl(unchecked, manager)
+            *///?}
+        }
+    }
+
     val metadata: PackLocationInfo
     val namespaces: Map<PackType, Set<String>>
     val resources: Map<PackIdentifier, InputSupplier>

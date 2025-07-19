@@ -56,7 +56,7 @@ class ETRuntimePackImpl(
 
     override fun open(file: String): InputSupplier? {
         return if ('/' !in file) base.getRootResource(file)
-        else resources[PackIdentifier.Companion.of(file)]
+        else resources[PackIdentifier.of(file)]
     }
 
     override fun locate(path: PackIdentifier): Sequence<ResourceEntry> = resources.entries.asSequence()
@@ -65,6 +65,7 @@ class ETRuntimePackImpl(
 
     @OptIn(ExperimentalTime::class)
     private fun collectResources(): Map<PackIdentifier, InputSupplier> {
+        LOGGER.info("Generating $type resources")
         val data = ConcurrentHashMap<PackIdentifier, InputSupplier>()
         val time = measureTime {
             when (type) {
@@ -75,8 +76,7 @@ class ETRuntimePackImpl(
                 .join()
         }
 
-        val resources = data.keys.joinToString("\n") { "  - $it" }
-        LOGGER.info("Collected ${data.size} ${type.directory} resources in $time:\n$resources")
+        LOGGER.info("Collected ${data.size} ${type.directory} resources in $time")
         return data
     }
 }
