@@ -19,6 +19,6 @@ side = "BOTH"
 [[dependencies.elytratrims]]
 modId = "minecraft"
 type = "required"
-versionRange = "[${minecraft}]"
+versionRange = "${minecraft}"
 ordering = "NONE"
 side = "BOTH"

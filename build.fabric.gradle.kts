@@ -5,8 +5,8 @@ plugins {
     id("elytratrims.common")
     id("fabric-loom")
     id("me.modmuss50.mod-publish-plugin")
-    id("com.google.devtools.ksp") version "2.1.21-2.0.2"
-    id("dev.kikugie.fletching-table.fabric") version "0.1.0-alpha.6"
+    id("com.google.devtools.ksp") version "2.2.0-2.0.2"
+    id("dev.kikugie.fletching-table.fabric") version "0.1.0-alpha.13"
 }
 
 version = "${property("mod.version")}+${property("deps.minecraft")}"
@@ -61,8 +61,8 @@ tasks {
 }
 
 fletchingTable {
-    mixins.create("main") {
-        default = "elytratrims.mixins.json"
+    mixins.register("main") {
+        mixin("default", "elytratrims.mixins.json")
     }
 }
 

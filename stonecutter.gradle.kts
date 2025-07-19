@@ -1,7 +1,7 @@
 import dev.kikugie.stonecutter.data.tree.struct.ProjectNode
 
 plugins {
-    kotlin("jvm") version "2.1.21" apply false
+    kotlin("jvm") version "2.2.0" apply false
     id("dev.kikugie.stonecutter")
     id("co.uzzu.dotenv.gradle") version "4.0.0"
     id("fabric-loom") version "1.10-SNAPSHOT" apply false
@@ -9,7 +9,7 @@ plugins {
     id("me.modmuss50.mod-publish-plugin") version "0.8.+" apply false
 }
 
-stonecutter active "1.21.7-fabric"
+stonecutter active "1.21.8-fabric"
 
 stonecutter parameters {
     constants.match(node.metadata.project.substringAfterLast('-'), "fabric", "neoforge")
