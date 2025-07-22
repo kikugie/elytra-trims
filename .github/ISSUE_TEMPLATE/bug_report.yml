@@ -32,6 +32,8 @@ body:
         themselves for optimisation or pvp may cause compatibility issues with
         mods.
       placeholder: Default/Prism/Modrinth
+    validations:
+      required: true
   - type: input
     id: version
     attributes:
