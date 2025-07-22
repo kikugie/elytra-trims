@@ -1,8 +1,5 @@
 name: Bug report
-description: 'Something doesn''t seem correct and it might be a bug '
-title: '[Bug]: '
-assignees:
-  - kikugie
+description: Template for bug reports
 labels:
   - bug
 body:
@@ -13,9 +10,9 @@ body:
       description: Which mod loader are you using?
       options:
         - Fabric
-        - Forge
         - Quilt
-        - NeoForge
+        - Forge
+        - Neoforge
     validations:
       required: true
   - type: input
@@ -23,59 +20,54 @@ body:
     attributes:
       label: Minecraft version
       description: Which Minecraft version are you playing on?
-      placeholder: 1.20.4
+      placeholder: 1.20.1/1.21.8
     validations:
       required: true
   - type: input
-    id: et_version
+    id: launcher
     attributes:
-      label: Mod version
+      label: Minecraft launcher
       description: >-
-        Which version of Elytra Trims (and Extensions if applicably) are you using?
-      placeholder: 2.0.0
+        What Minecraft launcher are you using? Some launchers that brand
+        themselves for optimisation or pvp may cause compatibility issues with
+        mods.
+      placeholder: Default/Prism/Modrinth
+  - type: input
+    id: version
+    attributes:
+      label: Elytra Trims version
+      description: Which version of Elytra Trims are you using?
+      placeholder: 4.1.3/3.5.9
     validations:
       required: true
-  - type: checkboxes
-    id: mods
+  - type: input
+    id: logs
     attributes:
-      label: Affected mods
-      description: |
-        Which mods does the issue affect. 
-        Extensions is responsible for textures for trims from other mods, such as More Armor Trims and Geode+.
-        Everything else is for Elytra Trims to blame.
-      options:
-        - label: Elytra Trims
-          required: false
-        - label: Extensions
-          required: false
+      label: Log file(s)
+      description: >-
+        Please attach a link to a **full log** and a crash log if applicable.
+        See [Uploading
+        Logs](https://docs.fabricmc.net/players/troubleshooting/uploading-logs)
+        and [Crash
+        Reports](https://docs.fabricmc.net/players/troubleshooting/crash-reports)
+        guides (**they are applicable to Forge/Neoforge too**).
+      placeholder: https://mclo.gs/...
+    validations:
+      required: true
   - type: textarea
     id: description
     attributes:
       label: Bug description
-      description: A clear and concise description of what the bug is.
-      placeholder: >-
-        Elytra Trims crashes on startup with OptiFabric installed, but doesn't with Sodium.
-    validations:
-      required: true
-  - type: textarea
-    id: steps
-    attributes:
-      label: Steps to reproduce
       description: >-
-        Required steps to reproduce the bug. When reproducing the bug try to
-        minimise used mods. It will be much easier to figure out the problem if
-        you don't have 100 mods in your log.
-      placeholder: |
-        1. Install OptiFabric, Fabric API and Elytra Trims 
-        2. Launch the game 
-        3. Crash
-  - type: input
-    id: logs
+        Use this section to describe the issue you are experiencing in as much
+        depth as possible. The description should explain what behavior you were
+        expecting, and why you believe the issue to be a bug. If the issue you
+        are reporting only occurs with specific mods installed, then provide the
+        name and version of each mod. Hint: If you have any screenshots, videos,
+        or other information that you feel is necessary to explain the issue,
+        you can attach them here.
+  - type: markdown
     attributes:
-      label: Relevant logs
-      description: |
-        If it's a crash, send the corresponding Minecraft log from the `logs`
-        folder here.         
-        Please upload the log file as an attachment, or upload the log to [pastebin](https://pastebin.com/) / [mclo.gs](https://mclo.gs/) and paste the url here.  
-        Leave empty if there is none.
-      placeholder: https://mclo.gs/...
+      value: >-
+        This template was generated with [Issue Forms
+        Creator](https://issue-forms-creator.netlify.app)
