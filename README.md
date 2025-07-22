@@ -15,7 +15,7 @@ Let your creativity soar and make your elytra stand out with the Elytra Trims mo
 <img alt="curseforge" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/curseforge_vector.svg">
 </a>
 
-<a href="https://github.com/kikugie/elytra-trims">
+<a href="[https://github.com/kikugie/elytra-trims](https://codeberg.org/KikuGie/elytra-trims)">
 <img alt="codeberg" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/available/codeberg_vector.svg">
 </a>
 
