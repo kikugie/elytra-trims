@@ -1,6 +1,0 @@
-{
-  "type": "minecraft:smithing_transform",
-  "base": "#elytratrims:decoratable",
-  "addition": "minecraft:enchanted_golden_apple",
-  "result": {"id": "minecraft:elytra"}
-}

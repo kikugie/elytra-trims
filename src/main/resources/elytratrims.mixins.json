@@ -1,9 +1,0 @@
-{
-  "package": "dev.kikugie.elytratrims.mixin",
-  "required": true,
-  "minVersion": "0.8",
-  "compatibilityLevel": "JAVA_21",
-  "injectors": {
-    "defaultRequire": 1
-  }
-}

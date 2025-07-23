@@ -1,6 +1,0 @@
-{
-  "type": "minecraft:smithing_transform",
-  "base": "#elytratrims:decoratable",
-  "addition": "minecraft:glow_ink_sac",
-  "result": {"id": "minecraft:elytra"}
-}
