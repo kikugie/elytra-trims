@@ -1,4 +1,4 @@
-name: Trim requests
+name: Trim request
 description: Request trim designs to be added to Elytra Trims Extensions.
 labels:
   - compatibility
