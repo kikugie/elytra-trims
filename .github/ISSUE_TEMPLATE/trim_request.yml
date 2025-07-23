@@ -1,0 +1,29 @@
+name: Trim requests
+description: Request trim designs to be added to Elytra Trims Extensions.
+labels:
+  - compatibility
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        Please understand that adding new trim designs is a creative process,
+        which is not as straightforward as fixing a bug. For the design of
+        Elytra Trims not adding a trim is preferable to adding a poorly made
+        one.
+  - type: input
+    id: mods
+    attributes:
+      label: Link(s) to the related mods
+      description: Add Modrinth/Curseforge links to the mods adding new trims.
+      placeholder: https://modrinth.com/mod/more-armor-trims...
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Additional info
+      description: >-
+        Use this field to provide any additional info you feel necessary. If you
+        have ideas or references for the trim designs, you're welcome to attach
+        them here.

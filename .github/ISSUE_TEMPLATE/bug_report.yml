@@ -68,8 +68,3 @@ body:
         name and version of each mod. Hint: If you have any screenshots, videos,
         or other information that you feel is necessary to explain the issue,
         you can attach them here.
-  - type: markdown
-    attributes:
-      value: >-
-        This template was generated with [Issue Forms
-        Creator](https://issue-forms-creator.netlify.app)
